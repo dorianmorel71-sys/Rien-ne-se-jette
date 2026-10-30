@@ -1,66 +1,74 @@
 .wrap {
-  max-width: 720px;
+  max-width: 760px;
   margin: 0 auto;
-  padding-block: max(24px, env(safe-area-inset-top, 0px))
-    max(48px, env(safe-area-inset-bottom, 0px));
-  padding-left: max(16px, env(safe-area-inset-left, 0px));
-  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: max(48px, env(safe-area-inset-top, 0px))
+    max(64px, env(safe-area-inset-bottom, 0px));
+  padding-left: max(20px, env(safe-area-inset-left, 0px));
+  padding-right: max(20px, env(safe-area-inset-right, 0px));
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 36px;
 }
 
 header {
   h1 {
     font-family: var(--f-display);
-    font-weight: 800;
-    font-size: clamp(2rem, 8vw, 2.8rem);
-    line-height: 1;
+    font-weight: 400;
+    font-size: clamp(2.6rem, 10vw, 4rem);
+    line-height: 0.95;
     margin: 0;
     letter-spacing: -0.02em;
     text-wrap: balance;
 
     span {
+      font-style: italic;
       color: var(--accent);
     }
   }
 
   p {
-    margin: 8px 0 0;
+    margin: 16px 0 0;
     color: var(--muted);
-    max-width: 52ch;
+    max-width: 48ch;
+    font-size: 1rem;
   }
 }
 
 .onglets {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4px;
-  background: var(--line);
-  padding: 4px;
-  border-radius: 14px;
+  display: flex;
+  gap: 28px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: -8px;
 
   a {
-    font-weight: 600;
-    text-align: center;
+    font-size: 0.82rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
     text-decoration: none;
-    padding: 10px 8px;
-    border-radius: 11px;
+    padding: 0 0 12px;
+    margin-bottom: -1px;
+    border-bottom: 1px solid transparent;
     color: var(--muted);
+    transition: color 0.2s, border-color 0.2s;
+
+    &:hover {
+      color: var(--fg);
+    }
 
     &.actif {
-      background: var(--surface);
       color: var(--fg);
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+      border-bottom-color: var(--fg);
     }
   }
 }
 
 footer {
   color: var(--muted);
-  font-size: 0.88rem;
+  font-size: 0.8rem;
   border-top: 1px solid var(--line);
-  padding-top: 14px;
+  padding-top: 20px;
+  margin-top: 16px;
 
   p {
     margin: 0 0 6px;

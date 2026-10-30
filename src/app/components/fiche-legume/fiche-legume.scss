@@ -1,11 +1,12 @@
 :host {
   display: flex;
   flex-direction: column;
-  gap: 18px;
   background: var(--surface);
   border: 1px solid var(--line);
-  border-radius: 20px;
-  padding: 22px 18px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: clamp(24px, 5vw, 40px);
+  gap: 24px;
   scroll-margin-top: 16px;
 }
 
@@ -34,35 +35,34 @@
 
 h2 {
   font-family: var(--f-display);
-  font-weight: 700;
-  font-size: 2rem;
+  font-weight: 400;
+  font-size: clamp(2.2rem, 7vw, 3rem);
   margin: 0;
-  line-height: 1.05;
+  line-height: 1;
+  letter-spacing: -0.02em;
 }
 
 .score {
-  font-size: 0.8rem;
-  font-weight: 600;
+  font-size: 0.7rem;
+  font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--leaf);
-  background: var(--leaf-soft);
-  padding: 5px 10px;
-  border-radius: 999px;
+  letter-spacing: 0.12em;
+  color: var(--accent);
   font-variant-numeric: tabular-nums;
 }
 
 .intro {
-  margin: -8px 0 0;
+  margin: -12px 0 0;
   color: var(--muted);
+  max-width: 56ch;
 }
 
 .partie {
   display: grid;
-  grid-template-columns: 112px 1fr;
-  gap: 14px;
-  padding: 14px 0;
-  border-top: 1px dashed var(--line);
+  grid-template-columns: 140px 1fr;
+  gap: 20px;
+  padding: 20px 0;
+  border-top: 1px solid var(--line);
 
   &:first-child {
     border-top: 0;
@@ -76,11 +76,14 @@ h2 {
 }
 
 h3 {
-  font-family: var(--f-display);
-  font-weight: 700;
-  font-size: 1.05rem;
+  font-family: var(--f-body);
+  font-weight: 500;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
   margin: 0;
-  color: var(--accent);
+  padding-top: 4px;
+  color: var(--muted);
 }
 
 ul {
@@ -89,7 +92,7 @@ ul {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
   min-width: 0;
 }
 
@@ -101,11 +104,10 @@ li {
     content: '';
     position: absolute;
     left: 0;
-    top: 0.62em;
-    width: 7px;
-    height: 7px;
-    border-radius: 2px;
-    background: var(--leaf);
+    top: 0.8em;
+    width: 8px;
+    height: 1px;
+    background: var(--accent);
   }
 
   // Le <b> vient de [innerHTML] : il faut sortir de l'encapsulation pour le styler.

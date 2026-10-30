@@ -154,7 +154,36 @@
     </p>
   </div>
 } @else {
-  @for (zone of [frigo.auFrigo(), frigo.auCongelateur()]; track $index; let congelateur = $last) {
+  <div class="filtres" role="group" aria-label="Filtrer la liste">
+    @for (f of filtres(); track f.valeur) {
+      <button
+        type="button"
+        [class]="f.valeur"
+        [attr.aria-pressed]="filtre() === f.valeur"
+        (click)="filtre.set(f.valeur)"
+      >
+        {{ f.libelle }} <span class="compte">{{ f.nombre }}</span>
+      </button>
+    }
+  </div>
+
+  @if (!zones()[0].length && !zones()[1].length) {
+    <p class="vide">
+      @switch (filtre()) {
+        @case ('urgents') {
+          Rien d'urgent : tout peut attendre au moins deux jours. 👌
+        }
+        @case ('congelateur') {
+          Rien au congélateur.
+        }
+        @default {
+          Rien au frigo.
+        }
+      }
+    </p>
+  }
+
+  @for (zone of zones(); track $index; let congelateur = $last) {
     @if (zone.length) {
       <section>
         <h4 [class.glace]="congelateur">

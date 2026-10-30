@@ -11,6 +11,8 @@ import { suggererRecettes } from '../../services/suggestions';
 import { ajouterJours, aujourdhui, libelleDate } from '../../utils/date';
 import { normaliser } from '../../utils/texte';
 
+type Filtre = 'tout' | 'urgents' | 'frigo' | 'congelateur';
+
 /** Nombre maximum de suggestions sous la recherche. */
 const SUGGESTIONS_MAX = 12;
 /** Recettes proposées pour ce soir : 3 visibles, jusqu'à 10 en tout. */
@@ -38,6 +40,32 @@ export class PageFrigo {
   /** Jour où les restes ajoutés ont été rangés : aujourd'hui sauf si on l'a oublié. */
   protected readonly dateRangement = signal(this.frigo.jour());
   protected readonly versCongelateur = signal(false);
+  /** Filtre de la liste. */
+  protected readonly filtre = signal<Filtre>('tout');
+  protected readonly filtres = computed(() => {
+    const auFrigo = this.frigo.auFrigo();
+    const auCongelateur = this.frigo.auCongelateur();
+    return [
+      { valeur: 'tout' as const, libelle: 'Tout', nombre: auFrigo.length + auCongelateur.length },
+      { valeur: 'urgents' as const, libelle: '⏰ À finir vite', nombre: this.frigo.urgents() },
+      { valeur: 'frigo' as const, libelle: '🧊 Frigo', nombre: auFrigo.length },
+      { valeur: 'congelateur' as const, libelle: '❄️ Congélateur', nombre: auCongelateur.length },
+    ];
+  });
+  /** Frigo puis congélateur, selon le filtre. */
+  protected readonly zones = computed(() => {
+    const filtre = this.filtre();
+    const auFrigo = this.frigo.auFrigo();
+    return [
+      filtre === 'congelateur'
+        ? []
+        : filtre === 'urgents'
+          ? auFrigo.filter((r) => r.joursRestants <= 1)
+          : auFrigo,
+      filtre === 'tout' || filtre === 'congelateur' ? this.frigo.auCongelateur() : [],
+    ];
+  });
+
   /** Deuxième clic nécessaire pour tout vider. */
   protected readonly confirmerVidage = signal(false);
   /** Reste dont on modifie la date ou la note. */

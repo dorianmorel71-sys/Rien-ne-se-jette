@@ -1,3 +1,5 @@
+@use '../../../styles/ecran';
+
 :host {
   display: block;
   max-width: 460px;
@@ -269,4 +271,96 @@ button {
   background: none;
   border: 1.5px solid var(--berry);
   color: var(--berry);
+}
+
+// Présentation du compte : seulement sur ordinateur, où il y a la place.
+.presentation {
+  display: none;
+}
+
+@include ecran.ordi {
+  :host {
+    max-width: 960px;
+  }
+
+  // Connecté : la carte garde une largeur confortable.
+  :host > .carte {
+    max-width: 560px;
+  }
+
+  .connexion {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+
+    .carte {
+      border-radius: 0;
+      border-top: 0;
+      border-left: 0;
+      box-shadow: none;
+      padding: 40px;
+      justify-content: center;
+    }
+  }
+
+  .presentation {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    padding: 40px;
+    color: #fff;
+    // Nappe vichy tomate, comme l'icône.
+    background:
+      repeating-linear-gradient(90deg, transparent 0 22px, rgba(255, 255, 255, 0.07) 22px 44px),
+      repeating-linear-gradient(0deg, transparent 0 22px, rgba(255, 255, 255, 0.07) 22px 44px),
+      #d9482b;
+
+    img {
+      border-radius: 24px;
+      box-shadow: 0 10px 24px -10px rgba(60, 20, 5, 0.6);
+    }
+
+    p {
+      margin: 0;
+      font-size: 1.02rem;
+      line-height: 1.5;
+    }
+
+    .accroche {
+      font-family: var(--f-display);
+      font-weight: 800;
+      font-size: 2.1rem;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+    }
+  }
+
+  .avantages {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+
+    li {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      line-height: 1.4;
+    }
+
+    span {
+      flex-shrink: 0;
+      display: grid;
+      place-items: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.18);
+      font-size: 1.1rem;
+    }
+  }
 }

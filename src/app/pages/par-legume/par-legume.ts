@@ -11,6 +11,7 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { FicheLegume } from '../../components/fiche-legume/fiche-legume';
+import { InvitationInstallation } from '../../components/invitation-installation/invitation-installation';
 import { CATEGORIES_LEGUMES, LEGUMES } from '../../data/legumes';
 import { astuceDuJour } from '../../data/astuces';
 import { nomMois } from '../../utils/saison';
@@ -21,7 +22,7 @@ const LARGEUR_MOBILE = 700;
 
 @Component({
   selector: 'app-par-legume',
-  imports: [FicheLegume],
+  imports: [FicheLegume, InvitationInstallation],
   templateUrl: './par-legume.html',
   styleUrl: './par-legume.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

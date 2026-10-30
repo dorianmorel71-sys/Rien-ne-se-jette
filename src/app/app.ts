@@ -4,6 +4,7 @@ import { Compte } from './services/compte';
 import { Compteur } from './services/compteur';
 import { Favoris } from './services/favoris';
 import { Frigo } from './services/frigo';
+import { Installation } from './services/installation';
 
 @Component({
   selector: 'app-root',
@@ -17,6 +18,8 @@ export class App {
   protected readonly compteur = inject(Compteur);
   protected readonly frigo = inject(Frigo);
   protected readonly compte = inject(Compte);
+  // Démarré dès l'ouverture pour ne pas rater la proposition d'installation du navigateur.
+  protected readonly installation = inject(Installation);
 
   protected readonly liens = [
     { chemin: '/legume', icone: '🥕', libelle: 'Légumes' },

@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <rect width="512" height="512" fill="#d9482b"/>
+  <!-- Nappe vichy discrète -->
+  <g fill="#ffffff" opacity="0.08">
+    <rect x="0" y="0" width="512" height="32"/><rect x="0" y="64" width="512" height="32"/>
+    <rect x="0" y="128" width="512" height="32"/><rect x="0" y="192" width="512" height="32"/>
+    <rect x="0" y="256" width="512" height="32"/><rect x="0" y="320" width="512" height="32"/>
+    <rect x="0" y="384" width="512" height="32"/><rect x="0" y="448" width="512" height="32"/>
+  </g>
+  <g fill="#ffffff" opacity="0.08">
+    <rect x="0" y="0" width="32" height="512"/><rect x="64" y="0" width="32" height="512"/>
+    <rect x="128" y="0" width="32" height="512"/><rect x="192" y="0" width="32" height="512"/>
+    <rect x="256" y="0" width="32" height="512"/><rect x="320" y="0" width="32" height="512"/>
+    <rect x="384" y="0" width="32" height="512"/><rect x="448" y="0" width="32" height="512"/>
+  </g>
+  <circle cx="256" cy="256" r="168" fill="#fbf3e4"/>
+  <g transform="rotate(35 256 256)">
+    <!-- fanes -->
+    <path d="M256 168 C 230 120, 200 110, 186 118 C 206 132, 228 150, 246 176 Z" fill="#4f7a2a"/>
+    <path d="M256 170 C 256 110, 262 92, 272 84 C 280 112, 276 144, 266 176 Z" fill="#6b9a3a"/>
+    <path d="M262 174 C 290 130, 320 122, 334 128 C 314 146, 292 162, 270 182 Z" fill="#4f7a2a"/>
+    <!-- carotte -->
+    <path d="M214 178 Q 256 160 298 178 Q 296 240 262 368 Q 256 384 250 368 Q 216 240 214 178 Z" fill="#e8742a"/>
+    <path d="M230 222 l 22 0 M 270 252 l -22 0 M 236 290 l 18 0" stroke="#b9531a" stroke-width="7" stroke-linecap="round"/>
+  </g>
+</svg>

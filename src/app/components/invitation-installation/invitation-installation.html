@@ -1,0 +1,26 @@
+@if (installation.proposer()) {
+  <aside class="invitation">
+    <img src="icons/icon-96x96.png" alt="" width="48" height="48" />
+    <div class="texte">
+      <strong>Installe l'appli</strong>
+      @if (installation.ios) {
+        <p>
+          Touche <span class="partager" aria-label="Partager">⬆︎</span> Partager, puis
+          <b>Sur l'écran d'accueil</b>. Elle marchera même sans réseau.
+        </p>
+      } @else {
+        <p>Sur ton écran d'accueil, comme une vraie appli. Elle marche même sans réseau.</p>
+      }
+      <div class="boutons">
+        @if (!installation.ios) {
+          <button class="installer" type="button" (click)="installation.installer()">
+            Installer
+          </button>
+        }
+        <button class="plus-tard" type="button" (click)="installation.masquer()">
+          {{ installation.ios ? 'Compris' : 'Plus tard' }}
+        </button>
+      </div>
+    </div>
+  </aside>
+}

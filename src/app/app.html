@@ -64,3 +64,10 @@
     </p>
   </footer>
 </div>
+
+@if (installation.nouvelleVersion()) {
+  <div class="mise-a-jour" role="status">
+    <span>✨ Une nouvelle version est prête</span>
+    <button type="button" (click)="installation.recharger()">Mettre à jour</button>
+  </div>
+}

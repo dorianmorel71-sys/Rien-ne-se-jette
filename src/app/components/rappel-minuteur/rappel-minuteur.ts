@@ -1,17 +1,16 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { Minuteurs } from '../../services/minuteurs';
+import { AlerteMinuteur } from '../alerte-minuteur/alerte-minuteur';
 import { formaterDuree } from '../../utils/duree';
 
 /** Minuteur en cours, visible partout dans l'appli quand le mode cuisine est fermé. */
 @Component({
   selector: 'app-rappel-minuteur',
+  imports: [AlerteMinuteur],
   template: `
     @if (!minuteurs.enCuisine() && minuteurs.liste().length) {
       @if (minuteurs.sonnerie()) {
-        <div class="rappel sonne" role="alert">
-          <span>⏰ Minuteur terminé !</span>
-          <button type="button" (click)="minuteurs.arreterSonnerie()">Arrêter</button>
-        </div>
+        <app-alerte-minuteur />
       } @else if (minuteurs.prochain(); as m) {
         <div class="rappel" role="timer">
           <span>

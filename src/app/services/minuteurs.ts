@@ -1,4 +1,5 @@
 import { computed, DestroyRef, inject, Injectable, signal } from '@angular/core';
+import { creerSonAlarme } from '../utils/alarme';
 
 export interface Minuteur {
   id: number;
@@ -40,8 +41,13 @@ export class Minuteurs {
 
   private compteur = 0;
   private horloge?: ReturnType<typeof setInterval>;
-  private audio?: AudioContext;
-  private dernierBip = 0;
+  /**
+   * Lecteur audio classique plutôt que l'API Web Audio : sur iPhone, celle-ci est
+   * coupée par le mode silencieux, alors qu'un lecteur se comporte comme une vidéo.
+   */
+  private lecteur?: HTMLAudioElement;
+  private finTest?: ReturnType<typeof setTimeout>;
+  private derniereVibration = 0;
 
   constructor() {
     inject(DestroyRef).onDestroy(() => clearInterval(this.horloge));
@@ -82,16 +88,19 @@ export class Minuteurs {
       if (m.fin === null) return { ...m, reste: m.reste + ajout };
       return { ...m, fin: m.fin + ajout };
     });
+    this.taireSiFini();
     this.demarrerHorloge();
   }
 
   arreter(id: number): void {
     this.liste.update((l) => l.filter((m) => m.id !== id));
+    this.taireSiFini();
   }
 
   /** Arrête tous ceux qui sonnent. */
   arreterSonnerie(): void {
     this.liste.update((l) => l.filter((m) => !m.sonne));
+    this.taireSiFini();
   }
 
   /** Avance l'horloge : les minuteurs arrivés au bout se mettent à sonner. */
@@ -106,10 +115,11 @@ export class Minuteurs {
       }),
     );
     // Tant qu'un minuteur sonne : alarme et vibration toutes les secondes.
-    if (this.sonnerie() && (fini || maintenant - this.dernierBip >= 1000)) {
-      this.dernierBip = maintenant;
-      this.biper();
-      navigator.vibrate?.([250, 100, 250]);
+    if (fini) this.sonner();
+    // Android seulement : Apple ne laisse pas les sites faire vibrer l'iPhone.
+    if (this.sonnerie() && maintenant - this.derniereVibration >= 1600) {
+      this.derniereVibration = maintenant;
+      navigator.vibrate?.([300, 100, 300, 100, 300]);
     }
     if (!this.liste().some((m) => m.fin !== null || m.sonne)) {
       clearInterval(this.horloge);
@@ -126,41 +136,58 @@ export class Minuteurs {
     this.horloge = setInterval(() => this.actualiser(), INTERVALLE);
   }
 
+  /**
+   * Prépare le son pendant un geste de l'utilisateur : sans ça, iPhone et Android
+   * refusent de le jouer plus tard, quand le minuteur arrive au bout.
+   */
   private preparerSon(): void {
-    const Contexte = globalThis.AudioContext;
-    if (!Contexte) return;
-    this.audio ??= new Contexte();
-    void this.audio.resume();
+    if (typeof Audio === 'undefined') return;
+    // Safari 17+ : la sonnerie passe même en mode silencieux, comme une vidéo.
+    const session = (navigator as { audioSession?: { type: string } }).audioSession;
+    if (session) session.type = 'playback';
+    if (!this.lecteur) {
+      this.lecteur = new Audio(URL.createObjectURL(creerSonAlarme()));
+      this.lecteur.loop = true;
+      this.lecteur.preload = 'auto';
+    }
+    if (this.sonnerie() || this.finTest) return;
+    // Lecture muette d'un instant, juste pour que le navigateur autorise le son.
+    const lecteur = this.lecteur;
+    lecteur.muted = true;
+    // Les vieux navigateurs ne renvoient pas de promesse.
+    Promise.resolve(lecteur.play())
+      .then(() => {
+        if (this.sonnerie()) return;
+        lecteur.pause();
+        lecteur.currentTime = 0;
+      })
+      .catch(() => {})
+      .finally(() => (lecteur.muted = false));
   }
 
-  /** Fait entendre la sonnerie une fois, pour régler le volume. */
+  private sonner(): void {
+    const lecteur = this.lecteur;
+    if (!lecteur) return;
+    clearTimeout(this.finTest);
+    this.finTest = undefined;
+    lecteur.muted = false;
+    lecteur.currentTime = 0;
+    Promise.resolve(lecteur.play()).catch(() => {});
+  }
+
+  private taireSiFini(): void {
+    if (this.sonnerie() || this.finTest) return;
+    this.lecteur?.pause();
+  }
+
+  /** Fait entendre la sonnerie 3 secondes, pour régler le volume. */
   testerSonnerie(): void {
     this.preparerSon();
-    this.biper();
-  }
-
-  /**
-   * Alarme stridente : quatre bips rapides sur deux notes aiguës, en onde carrée
-   * (plus perçante qu'une onde douce), pour qu'on l'entende par-dessus la hotte.
-   */
-  private biper(): void {
-    const audio = this.audio;
-    if (!audio) return;
-    // Le navigateur peut avoir mis le son en veille pendant l'attente.
-    void audio.resume();
-    for (let i = 0; i < 4; i++) {
-      const debut = audio.currentTime + i * 0.14;
-      const oscillateur = audio.createOscillator();
-      const volume = audio.createGain();
-      oscillateur.type = 'square';
-      oscillateur.frequency.value = i % 2 ? 1568 : 1047;
-      volume.gain.setValueAtTime(0.0001, debut);
-      volume.gain.exponentialRampToValueAtTime(0.5, debut + 0.005);
-      volume.gain.setValueAtTime(0.5, debut + 0.09);
-      volume.gain.exponentialRampToValueAtTime(0.0001, debut + 0.11);
-      oscillateur.connect(volume).connect(audio.destination);
-      oscillateur.start(debut);
-      oscillateur.stop(debut + 0.12);
-    }
+    if (this.sonnerie()) return;
+    this.sonner();
+    this.finTest = setTimeout(() => {
+      this.finTest = undefined;
+      this.taireSiFini();
+    }, 3200);
   }
 }

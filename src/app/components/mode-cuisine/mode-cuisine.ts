@@ -12,6 +12,7 @@ import {
   viewChild,
 } from '@angular/core';
 import { INDISPENSABLES } from '../../data/ingredients';
+import { AlerteMinuteur } from '../alerte-minuteur/alerte-minuteur';
 import { RecetteGeneree } from '../../models/recette';
 import { Minuteurs } from '../../services/minuteurs';
 import { dureeDansEtape, formaterDuree } from '../../utils/duree';
@@ -27,6 +28,7 @@ interface Verrou {
  */
 @Component({
   selector: 'app-mode-cuisine',
+  imports: [AlerteMinuteur],
   templateUrl: './mode-cuisine.html',
   styleUrl: './mode-cuisine.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

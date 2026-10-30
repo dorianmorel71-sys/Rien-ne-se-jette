@@ -233,26 +233,82 @@ footer {
 .reglage-duree {
   display: flex;
   align-items: center;
-  gap: 18px;
+  gap: 10px;
+}
+
+.champ-temps {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
 
   button {
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
+    width: 52px;
+    height: 44px;
+    border-radius: 14px;
     border: 2px solid var(--line);
     background: var(--surface);
     color: var(--fg);
-    font-size: 1.6rem;
+    font-size: 1.5rem;
     cursor: pointer;
+  }
+
+  input {
+    width: 3.2ch;
+    padding: 4px 0;
+    border: 2px solid transparent;
+    border-radius: 12px;
+    background: var(--surface);
+    color: var(--fg);
+    text-align: center;
+    font-family: var(--f-display);
+    font-weight: 800;
+    font-size: 2.8rem;
+    font-variant-numeric: tabular-nums;
+    -moz-appearance: textfield;
+
+    &::-webkit-inner-spin-button,
+    &::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+  }
+
+  .unite {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--muted);
   }
 }
 
-.duree-reglee {
-  min-width: 5ch;
+.deux-points {
   font-family: var(--f-display);
   font-weight: 800;
-  font-size: 2.6rem;
-  font-variant-numeric: tabular-nums;
+  font-size: 2.4rem;
+  margin-bottom: 4px;
+}
+
+.boutons-reglage {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.tester {
+  font: inherit;
+  font-weight: 700;
+  padding: 14px 18px;
+  border-radius: 999px;
+  border: 1.5px solid var(--line);
+  background: var(--surface);
+  color: var(--fg);
+  cursor: pointer;
 }
 
 .durees-rapides {
@@ -281,6 +337,11 @@ footer {
 }
 
 .lancer {
+  &:disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
+
   font: inherit;
   font-weight: 700;
   font-size: 1.1rem;

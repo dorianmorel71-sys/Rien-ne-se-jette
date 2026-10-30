@@ -105,10 +105,11 @@ export class Minuteurs {
         return { ...m, fin: null, reste: 0, sonne: true };
       }),
     );
-    if (fini) navigator.vibrate?.([400, 150, 400, 150, 400]);
-    if (this.sonnerie() && maintenant - this.dernierBip >= 1000) {
+    // Tant qu'un minuteur sonne : alarme et vibration toutes les secondes.
+    if (this.sonnerie() && (fini || maintenant - this.dernierBip >= 1000)) {
       this.dernierBip = maintenant;
       this.biper();
+      navigator.vibrate?.([250, 100, 250]);
     }
     if (!this.liste().some((m) => m.fin !== null || m.sonne)) {
       clearInterval(this.horloge);
@@ -132,21 +133,34 @@ export class Minuteurs {
     void this.audio.resume();
   }
 
-  /** Trois bips courts, comme un minuteur de cuisine. */
+  /** Fait entendre la sonnerie une fois, pour régler le volume. */
+  testerSonnerie(): void {
+    this.preparerSon();
+    this.biper();
+  }
+
+  /**
+   * Alarme stridente : quatre bips rapides sur deux notes aiguës, en onde carrée
+   * (plus perçante qu'une onde douce), pour qu'on l'entende par-dessus la hotte.
+   */
   private biper(): void {
     const audio = this.audio;
     if (!audio) return;
-    for (let i = 0; i < 3; i++) {
-      const debut = audio.currentTime + i * 0.18;
+    // Le navigateur peut avoir mis le son en veille pendant l'attente.
+    void audio.resume();
+    for (let i = 0; i < 4; i++) {
+      const debut = audio.currentTime + i * 0.14;
       const oscillateur = audio.createOscillator();
       const volume = audio.createGain();
-      oscillateur.frequency.value = 880;
+      oscillateur.type = 'square';
+      oscillateur.frequency.value = i % 2 ? 1568 : 1047;
       volume.gain.setValueAtTime(0.0001, debut);
-      volume.gain.exponentialRampToValueAtTime(0.4, debut + 0.01);
-      volume.gain.exponentialRampToValueAtTime(0.0001, debut + 0.12);
+      volume.gain.exponentialRampToValueAtTime(0.5, debut + 0.005);
+      volume.gain.setValueAtTime(0.5, debut + 0.09);
+      volume.gain.exponentialRampToValueAtTime(0.0001, debut + 0.11);
       oscillateur.connect(volume).connect(audio.destination);
       oscillateur.start(debut);
-      oscillateur.stop(debut + 0.13);
+      oscillateur.stop(debut + 0.12);
     }
   }
 }

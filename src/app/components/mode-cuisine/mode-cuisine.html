@@ -45,26 +45,67 @@
     <section class="reglage" aria-label="Régler un minuteur">
       <p class="etiquette">Nouveau minuteur</p>
       <div class="reglage-duree">
-        <button type="button" aria-label="Une minute de moins" (click)="ajusterReglage(-1)">
-          −
-        </button>
-        <span class="duree-reglee">{{ minutesReglees() }} min</span>
-        <button type="button" aria-label="Une minute de plus" (click)="ajusterReglage(1)">+</button>
+        @for (champ of champsReglage; track champ.nom) {
+          <div class="champ-temps">
+            <button
+              type="button"
+              [attr.aria-label]="champ.plus"
+              (click)="ajusterReglage(champ.pas)"
+            >
+              +
+            </button>
+            <input
+              type="number"
+              inputmode="numeric"
+              min="0"
+              [max]="champ.nom === 'minutes' ? 180 : 59"
+              [attr.aria-label]="champ.nom"
+              [value]="
+                champ.nom === 'minutes'
+                  ? minutesReglage()
+                  : (secondesReglage() < 10 ? '0' : '') + secondesReglage()
+              "
+              (change)="saisir(champ.nom, $any($event.target).value)"
+              (focus)="$any($event.target).select()"
+            />
+            <span class="unite">{{ champ.nom === 'minutes' ? 'min' : 's' }}</span>
+            <button
+              type="button"
+              [attr.aria-label]="champ.moins"
+              (click)="ajusterReglage(-champ.pas)"
+            >
+              −
+            </button>
+          </div>
+          @if (champ.nom === 'minutes') {
+            <span class="deux-points" aria-hidden="true">:</span>
+          }
+        }
       </div>
       <div class="durees-rapides">
         @for (d of dureesRapides; track d) {
           <button
             type="button"
-            [attr.aria-pressed]="minutesReglees() === d"
-            (click)="minutesReglees.set(d)"
+            [attr.aria-pressed]="secondesReglees() === d * 60"
+            (click)="secondesReglees.set(d * 60)"
           >
             {{ d }} min
           </button>
         }
       </div>
-      <button class="lancer" type="button" (click)="lancerReglage()">
-        Lancer {{ minutesReglees() }} min
-      </button>
+      <div class="boutons-reglage">
+        <button class="tester" type="button" (click)="minuteurs.testerSonnerie()">
+          🔔 Tester la sonnerie
+        </button>
+        <button
+          class="lancer"
+          type="button"
+          [disabled]="!secondesReglees()"
+          (click)="lancerReglage()"
+        >
+          Lancer {{ formaterReglage(secondesReglees()) }}
+        </button>
+      </div>
     </section>
   } @else {
     <main aria-live="polite">

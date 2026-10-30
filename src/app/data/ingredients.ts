@@ -55,6 +55,38 @@ export const GROUPES_INGREDIENTS: GroupeIngredients[] = [
         avecArticle: 'les cosses de petits pois',
       },
       { id: 'cosses-feves', nom: 'Cosses de fèves', avecArticle: 'les cosses de fèves' },
+      { id: 'epl-navet', nom: 'Épluchures de navet', avecArticle: 'les épluchures de navet' },
+      {
+        id: 'epl-topinambour',
+        nom: 'Épluchures de topinambour',
+        avecArticle: 'les épluchures de topinambour',
+      },
+      {
+        id: 'epl-gingembre',
+        nom: 'Épluchures de gingembre',
+        avecArticle: 'les épluchures de gingembre',
+      },
+      {
+        id: 'epl-rhubarbe',
+        nom: 'Épluchures de rhubarbe',
+        avecArticle: 'les épluchures de rhubarbe',
+      },
+      {
+        id: 'tiges-epinards',
+        nom: "Tiges d'épinards ou de kale",
+        avecArticle: "les tiges d'épinards",
+      },
+      {
+        id: 'feuilles-chou-rave',
+        nom: 'Feuilles de chou-rave',
+        avecArticle: 'les feuilles de chou-rave',
+      },
+      {
+        id: 'feuilles-bruxelles',
+        nom: 'Feuilles de choux de Bruxelles',
+        avecArticle: 'les feuilles de choux de Bruxelles',
+      },
+      { id: 'epis-mais', nom: 'Épis de maïs égrenés', avecArticle: 'les épis de maïs' },
     ],
   },
   {
@@ -108,6 +140,17 @@ export const GROUPES_INGREDIENTS: GroupeIngredients[] = [
         nom: 'Légumes un peu fatigués',
         avecArticle: 'les légumes fatigués',
       },
+      { id: 'trognon-chou', nom: 'Trognon de chou', avecArticle: 'le trognon de chou' },
+      { id: 'epinards-fanes', nom: 'Épinards ou kale fanés', avecArticle: 'les épinards fanés' },
+      { id: 'endives-molles', nom: 'Endives ramollies', avecArticle: 'les endives' },
+      { id: 'poivron-ride', nom: 'Poivron ridé', avecArticle: 'le poivron' },
+      { id: 'aubergine-molle', nom: 'Aubergine ramollie', avecArticle: "l'aubergine" },
+      { id: 'champignons-mous', nom: 'Champignons ramollis', avecArticle: 'les champignons' },
+      {
+        id: 'bouts-haricots',
+        nom: 'Bouts de haricots verts',
+        avecArticle: 'les bouts de haricots verts',
+      },
     ],
   },
   {
@@ -159,8 +202,8 @@ export const GROUPES_INGREDIENTS: GroupeIngredients[] = [
     ingredients: [
       {
         id: 'epl-pomme',
-        nom: 'Épluchures et trognons de pomme',
-        avecArticle: 'les épluchures et trognons de pomme',
+        nom: 'Épluchures et trognons de pomme ou de poire',
+        avecArticle: 'les épluchures et trognons',
       },
       { id: 'zeste', nom: "Peau de citron ou d'orange", avecArticle: "la peau d'agrume" },
       { id: 'peaux-tomate', nom: 'Peaux de tomate', avecArticle: 'les peaux de tomate' },
@@ -170,6 +213,21 @@ export const GROUPES_INGREDIENTS: GroupeIngredients[] = [
         avecArticle: 'les bananes trop mûres',
       },
       { id: 'fruits-abimes', nom: 'Fruits abîmés', avecArticle: 'les fruits abîmés' },
+      {
+        id: 'ecorce-ananas',
+        nom: "Écorce et cœur d'ananas",
+        avecArticle: "l'écorce et le cœur d'ananas",
+      },
+      { id: 'ecorce-pasteque', nom: 'Écorce de pastèque', avecArticle: "l'écorce de pastèque" },
+      { id: 'avocat-mur', nom: 'Avocat trop mûr', avecArticle: "l'avocat" },
+      { id: 'peau-banane', nom: 'Peaux de banane bio', avecArticle: 'les peaux de banane' },
+      { id: 'raisins-rides', nom: 'Raisins ridés', avecArticle: 'les raisins ridés' },
+      {
+        id: 'queues-fraises',
+        nom: 'Queues et feuilles de fraise',
+        avecArticle: 'les queues de fraise',
+      },
+      { id: 'queues-cerises', nom: 'Queues de cerise', avecArticle: 'les queues de cerise' },
     ],
   },
   {
@@ -192,6 +250,8 @@ export const GROUPES_INGREDIENTS: GroupeIngredients[] = [
       { id: 'sauce-soja', nom: 'Sauce soja', avecArticle: 'la sauce soja' },
       { id: 'pates-seches', nom: 'Pâtes sèches', avecArticle: 'les pâtes' },
       { id: 'pate', nom: 'Pâte à tarte', avecArticle: 'la pâte à tarte' },
+      { id: 'cacao', nom: 'Cacao ou chocolat', avecArticle: 'le cacao' },
+      { id: 'lait-coco', nom: 'Lait de coco', avecArticle: 'le lait de coco' },
     ],
   },
 ];

@@ -1,4 +1,29 @@
 <div class="colonne-restes">
+  @let nb = selection.nombre();
+  <div class="barre">
+    <span>
+      @switch (nb) {
+        @case (0) {
+          Rien de coché
+        }
+        @case (1) {
+          1 ingrédient coché
+        }
+        @default {
+          {{ nb }} ingrédients cochés
+        }
+      }
+    </span>
+    <div class="boutons">
+      @if (aRanger().length) {
+        <button class="frigo" type="button" (click)="mettreAuFrigo()">🧊 Mettre au frigo</button>
+      } @else if (rangesAuFrigo()) {
+        <a class="frigo" routerLink="/frigo">✓ Au frigo</a>
+      }
+      <button type="button" (click)="selection.toutDecocher()">Tout décocher</button>
+    </div>
+  </div>
+
   @if (selection.estExemple()) {
     <p class="note-exemple">
       Exemple : quelques restes sont déjà cochés. Coche ce que tu as vraiment, placard compris.
@@ -52,31 +77,6 @@
   <p class="indispensables">
     Les recettes n'utilisent que ce que tu as coché, plus {{ indispensables }}.
   </p>
-
-  @let nb = selection.nombre();
-  <div class="barre">
-    <span>
-      @switch (nb) {
-        @case (0) {
-          Rien de coché
-        }
-        @case (1) {
-          1 ingrédient coché
-        }
-        @default {
-          {{ nb }} ingrédients cochés
-        }
-      }
-    </span>
-    <div class="boutons">
-      @if (aRanger().length) {
-        <button class="frigo" type="button" (click)="mettreAuFrigo()">🧊 Mettre au frigo</button>
-      } @else if (rangesAuFrigo()) {
-        <a class="frigo" routerLink="/frigo">✓ Au frigo</a>
-      }
-      <button type="button" (click)="selection.toutDecocher()">Tout décocher</button>
-    </div>
-  </div>
 </div>
 
 <div class="colonne-recettes">

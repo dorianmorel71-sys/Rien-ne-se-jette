@@ -107,7 +107,7 @@
         <p class="etape">{{ r.etapes[ecran() - 1] }}</p>
         @if (dureeEtape(); as minutes) {
           <button class="lancer-etape" type="button" (click)="lancerEtape(minutes)">
-            ⏱️ Lancer {{ minutes }} min
+            ⏱️ Lancer {{ libelleMinutes(minutes) }}
           </button>
         }
         @if (ecran() === r.etapes.length && r.avertissement) {

@@ -1,15 +1,28 @@
 import { Ingredient, ModeleRecette, RecetteGeneree } from '../models/recette';
+import { dureesDans } from '../utils/duree';
 
 /** Restes qui rendent une recette non végétarienne. */
-const VIANDES = new Set(['poulet-cuit', 'jambon', 'viande-cuite', 'poisson-cuit']);
+const VIANDES = new Set([
+  'poulet-cuit',
+  'jambon',
+  'viande-cuite',
+  'poisson-cuit',
+  'lardons',
+  'saucisses',
+  'chorizo',
+  'carcasse-poulet',
+  'os-viande',
+  'graisse-cuisson',
+  'aretes-poisson',
+  'peau-saumon',
+  'carapaces-crevettes',
+  'thon-boite',
+  'sardines-boite',
+]);
 
-/** Durée totale en minutes : « 10 min + 1 h au four » → 70. */
+/** Durée totale en minutes : « 10 min + 1 h 30 au four » → 100. */
 export function enMinutes(temps: string): number {
-  const unites: Record<string, number> = { min: 1, h: 60, jour: 1440, jours: 1440 };
-  return [...temps.matchAll(/(\d+)\s*(min|h|jours?)\b/g)].reduce(
-    (total, [, nombre, unite]) => total + Number(nombre) * unites[unite],
-    0,
-  );
+  return dureesDans(temps, 'haute').reduce((total, minutes) => total + minutes, 0);
 }
 
 /** « a », « a et b », « a, b et c ». */

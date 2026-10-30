@@ -50,6 +50,10 @@
     --c: var(--accent);
     --c-soft: var(--accent-soft);
   }
+  &[data-groupe='Viande et poisson'] {
+    --c: var(--meat);
+    --c-soft: var(--meat-soft);
+  }
   &[data-groupe='Fruits'] {
     --c: var(--berry);
     --c-soft: var(--berry-soft);

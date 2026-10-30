@@ -6,7 +6,7 @@ export interface PartieLegume {
 }
 
 /** Famille sous laquelle le légume est rangé dans la liste. */
-export type CategorieLegume = 'Légumes' | 'Fruits' | 'Herbes & aromates';
+export type CategorieLegume = 'Légumes' | 'Fruits' | 'Herbes & aromates' | 'Viande & poisson';
 
 export interface Legume {
   id: string;

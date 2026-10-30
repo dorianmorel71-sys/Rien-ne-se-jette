@@ -1,6 +1,13 @@
 import { CategorieLegume, Legume } from '../models/legume';
 
-export const CATEGORIES_LEGUMES: CategorieLegume[] = ['Légumes', 'Fruits', 'Herbes & aromates'];
+export const CATEGORIES_LEGUMES: CategorieLegume[] = [
+  'Légumes',
+  'Fruits',
+  'Herbes & aromates',
+  'Viande & poisson',
+];
+
+const TOUTE_L_ANNEE = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
 export const LEGUMES: Legume[] = [
   {
@@ -1396,5 +1403,169 @@ export const LEGUMES: Legume[] = [
       { nom: 'Tiges abîmées', usages: ['En compote ou en crumble'] },
     ],
     avertissement: 'Les feuilles de rhubarbe sont toxiques : ne les mange jamais.',
+  },
+  // ---------- Viande & poisson ----------
+  {
+    id: 'poulet',
+    nom: 'Poulet rôti',
+    emoji: '🍗',
+    categorie: 'Viande & poisson',
+    saison: TOUTE_L_ANNEE,
+    restes: ['poulet-cuit', 'carcasse-poulet', 'graisse-cuisson'],
+    compost: [],
+    conservation: [
+      'Restes de viande : 3 jours au frigo dans une boîte fermée, ou congelés effilochés',
+      'Carcasse : au frigo dès la fin du repas, à cuisiner sous 2 jours, ou congelée',
+    ],
+    couleur: '#c98a1b',
+    score: '4 parties sur 4',
+    intro:
+      'Un poulet rôti fait au moins deux repas, et sa carcasse donne le meilleur des bouillons.',
+    parties: [
+      {
+        nom: 'Restes de viande',
+        usages: [
+          '<b>Effilochés</b> dans une salade, un riz sauté ou une quiche',
+          'En croquettes ou en boulettes avec un reste de purée',
+        ],
+      },
+      {
+        nom: 'Carcasse',
+        usages: [
+          '<b>Bouillon</b> : 2 h à frémir avec un oignon et des épluchures de légumes',
+          'Le bouillon sert ensuite pour une soupe, un risotto ou des nouilles',
+        ],
+      },
+      {
+        nom: 'Jus et graisse du plat',
+        usages: [
+          '<b>Pommes de terre sautées</b> dans la graisse : rien n’a plus de goût',
+          'Le jus refroidi forme une gelée : une cuillère relève une sauce ou une soupe',
+        ],
+      },
+      {
+        nom: 'Peau',
+        usages: ['Grillée au four 10 min : croustillante, à émietter sur une salade'],
+      },
+    ],
+    avertissement:
+      'Le poulet cuit se met au frigo dans les 2 heures après le repas, pas plus tard.',
+  },
+  {
+    id: 'saumon',
+    nom: 'Saumon',
+    emoji: '🐟',
+    categorie: 'Viande & poisson',
+    saison: TOUTE_L_ANNEE,
+    restes: ['poisson-cuit', 'peau-saumon', 'aretes-poisson'],
+    compost: ['Le poisson ne va pas au compost de jardin : à la poubelle'],
+    conservation: [
+      'Poisson cuit : 2 jours au frigo, bien emballé',
+      'Peau et arêtes : à cuisiner le jour même, ou à congeler tout de suite',
+    ],
+    couleur: '#e8735a',
+    score: '3 parties sur 3',
+    intro: 'La peau du saumon devient des chips, et ses arêtes un fumet pour les sauces.',
+    parties: [
+      {
+        nom: 'Peau',
+        usages: [
+          '<b>Chips de peau</b> : grattée, salée, 12 min au four à 200 °C entre deux plaques',
+          'Émiettée sur un riz ou une salade, comme des lardons',
+        ],
+      },
+      {
+        nom: 'Arêtes et parures',
+        usages: ['<b>Fumet</b> : 20 min à frémir avec oignon et fenouil, pour sauce ou risotto'],
+      },
+      {
+        nom: 'Restes cuits',
+        usages: ['En <b>rillettes</b> avec un yaourt et du citron', 'En brandade ou en croquettes'],
+      },
+    ],
+    avertissement:
+      'Le poisson cru ou cuit s’abîme vite : au frigo tout de suite, et 2 jours maximum.',
+  },
+  {
+    id: 'crevettes',
+    nom: 'Crevettes',
+    emoji: '🦐',
+    categorie: 'Viande & poisson',
+    saison: TOUTE_L_ANNEE,
+    restes: ['carapaces-crevettes'],
+    compost: [],
+    conservation: [
+      'Têtes et carapaces : au congélateur dans un sac, en attendant d’en avoir assez',
+    ],
+    couleur: '#e9967a',
+    score: '2 parties sur 2',
+    intro: 'Les têtes et carapaces ont plus de goût que la chair : elles font une bisque parfumée.',
+    parties: [
+      {
+        nom: 'Têtes et carapaces',
+        usages: [
+          '<b>Bisque</b> : revenues à l’huile, puis mijotées avec tomate et oignon',
+          '<b>Huile de crevette</b> : infusées 20 min dans l’huile chaude, puis filtrées',
+        ],
+      },
+      { nom: 'Chair', usages: ['Dans un riz sauté, des pâtes ou une salade'] },
+    ],
+    avertissement: 'Les crustacés s’abîment très vite : à cuisiner ou congeler le jour même.',
+  },
+  {
+    id: 'poisson-entier',
+    nom: 'Poisson entier',
+    emoji: '🐠',
+    categorie: 'Viande & poisson',
+    saison: TOUTE_L_ANNEE,
+    restes: ['aretes-poisson', 'poisson-cuit'],
+    compost: ['Viscères et écailles : à la poubelle, pas au compost'],
+    conservation: ['Têtes et arêtes : le jour même, ou au congélateur pour un fumet plus tard'],
+    couleur: '#4a8fb8',
+    score: '3 parties sur 4',
+    intro:
+      'Quand le poissonnier lève les filets, demande la tête et les arêtes : c’est gratuit et plein de goût.',
+    parties: [
+      {
+        nom: 'Tête et arêtes',
+        usages: ['<b>Fumet</b> pour une soupe de poisson, une sauce ou un risotto'],
+      },
+      { nom: 'Joues', usages: ['Le morceau le plus tendre : poêlées 1 min au beurre'] },
+      { nom: 'Restes cuits', usages: ['En brandade, en croquettes ou en rillettes'] },
+    ],
+  },
+  {
+    id: 'pot-au-feu',
+    nom: 'Rôti et pot-au-feu',
+    emoji: '🥩',
+    categorie: 'Viande & poisson',
+    saison: TOUTE_L_ANNEE,
+    restes: ['viande-cuite', 'os-viande', 'graisse-cuisson'],
+    compost: [],
+    conservation: [
+      'Viande cuite : 3 jours au frigo, ou congelée en tranches',
+      'Os et parures : 3 jours au frigo, ou congelés pour un prochain bouillon',
+    ],
+    couleur: '#9c3d2e',
+    score: '3 parties sur 3',
+    intro:
+      'Les restes d’un rôti ou d’un pot-au-feu font un deuxième plat, souvent meilleur que le premier.',
+    parties: [
+      {
+        nom: 'Restes de viande',
+        usages: [
+          '<b>Hachis parmentier</b> avec une purée',
+          'En salade froide avec moutarde et cornichons, ou en boulettes',
+        ],
+      },
+      {
+        nom: 'Os et parures',
+        usages: ['<b>Bouillon</b> : 3 h à frémir avec des légumes, puis dégraissé une fois froid'],
+      },
+      {
+        nom: 'Jus et graisse',
+        usages: ['Pour faire sauter des pommes de terre ou des légumes', 'Pour lier une sauce'],
+      },
+    ],
   },
 ];

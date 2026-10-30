@@ -17,7 +17,7 @@ import { RoueTemps } from '../roue-temps/roue-temps';
 import { RecetteGeneree } from '../../models/recette';
 import { Minuteurs } from '../../services/minuteurs';
 import { SONNERIES } from '../../utils/alarme';
-import { dureeDansEtape, formaterDuree } from '../../utils/duree';
+import { dureeDansEtape, formaterDuree, libelleMinutes } from '../../utils/duree';
 
 /** Verrou qui empêche l'écran de se mettre en veille (absent sur les vieux navigateurs). */
 interface Verrou {
@@ -53,6 +53,7 @@ export class ModeCuisine {
 
   protected readonly minuteurs = inject(Minuteurs);
   protected readonly formater = formaterDuree;
+  protected readonly libelleMinutes = libelleMinutes;
   /** Durée trouvée dans l'étape affichée, pour la lancer en un geste. */
   protected readonly dureeEtape = computed(() => {
     const etape = this.recette().etapes[this.ecran() - 1];

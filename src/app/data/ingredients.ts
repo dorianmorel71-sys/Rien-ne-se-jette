@@ -186,8 +186,6 @@ export const GROUPES_INGREDIENTS: GroupeIngredients[] = [
         nom: 'Jus de pois chiches (aquafaba)',
         avecArticle: 'le jus de pois chiches',
       },
-      { id: 'poulet-cuit', nom: 'Restes de poulet', avecArticle: 'les restes de poulet' },
-      { id: 'jambon', nom: 'Bouts de jambon', avecArticle: 'les bouts de jambon' },
       { id: 'fromage-bouts', nom: 'Bouts de fromage', avecArticle: 'les bouts de fromage' },
       {
         id: 'croute-parmesan',
@@ -197,12 +195,6 @@ export const GROUPES_INGREDIENTS: GroupeIngredients[] = [
       { id: 'yaourt', nom: 'Yaourt à finir', avecArticle: 'le yaourt' },
       { id: 'blancs-oeufs', nom: "Blancs d'œufs", avecArticle: "les blancs d'œufs" },
       { id: 'jaunes-oeufs', nom: "Jaunes d'œufs", avecArticle: "les jaunes d'œufs" },
-      {
-        id: 'viande-cuite',
-        nom: 'Restes de viande cuite (rôti, pot-au-feu…)',
-        avecArticle: 'les restes de viande',
-      },
-      { id: 'poisson-cuit', nom: 'Restes de poisson cuit', avecArticle: 'les restes de poisson' },
       { id: 'crepes', nom: 'Crêpes en trop', avecArticle: 'les crêpes' },
       {
         id: 'miettes-gateau',
@@ -216,6 +208,44 @@ export const GROUPES_INGREDIENTS: GroupeIngredients[] = [
       },
       { id: 'fond-vin', nom: 'Fond de bouteille de vin', avecArticle: 'le fond de vin' },
       { id: 'cafe-froid', nom: 'Café refroidi', avecArticle: 'le café' },
+    ],
+  },
+  {
+    titre: 'Viande et poisson',
+    ingredients: [
+      { id: 'poulet-cuit', nom: 'Restes de poulet', avecArticle: 'les restes de poulet' },
+      {
+        id: 'viande-cuite',
+        nom: 'Restes de viande cuite (rôti, pot-au-feu…)',
+        avecArticle: 'les restes de viande',
+      },
+      { id: 'poisson-cuit', nom: 'Restes de poisson cuit', avecArticle: 'les restes de poisson' },
+      { id: 'jambon', nom: 'Bouts de jambon', avecArticle: 'les bouts de jambon' },
+      { id: 'lardons', nom: 'Fond de barquette de lardons', avecArticle: 'les lardons' },
+      { id: 'saucisses', nom: 'Saucisses en trop', avecArticle: 'les saucisses' },
+      { id: 'chorizo', nom: 'Bouts de chorizo ou de saucisson', avecArticle: 'le chorizo' },
+      {
+        id: 'carcasse-poulet',
+        nom: 'Carcasse de poulet rôti',
+        avecArticle: 'la carcasse de poulet',
+      },
+      { id: 'os-viande', nom: 'Os et parures de viande', avecArticle: 'les os et parures' },
+      {
+        id: 'graisse-cuisson',
+        nom: 'Jus ou graisse de cuisson (rôti, canard)',
+        avecArticle: 'la graisse de cuisson',
+      },
+      {
+        id: 'aretes-poisson',
+        nom: 'Têtes et arêtes de poisson',
+        avecArticle: 'les têtes et arêtes de poisson',
+      },
+      { id: 'peau-saumon', nom: 'Peau de saumon', avecArticle: 'la peau de saumon' },
+      {
+        id: 'carapaces-crevettes',
+        nom: 'Têtes et carapaces de crevettes',
+        avecArticle: 'les carapaces de crevettes',
+      },
     ],
   },
   {
@@ -273,6 +303,14 @@ export const GROUPES_INGREDIENTS: GroupeIngredients[] = [
       { id: 'pate', nom: 'Pâte à tarte', avecArticle: 'la pâte à tarte' },
       { id: 'cacao', nom: 'Cacao ou chocolat', avecArticle: 'le cacao' },
       { id: 'lait-coco', nom: 'Lait de coco', avecArticle: 'le lait de coco' },
+      { id: 'riz-sec', nom: 'Riz', avecArticle: 'le riz' },
+      {
+        id: 'tomates-conserve',
+        nom: 'Tomates en conserve',
+        avecArticle: 'les tomates en conserve',
+      },
+      { id: 'thon-boite', nom: 'Thon en boîte', avecArticle: 'le thon' },
+      { id: 'sardines-boite', nom: 'Sardines en boîte', avecArticle: 'les sardines' },
     ],
   },
 ];

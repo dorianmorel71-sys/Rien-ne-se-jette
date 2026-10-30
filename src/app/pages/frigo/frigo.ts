@@ -1,7 +1,13 @@
+import { LowerCasePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { CarteRecette } from '../../components/carte-recette/carte-recette';
+import { Compte } from '../../services/compte';
+import { Foyer } from '../../services/foyer';
 import { Frigo as ServiceFrigo, RESTES_FRIGO, ResteAuFrigo } from '../../services/frigo';
+import { enumerer } from '../../services/generer-recette';
 import { SelectionRestes } from '../../services/selection-restes';
+import { suggererRecettes } from '../../services/suggestions';
 import { ajouterJours, aujourdhui, libelleDate } from '../../utils/date';
 import { normaliser } from '../../utils/texte';
 
@@ -10,13 +16,19 @@ const SUGGESTIONS_MAX = 12;
 
 @Component({
   selector: 'app-frigo',
+  imports: [CarteRecette, LowerCasePipe, RouterLink],
   templateUrl: './frigo.html',
   styleUrl: './frigo.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PageFrigo {
   protected readonly frigo = inject(ServiceFrigo);
+  protected readonly compte = inject(Compte);
+  protected readonly foyer = inject(Foyer);
   private readonly selection = inject(SelectionRestes);
+
+  /** « Léa », « Léa et Sam ». */
+  protected readonly partageAvec = computed(() => enumerer(this.foyer.autres().map((m) => m.nom)));
   private readonly router = inject(Router);
 
   protected readonly recherche = signal('');
@@ -42,7 +54,7 @@ export class PageFrigo {
   );
 
   /** Restes qui correspondent à la recherche et ne sont pas déjà au frigo. */
-  protected readonly suggestions = computed(() => {
+  protected readonly resultats = computed(() => {
     const filtre = normaliser(this.recherche().trim());
     if (!filtre) return [];
     return RESTES_FRIGO.filter(
@@ -55,6 +67,15 @@ export class PageFrigo {
     const texte = normaliser(this.recherche().trim());
     return texte.length >= 2 && !RESTES_FRIGO.some((i) => normaliser(i.nom) === texte);
   });
+
+  /** « Qu'est-ce que je cuisine ce soir ? » : les recettes qui sauvent le plus de restes urgents. */
+  protected readonly suggestions = computed(() => suggererRecettes(this.frigo.restes()));
+  /** Suggestion dont on a déplié la recette. */
+  protected readonly suggestionOuverte = signal<string | null>(null);
+
+  protected basculerSuggestion(nom: string): void {
+    this.suggestionOuverte.update((actuelle) => (actuelle === nom ? null : nom));
+  }
 
   /** Restes de la liste au frigo, pour lesquels on a des recettes. */
   private readonly avecRecettes = computed(() => this.frigo.auFrigo().filter((r) => !r.libre));

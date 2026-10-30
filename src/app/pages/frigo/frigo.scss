@@ -338,3 +338,106 @@ details {
     align-items: start;
   }
 }
+
+// « Ce soir, je cuisine… »
+.ce-soir {
+  background: var(--mustard-soft);
+  border-radius: var(--radius);
+  padding: 16px;
+
+  h4 {
+    color: var(--fg);
+  }
+
+  .sous-titre {
+    margin: -6px 0 0;
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+}
+
+.idees {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  li {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+}
+
+.idee {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  text-align: left;
+  font: inherit;
+  color: var(--fg);
+  background: var(--surface);
+  border: 1.5px solid var(--line);
+  border-radius: 14px;
+  padding: 10px 14px;
+  cursor: pointer;
+
+  &:hover {
+    border-color: var(--mustard);
+  }
+
+  .emoji {
+    font-size: 1.7rem;
+    line-height: 1;
+  }
+
+  .texte {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .detail {
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+
+  .urgent {
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  .chevron {
+    width: 9px;
+    height: 9px;
+    border-right: 2.5px solid var(--mustard);
+    border-bottom: 2.5px solid var(--mustard);
+    transform: rotate(45deg);
+    transition: transform 0.2s;
+  }
+
+  &[aria-expanded='true'] .chevron {
+    transform: rotate(-135deg);
+  }
+}
+
+.partage {
+  align-self: flex-start;
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: var(--mustard-soft);
+  color: var(--fg);
+  font-size: 0.92rem;
+  text-decoration: none;
+
+  &.discret {
+    background: none;
+    padding: 0;
+    color: var(--muted);
+    font-weight: 700;
+  }
+}

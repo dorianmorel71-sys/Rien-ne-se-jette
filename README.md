@@ -44,4 +44,6 @@ Les comptes sont facultatifs : ils sauvegardent favoris, frigo et compteur pour 
 1. Sur [console.firebase.google.com](https://console.firebase.google.com), crée un projet, puis ajoute une **application Web** et copie sa configuration dans `src/app/firebase.config.ts`.
 2. **Authentication › Méthodes de connexion** : active « Adresse e-mail/Mot de passe » et « Google ».
 3. **Authentication › Paramètres › Domaines autorisés** : ajoute le domaine GitHub Pages (`<utilisateur>.github.io`).
-4. **Firestore Database** : crée la base, puis colle le contenu de `firestore.rules` dans l'onglet **Règles** et publie.
+4. **Firestore Database** : crée la base, puis colle le contenu de `firestore.rules` dans l'onglet **Règles** et publie. **À refaire à chaque modification de `firestore.rules`.**
+
+Le frigo partagé (foyer) vit dans la collection `foyers` : un document par foyer avec ses membres, leurs prénoms et le frigo commun. On le rejoint par un lien `#/foyer/<id>`.

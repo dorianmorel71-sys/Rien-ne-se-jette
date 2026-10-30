@@ -4,6 +4,7 @@ import { RouterLink } from '@angular/router';
 import { Compte, messageErreur } from '../../services/compte';
 import { Compteur } from '../../services/compteur';
 import { Favoris } from '../../services/favoris';
+import { Foyer } from '../../services/foyer';
 import { Frigo } from '../../services/frigo';
 
 type Mode = 'connexion' | 'creation' | 'oubli';
@@ -20,6 +21,7 @@ export class PageCompte {
   protected readonly favoris = inject(Favoris);
   protected readonly frigo = inject(Frigo);
   protected readonly compteur = inject(Compteur);
+  protected readonly foyer = inject(Foyer);
 
   protected readonly mode = signal<Mode>('connexion');
   protected readonly nom = signal('');
@@ -30,6 +32,10 @@ export class PageCompte {
   protected readonly occupe = signal(false);
   protected readonly erreur = signal('');
   protected readonly info = signal('');
+  /** Deuxième clic nécessaire pour quitter le foyer. */
+  protected readonly confirmerDepart = signal(false);
+  /** « Lien copié ! » après avoir copié l'invitation. */
+  protected readonly lienCopie = signal(false);
   /** Deuxième clic nécessaire pour supprimer le compte. */
   protected readonly confirmerSuppression = signal(false);
 
@@ -84,8 +90,46 @@ export class PageCompte {
       this.confirmerSuppression.set(true);
       return;
     }
-    await this.executer(() => this.compte.supprimerCompte());
+    await this.executer(async () => {
+      await this.foyer.quitter();
+      await this.compte.supprimerCompte();
+    });
     this.confirmerSuppression.set(false);
+  }
+
+  protected creerFoyer(): Promise<void> {
+    return this.executer(() => this.foyer.creer());
+  }
+
+  /** Partage du téléphone si possible, sinon copie du lien. */
+  protected async inviter(): Promise<void> {
+    const url = this.foyer.lienInvitation();
+    const texte = 'Rejoins mon frigo sur Rien ne se jette, pour savoir ce qu’il reste à finir.';
+    if (navigator.share) {
+      try {
+        await navigator.share({ title: 'Rien ne se jette', text: texte, url });
+        return;
+      } catch (e) {
+        // Partage annulé par l'utilisateur : rien à faire.
+        if ((e as Error).name === 'AbortError') return;
+      }
+    }
+    try {
+      await navigator.clipboard.writeText(url);
+      this.lienCopie.set(true);
+      setTimeout(() => this.lienCopie.set(false), 3000);
+    } catch {
+      this.erreur.set(`Copie ce lien et envoie-le : ${url}`);
+    }
+  }
+
+  protected async quitterFoyer(): Promise<void> {
+    if (!this.confirmerDepart()) {
+      this.confirmerDepart.set(true);
+      return;
+    }
+    await this.executer(() => this.foyer.quitter());
+    this.confirmerDepart.set(false);
   }
 
   private async executer(action: () => Promise<void>): Promise<void> {

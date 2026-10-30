@@ -19,12 +19,6 @@ export function fusionner(local: DonneesCompte, compte: DonneesCompte): DonneesC
     if (!recettes.some((x) => x.nom === r.nom)) recettes.push(r);
   }
 
-  // Un même reste rangé des deux côtés garde la date la plus ancienne, par prudence.
-  const frigo = new Map(compte.frigo.map((r) => [r.id, r]));
-  for (const r of local.frigo) {
-    const deja = frigo.get(r.id);
-    if (!deja || r.depuis < deja.depuis) frigo.set(r.id, r);
-  }
 
   // Le même compteur a pu avancer sur les deux appareils : on garde le plus grand.
   const fois = { ...compte.compteur.fois };
@@ -37,11 +31,21 @@ export function fusionner(local: DonneesCompte, compte: DonneesCompte): DonneesC
       legumes: [...new Set([...compte.favoris.legumes, ...local.favoris.legumes])],
       recettes,
     },
-    frigo: [...frigo.values()],
+    frigo: fusionnerFrigo(local.frigo, compte.frigo),
     compteur: {
       restes: Math.max(compte.compteur.restes, local.compteur.restes),
       recettes: Math.max(compte.compteur.recettes, local.compteur.recettes),
       fois,
     },
   };
+}
+
+/** Réunit deux frigos ; un même reste rangé des deux côtés garde la date la plus ancienne, par prudence. */
+export function fusionnerFrigo(local: Rangement[], autre: Rangement[]): Rangement[] {
+  const frigo = new Map(autre.map((r) => [r.id, r]));
+  for (const r of local) {
+    const deja = frigo.get(r.id);
+    if (!deja || r.depuis < deja.depuis) frigo.set(r.id, r);
+  }
+  return [...frigo.values()];
 }

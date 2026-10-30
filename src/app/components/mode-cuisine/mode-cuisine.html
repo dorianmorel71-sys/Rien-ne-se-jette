@@ -1,0 +1,68 @@
+@let r = recette();
+<dialog
+  #dialogue
+  [attr.aria-label]="'Mode cuisine : ' + r.nom"
+  (close)="fermer.emit()"
+  (touchstart)="toucher($event)"
+  (touchend)="lacher($event)"
+>
+  <header>
+    <p class="titre">
+      @if (r.emoji) {
+        <span aria-hidden="true">{{ r.emoji }}</span>
+      }
+      {{ r.nom }}
+    </p>
+    <button
+      class="fermer"
+      type="button"
+      aria-label="Quitter le mode cuisine"
+      (click)="dialogue.close()"
+    >
+      ✕
+    </button>
+  </header>
+
+  <div class="progression" aria-hidden="true">
+    @for (i of ecrans(); track i) {
+      <span [class.faite]="i <= ecran()"></span>
+    }
+  </div>
+
+  <main aria-live="polite">
+    @if (ecran() === 0) {
+      <p class="etiquette">Prépare</p>
+      <ul class="ingredients">
+        @for (i of r.ingredients; track i.id) {
+          <li>{{ i.nom }}</li>
+        }
+      </ul>
+      <p class="plus">Et {{ indispensables }}.</p>
+    } @else if (fin()) {
+      <p class="grand-emoji" aria-hidden="true">🎉</p>
+      <p class="etape">Bon appétit !</p>
+    } @else {
+      <p class="etiquette">Étape {{ ecran() }} sur {{ r.etapes.length }}</p>
+      <p class="etape">{{ r.etapes[ecran() - 1] }}</p>
+      @if (ecran() === r.etapes.length && r.avertissement) {
+        <p class="avertissement">⚠️ {{ r.avertissement }}</p>
+      }
+    }
+  </main>
+
+  <footer>
+    <button class="precedent" type="button" [disabled]="ecran() === 0" (click)="precedent()">
+      ← Retour
+    </button>
+    @if (fin()) {
+      <button class="suivant" type="button" (click)="terminer()">Je l'ai cuisinée ✓</button>
+    } @else {
+      <button class="suivant" type="button" autofocus (click)="suivant()">
+        {{ ecran() === 0 ? "C'est parti" : 'Suivant' }} →
+      </button>
+    }
+  </footer>
+  @if (ecranAllume()) {
+    <p class="veille">💡 L'écran reste allumé</p>
+  }
+</dialog>

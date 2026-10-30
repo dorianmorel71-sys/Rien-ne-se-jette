@@ -3,6 +3,8 @@ import type { Auth } from 'firebase/auth';
 import type { Firestore } from 'firebase/firestore';
 import { FIREBASE_CONFIG } from '../firebase.config';
 import { DonneesCompte, fusionner } from '../utils/fusion';
+import { jsonStable } from '../utils/json';
+import { ecrire, lire } from '../utils/stockage';
 import { Compteur } from './compteur';
 import { Favoris } from './favoris';
 import { Frigo } from './frigo';
@@ -23,6 +25,18 @@ const DELAI_ENVOI = 800;
 /** Collection Firestore : un document par utilisateur, à son identifiant. */
 const COLLECTION = 'utilisateurs';
 
+/**
+ * Compte déjà réuni avec les données de cet appareil. On ne réunit qu'une fois :
+ * ensuite le compte fait foi, sinon un favori retiré ailleurs reviendrait.
+ */
+const CLE_REUNI = 'rien-ne-se-jette.compte-reuni';
+
+/** Le document du compte : les données, et le foyer dont on partage le frigo. */
+type DocumentCompte = Partial<DonneesCompte> & { foyer?: string };
+
+/** Ce qu'on envoie : sans le frigo quand il est partagé, il vit alors dans le foyer. */
+type DonneesEnvoyees = Omit<DonneesCompte, 'frigo'> & { frigo?: DonneesCompte['frigo'] };
+
 /** Messages d'erreur de Firebase, en clair. */
 const ERREURS: Record<string, string> = {
   'auth/invalid-email': "Cette adresse e-mail n'est pas valide.",
@@ -39,6 +53,8 @@ const ERREURS: Record<string, string> = {
   'auth/cancelled-popup-request': 'Connexion Google annulée.',
   'auth/requires-recent-login': 'Par sécurité, déconnecte-toi, reconnecte-toi puis réessaie.',
   'auth/unauthorized-domain': "Ce site n'est pas encore autorisé dans Firebase.",
+  'foyer/introuvable': "Cette invitation n'existe plus. Demande un nouveau lien.",
+  'permission-denied': 'Accès refusé par Firebase : les règles de la base ne sont pas à jour.',
 };
 
 export function messageErreur(erreur: unknown): string {
@@ -63,11 +79,13 @@ export class Compte {
   /** Vrai une fois qu'on sait si quelqu'un est connecté. */
   readonly pret = signal(!this.actif);
   readonly synchro = signal<EtatSynchro>('a-jour');
+  /** Foyer dont on partage le frigo, lu dans le document du compte. */
+  readonly foyerId = signal<string | null>(null);
 
-  private readonly donneesLocales = computed<DonneesCompte>(() => ({
+  private readonly donneesLocales = computed<DonneesEnvoyees>(() => ({
     favoris: this.favoris.etat(),
-    frigo: this.frigo.etat(),
     compteur: this.compteur.etat(),
+    ...(this.foyerId() ? {} : { frigo: this.frigo.etat() }),
   }));
 
   private firebase?: {
@@ -130,17 +148,28 @@ export class Compte {
       (instantane) => {
         // Nos propres envois reviennent ici avant d'être confirmés : on les ignore.
         if (instantane.metadata.hasPendingWrites) return;
-        const distant = instantane.data() as DonneesCompte | undefined;
+        const document = instantane.data() as DocumentCompte | undefined;
+        this.foyerId.set(document?.foyer ?? null);
+        const distant = document && this.extraire(document);
 
         if (!this.recu()) {
-          // Première réception : on réunit l'appareil et le compte, l'effet renverra le tout.
-          this.appliquer(
-            distant ? fusionner(this.donneesLocales(), distant) : this.donneesLocales(),
-          );
-          this.dernierEnvoi = distant ? JSON.stringify(distant) : '';
+          if (!distant) {
+            // Nouveau compte : l'effet y enverra les données de l'appareil.
+            this.dernierEnvoi = '';
+          } else if (lire(CLE_REUNI, '') === uid) {
+            this.dernierEnvoi = jsonStable(distant);
+            this.appliquer(distant);
+          } else {
+            // Première connexion sur cet appareil : on réunit, l'effet renverra le tout.
+            this.dernierEnvoi = jsonStable(distant);
+            this.appliquer(
+              fusionner(this.completer(this.donneesLocales()), this.completer(distant)),
+            );
+          }
+          ecrire(CLE_REUNI, uid);
           this.recu.set(true);
-        } else if (distant && JSON.stringify(distant) !== this.dernierEnvoi) {
-          this.dernierEnvoi = JSON.stringify(distant);
+        } else if (distant && jsonStable(distant) !== this.dernierEnvoi) {
+          this.dernierEnvoi = jsonStable(distant);
           this.appliquer(distant);
         }
         this.synchro.set('a-jour');
@@ -149,15 +178,31 @@ export class Compte {
     );
   }
 
-  private appliquer(donnees: DonneesCompte): void {
-    this.favoris.remplacer(donnees.favoris);
-    this.frigo.remplacer(donnees.frigo);
-    this.compteur.remplacer(donnees.compteur);
+  /** Les données du document, sans le frigo s'il est partagé dans un foyer. */
+  private extraire(document: DocumentCompte): DonneesEnvoyees {
+    const { favoris, compteur, frigo } = this.completer(document);
+    return { favoris, compteur, ...(document.foyer ? {} : { frigo }) };
   }
 
-  private envoyer(uid: string, donnees: DonneesCompte): void {
+  /** Remplit les champs absents, par exemple dans un compte créé avant un ajout. */
+  private completer(donnees: Partial<DonneesCompte>): DonneesCompte {
+    return {
+      favoris: donnees.favoris ?? { legumes: [], recettes: [] },
+      compteur: donnees.compteur ?? { restes: 0, recettes: 0, fois: {} },
+      frigo: donnees.frigo ?? [],
+    };
+  }
+
+  private appliquer(donnees: DonneesEnvoyees): void {
+    this.favoris.remplacer(donnees.favoris);
+    this.compteur.remplacer(donnees.compteur);
+    // Avec un foyer, le frigo vient du foyer.
+    if (donnees.frigo && !this.foyerId()) this.frigo.remplacer(donnees.frigo);
+  }
+
+  private envoyer(uid: string, donnees: DonneesEnvoyees): void {
     // Firestore refuse les champs « undefined » : le passage en JSON les retire.
-    const json = JSON.stringify(donnees);
+    const json = jsonStable(donnees);
     if (json === this.dernierEnvoi) return;
     clearTimeout(this.minuterie);
     this.synchro.set('en-cours');
@@ -165,7 +210,10 @@ export class Compte {
       const { store, db } = this.firebase!;
       try {
         this.dernierEnvoi = json;
-        await store.setDoc(store.doc(db, COLLECTION, uid), JSON.parse(json));
+        // Seuls les champs envoyés sont remplacés : le foyer et le frigo personnel restent.
+        await store.setDoc(store.doc(db, COLLECTION, uid), JSON.parse(json), {
+          mergeFields: Object.keys(donnees),
+        });
         this.synchro.set('a-jour');
       } catch {
         this.dernierEnvoi = '';
@@ -207,7 +255,22 @@ export class Compte {
   async deconnecter(): Promise<void> {
     const { auth, instanceAuth } = await this.charge();
     clearTimeout(this.minuterie);
+    // À la prochaine connexion, ce qui aura été fait entre-temps sera réuni avec le compte.
+    ecrire(CLE_REUNI, '');
     await auth.signOut(instanceAuth);
+  }
+
+  /** Enregistre dans le compte le foyer dont on partage le frigo (ou aucun). */
+  async definirFoyer(id: string | null): Promise<void> {
+    const { store, db } = await this.charge();
+    const uid = this.utilisateur()?.uid;
+    if (!uid) return;
+    await store.setDoc(
+      store.doc(db, COLLECTION, uid),
+      { foyer: id ?? store.deleteField() },
+      { merge: true },
+    );
+    this.foyerId.set(id);
   }
 
   /** Supprime les données du compte puis le compte ; l'appareil garde les siennes. */
@@ -227,6 +290,11 @@ export class Compte {
       this.ecouter(user.uid);
       throw erreur;
     }
+  }
+
+  /** Firebase, une fois chargé : pour le service du foyer. */
+  outils() {
+    return this.charge();
   }
 
   private async charge() {

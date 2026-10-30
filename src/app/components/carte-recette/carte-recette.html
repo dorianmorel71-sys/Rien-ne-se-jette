@@ -48,6 +48,7 @@
 
 @let fois = compteur.fois(r.nom);
 <div class="cuisine">
+  <button class="mode" type="button" (click)="enCuisine.set(true)">👩‍🍳 Mode cuisine</button>
   <button class="cuisinee" type="button" (click)="cuisiner()">
     {{ fois ? "+1 : je l'ai refaite" : "Je l'ai cuisinée" }}
   </button>
@@ -56,3 +57,7 @@
     <button class="annuler" type="button" (click)="compteur.annuler(r)">Annuler</button>
   }
 </div>
+
+@if (enCuisine()) {
+  <app-mode-cuisine [recette]="r" (cuisinee)="cuisiner()" (fermer)="enCuisine.set(false)" />
+}

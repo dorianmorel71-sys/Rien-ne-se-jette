@@ -3,6 +3,7 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { Compte } from './services/compte';
 import { Compteur } from './services/compteur';
 import { Favoris } from './services/favoris';
+import { Foyer } from './services/foyer';
 import { Frigo } from './services/frigo';
 import { Installation } from './services/installation';
 
@@ -18,6 +19,8 @@ export class App {
   protected readonly compteur = inject(Compteur);
   protected readonly frigo = inject(Frigo);
   protected readonly compte = inject(Compte);
+  // Démarré dès l'ouverture pour suivre le frigo partagé.
+  private readonly foyer = inject(Foyer);
   // Démarré dès l'ouverture pour ne pas rater la proposition d'installation du navigateur.
   protected readonly installation = inject(Installation);
 

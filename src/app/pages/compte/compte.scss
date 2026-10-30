@@ -279,6 +279,62 @@ button {
   text-decoration: none;
 }
 
+.invitation {
+  background: var(--mustard-soft);
+  color: var(--fg);
+}
+
+.foyer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 14px;
+  border-top: 1.5px dashed var(--line);
+
+  .sous-titre {
+    font-family: var(--f-display);
+    font-weight: 800;
+    font-size: 1.15rem;
+  }
+}
+
+.membres {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+
+  li {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 12px 4px 4px;
+    border-radius: 999px;
+    background: var(--bg);
+    font-weight: 700;
+    font-size: 0.92rem;
+  }
+
+  .pastille {
+    display: grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--mustard);
+    color: #2b1d14;
+    font-family: var(--f-display);
+    font-weight: 800;
+  }
+
+  .moi .pastille {
+    background: var(--accent);
+    color: var(--on-accent);
+  }
+}
+
 // Seulement sur ordinateur.
 .titre-espace {
   display: none;

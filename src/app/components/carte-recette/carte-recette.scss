@@ -116,6 +116,18 @@ app-alerte {
   gap: 10px;
 }
 
+.mode {
+  font: inherit;
+  font-weight: 700;
+  font-size: 0.9rem;
+  padding: 7px 16px;
+  border-radius: 999px;
+  border: 0;
+  background: var(--accent);
+  color: var(--on-accent);
+  cursor: pointer;
+}
+
 .cuisinee {
   font: inherit;
   font-weight: 700;

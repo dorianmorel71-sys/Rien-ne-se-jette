@@ -1,0 +1,75 @@
+:host {
+  display: block;
+  max-width: 520px;
+}
+
+.carte {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-top: 10px solid var(--mustard);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: clamp(20px, 5vw, 32px);
+
+  p {
+    margin: 0;
+  }
+}
+
+.emoji {
+  font-size: 3rem;
+  line-height: 1;
+}
+
+.grand {
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: 1.7rem;
+  line-height: 1.1;
+  color: var(--accent);
+}
+
+.note {
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.principal {
+  align-self: flex-start;
+  font: inherit;
+  font-weight: 700;
+  border: 0;
+  border-radius: 999px;
+  padding: 12px 22px;
+  background: var(--accent);
+  color: var(--on-accent);
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: 0 3px 0 rgba(120, 30, 10, 0.3);
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: wait;
+  }
+}
+
+.info,
+.erreur {
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 0.92rem;
+}
+
+.info {
+  background: var(--leaf-soft);
+  color: var(--leaf);
+}
+
+.erreur {
+  background: var(--berry-soft);
+  color: var(--berry);
+}

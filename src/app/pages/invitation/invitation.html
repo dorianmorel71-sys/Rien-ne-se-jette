@@ -1,0 +1,35 @@
+<div class="carte">
+  <p class="emoji" aria-hidden="true">🏠</p>
+  <p class="grand">On t'invite à partager un frigo</p>
+  <p>
+    Tout le monde dans le foyer voit les mêmes restes, peut en ajouter et les marquer comme
+    utilisés. Tes favoris et ton compteur restent à toi.
+  </p>
+
+  @if (!compte.actif) {
+    <p class="note">Les comptes ne sont pas activés sur cette version de l'appli.</p>
+  } @else if (!compte.pret()) {
+    <p class="note">Chargement…</p>
+  } @else if (!compte.utilisateur()) {
+    <p class="note">Il faut un compte pour rejoindre un foyer. L'invitation t'attendra.</p>
+    <a class="principal" routerLink="/compte">Me connecter ou créer un compte</a>
+  } @else if (foyer.id() === id()) {
+    <p class="info">Tu fais déjà partie de ce foyer.</p>
+    <a class="principal" routerLink="/frigo">Voir le frigo</a>
+  } @else {
+    @if (foyer.id()) {
+      <p class="note">
+        Tu partages déjà un frigo avec un autre foyer : tu vas le quitter pour rejoindre celui-ci.
+      </p>
+    } @else {
+      <p class="note">Ce qu'il y a déjà dans ton frigo sera ajouté au frigo commun.</p>
+    }
+    <button class="principal" type="button" [disabled]="occupe()" (click)="rejoindre()">
+      Rejoindre le frigo partagé
+    </button>
+  }
+
+  @if (erreur()) {
+    <p class="erreur" role="alert">{{ erreur() }}</p>
+  }
+</div>

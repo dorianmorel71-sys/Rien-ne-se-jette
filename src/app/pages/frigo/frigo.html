@@ -3,6 +3,19 @@
   avec.
 </p>
 
+@if (foyer.id()) {
+  <a class="partage" routerLink="/compte">
+    🏠
+    @if (foyer.autres().length) {
+      Frigo partagé avec <strong>{{ partageAvec() }}</strong>
+    } @else {
+      Frigo partagé : invite quelqu'un à le rejoindre
+    }
+  </a>
+} @else if (compte.utilisateur()) {
+  <a class="partage discret" routerLink="/compte">🏠 Partager ce frigo avec ton foyer →</a>
+}
+
 <div class="ajout">
   <input
     class="recherche"
@@ -12,7 +25,7 @@
     aria-label="Ajouter un reste"
     [value]="recherche()"
     (input)="recherche.set($any($event.target).value)"
-    (keydown.enter)="proposerLibre() && !suggestions().length && rangerLibre()"
+    (keydown.enter)="proposerLibre() && !resultats().length && rangerLibre()"
   />
 
   <div class="reglages">
@@ -64,19 +77,67 @@
 
   @if (recherche().trim()) {
     <div class="suggestions">
-      @for (i of suggestions(); track i.id) {
+      @for (i of resultats(); track i.id) {
         <button type="button" (click)="ranger(i.id)">+ {{ i.nom }}</button>
       }
       @if (proposerLibre()) {
         <button type="button" class="libre" (click)="rangerLibre()">
           + Ajouter « {{ recherche().trim() }} »
         </button>
-      } @else if (!suggestions().length) {
+      } @else if (!resultats().length) {
         <p class="vide">Déjà au frigo.</p>
       }
     </div>
   }
 </div>
+
+@if (suggestions().length) {
+  <section class="ce-soir">
+    <h4>🍳 Ce soir, je cuisine…</h4>
+    <p class="sous-titre">
+      Les recettes qui finissent le plus de restes, les plus urgents d'abord.
+    </p>
+    <ol class="idees">
+      @for (s of suggestions(); track s.recette.nom) {
+        @let ouverte = suggestionOuverte() === s.recette.nom;
+        <li>
+          <button
+            class="idee"
+            type="button"
+            [attr.aria-expanded]="ouverte"
+            (click)="basculerSuggestion(s.recette.nom)"
+          >
+            <span class="emoji" aria-hidden="true">{{ s.recette.emoji }}</span>
+            <span class="texte">
+              <strong>{{ s.recette.nom }}</strong>
+              <span class="detail">
+                {{ s.recette.temps }} · sauve
+                @for (r of s.sauves; track r.id; let dernier = $last) {
+                  <span [class.urgent]="r.joursRestants <= 1">{{
+                    r.ingredient.nom | lowercase
+                  }}</span
+                  >{{ dernier ? '' : ', ' }}
+                }
+              </span>
+              @if (s.placard.length) {
+                <span class="detail">
+                  + dans le placard :
+                  @for (i of s.placard; track i.id; let dernier = $last) {
+                    {{ i.nom | lowercase }}{{ dernier ? '' : ', ' }}
+                  }
+                </span>
+              }
+            </span>
+            <span class="chevron" aria-hidden="true"></span>
+          </button>
+          @if (ouverte) {
+            <app-carte-recette [recette]="s.recette" [ouverte]="true" [archivee]="true" />
+          }
+        </li>
+      }
+    </ol>
+  </section>
+}
 
 @if (frigo.nombre() === 0) {
   <div class="frigo-vide">

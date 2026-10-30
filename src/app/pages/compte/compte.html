@@ -72,6 +72,56 @@
           frigo
         </a>
       }
+      @if (foyer.invitation(); as invitation) {
+        @if (invitation !== foyer.id()) {
+          <a class="rappel invitation" [routerLink]="['/foyer', invitation]">
+            🏠 Tu as été invité à partager un frigo : voir l'invitation
+          </a>
+        }
+      }
+
+      <section class="foyer">
+        <p class="sous-titre">🏠 Frigo partagé</p>
+        @if (foyer.id()) {
+          <ul class="membres">
+            @for (m of foyer.membres(); track m.uid) {
+              <li [class.moi]="m.moi">
+                <span class="pastille" aria-hidden="true">{{ m.nom[0].toUpperCase() }}</span>
+                {{ m.moi ? 'Toi' : m.nom }}
+              </li>
+            }
+          </ul>
+          <p class="note">
+            @if (foyer.autres().length) {
+              Tout le monde voit et remplit le même frigo.
+            } @else {
+              Envoie le lien à ceux qui partagent ta cuisine : ils verront le même frigo que toi.
+            }
+          </p>
+          <div class="actions">
+            <button class="principal" type="button" (click)="inviter()">
+              {{ lienCopie() ? '✓ Lien copié !' : 'Inviter quelqu’un' }}
+            </button>
+            <button class="secondaire" type="button" [disabled]="occupe()" (click)="quitterFoyer()">
+              {{ confirmerDepart() ? 'Oui, quitter' : 'Quitter le foyer' }}
+            </button>
+          </div>
+          @if (confirmerDepart()) {
+            <p class="note">Tu gardes une copie du frigo, qui redevient le tien.</p>
+          }
+        } @else {
+          <p class="note">
+            Tu cuisines à plusieurs ? Partage ton frigo avec ton foyer : chacun voit les restes à
+            finir et peut en ajouter.
+          </p>
+          <div class="actions">
+            <button class="principal" type="button" [disabled]="occupe()" (click)="creerFoyer()">
+              Partager mon frigo
+            </button>
+          </div>
+        }
+      </section>
+
       <p class="note astuce-appareils">
         Connecte-toi avec le même compte sur ton téléphone et ton ordinateur pour tout retrouver.
       </p>

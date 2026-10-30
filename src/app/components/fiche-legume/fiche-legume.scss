@@ -1,25 +1,29 @@
+// --c : couleur du légume, passée par la page.
 :host {
   display: flex;
   flex-direction: column;
+  gap: 20px;
   background: var(--surface);
   border: 1px solid var(--line);
+  border-top: 10px solid var(--c, var(--accent));
   border-radius: var(--radius);
   box-shadow: var(--shadow);
-  padding: clamp(24px, 5vw, 40px);
-  gap: 24px;
+  padding: clamp(20px, 5vw, 32px);
   scroll-margin-top: 16px;
 }
 
 @media (prefers-reduced-motion: no-preference) {
   :host {
-    animation: apparition 0.25s ease-out;
+    animation: apparition 0.3s ease-out;
   }
 
   @keyframes apparition {
     from {
-      transform: translateY(6px);
+      opacity: 0;
+      transform: translateY(8px);
     }
     to {
+      opacity: 1;
       transform: none;
     }
   }
@@ -27,7 +31,7 @@
 
 .entete {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   justify-content: space-between;
   gap: 12px;
   flex-wrap: wrap;
@@ -35,39 +39,44 @@
 
 h2 {
   font-family: var(--f-display);
-  font-weight: 400;
-  font-size: clamp(2.2rem, 7vw, 3rem);
+  font-weight: 800;
+  font-size: clamp(2.2rem, 8vw, 3rem);
   margin: 0;
   line-height: 1;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
+  font-variation-settings: 'SOFT' 100;
 }
 
 .score {
-  font-size: 0.7rem;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--accent);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--leaf);
+  background: var(--leaf-soft);
+  padding: 5px 12px;
+  border-radius: 999px;
   font-variant-numeric: tabular-nums;
 }
 
 .intro {
-  margin: -12px 0 0;
+  margin: -6px 0 0;
   color: var(--muted);
+  font-size: 1.05rem;
   max-width: 56ch;
+}
+
+.parties {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .partie {
   display: grid;
-  grid-template-columns: 140px 1fr;
-  gap: 20px;
-  padding: 20px 0;
-  border-top: 1px solid var(--line);
-
-  &:first-child {
-    border-top: 0;
-    padding-top: 0;
-  }
+  grid-template-columns: 130px 1fr;
+  gap: 16px;
+  background: var(--bg);
+  border-radius: 14px;
+  padding: 14px 16px;
 
   @media (max-width: 480px) {
     grid-template-columns: 1fr;
@@ -76,14 +85,12 @@ h2 {
 }
 
 h3 {
-  font-family: var(--f-body);
-  font-weight: 500;
-  font-size: 0.72rem;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-style: italic;
+  font-size: 1.15rem;
   margin: 0;
-  padding-top: 4px;
-  color: var(--muted);
+  color: var(--accent);
 }
 
 ul {
@@ -92,26 +99,27 @@ ul {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 7px;
   min-width: 0;
 }
 
 li {
-  padding-left: 16px;
+  padding-left: 18px;
   position: relative;
 
   &::before {
     content: '';
     position: absolute;
     left: 0;
-    top: 0.8em;
+    top: 0.5em;
     width: 8px;
-    height: 1px;
-    background: var(--accent);
+    height: 8px;
+    border-radius: 50%;
+    background: var(--c, var(--leaf));
   }
 
   // Le <b> vient de [innerHTML] : il faut sortir de l'encapsulation pour le styler.
   ::ng-deep b {
-    font-weight: 600;
+    font-weight: 700;
   }
 }

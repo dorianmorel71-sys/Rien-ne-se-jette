@@ -24,7 +24,7 @@
   }
 </div>
 
-<app-fiche-legume [legume]="legume()" aria-live="polite" />
+<app-fiche-legume [legume]="legume()" [style.--c]="legume().couleur" aria-live="polite" />
 
 <div>
   <button class="hasard" type="button" (click)="auHasard()">Un légume au hasard</button>

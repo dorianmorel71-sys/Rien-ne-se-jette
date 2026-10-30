@@ -1,37 +1,47 @@
 // Couleurs et polices de l'appli, exposées en variables CSS.
 
 @mixin theme-sombre {
-  --bg: #121412;
-  --surface: #191c19;
-  --fg: #ecebe5;
-  --muted: #9b9d95;
-  --line: #2b2e2a;
-  --accent: #a8c5b0;
-  --accent-soft: #1f2a23;
-  --leaf: #a8c5b0;
-  --leaf-soft: #1f2a23;
-  --warn: #d9a85b;
-  --warn-soft: #2a2316;
-  --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px -12px rgba(0, 0, 0, 0.5);
+  --bg: #1f1611;
+  --surface: #2a1f18;
+  --fg: #f6eadb;
+  --muted: #c0a68f;
+  --line: #3d2e23;
+  --accent: #ff7a59;
+  --accent-soft: #4a2418;
+  --on-accent: #1f1611;
+  --leaf: #a6cf7a;
+  --leaf-soft: #2a3520;
+  --mustard: #f2b84b;
+  --mustard-soft: #3d2e14;
+  --berry: #f08aa8;
+  --berry-soft: #45202c;
+  --warn: #f2b84b;
+  --warn-soft: #3d2e14;
+  --shadow: 0 2px 0 rgba(0, 0, 0, 0.25), 0 14px 30px -18px rgba(0, 0, 0, 0.7);
   color-scheme: dark;
 }
 
 :root {
-  --bg: #f6f4ef;
-  --surface: #fdfcf9;
-  --fg: #1b1d1a;
-  --muted: #6b6d66;
-  --line: #e3e0d7;
-  --accent: #2f4b3c; // vert sauge foncé
-  --accent-soft: #e8ede7;
-  --leaf: #2f4b3c;
-  --leaf-soft: #e8ede7;
-  --warn: #8a5a12;
-  --warn-soft: #f5eddd;
-  --shadow: 0 1px 2px rgba(27, 29, 26, 0.04), 0 8px 24px -12px rgba(27, 29, 26, 0.12);
-  --f-display: 'Instrument Serif', 'Iowan Old Style', Georgia, serif;
-  --f-body: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --radius: 4px;
+  --bg: #fbf3e4; // crème
+  --surface: #fffaf2;
+  --fg: #2b1d14; // chocolat
+  --muted: #7a6352;
+  --line: #ecdcc3;
+  --accent: #d9482b; // tomate
+  --accent-soft: #fde2d6;
+  --on-accent: #fff;
+  --leaf: #4f7a2a; // herbes
+  --leaf-soft: #e4efd2;
+  --mustard: #c98a1b; // moutarde
+  --mustard-soft: #fbe8c4;
+  --berry: #b8325a; // betterave
+  --berry-soft: #f8dde5;
+  --warn: #a65d00;
+  --warn-soft: #fbe8c4;
+  --shadow: 0 2px 0 #f0e2cb, 0 14px 30px -18px rgba(120, 60, 20, 0.35);
+  --f-display: 'Fraunces', Georgia, serif;
+  --f-body: 'DM Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --radius: 20px;
   color-scheme: light;
 }
 

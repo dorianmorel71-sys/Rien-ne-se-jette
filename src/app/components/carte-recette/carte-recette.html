@@ -46,12 +46,13 @@
   }
 </details>
 
-@let cuisinee = compteur.estCuisinee(r.nom);
-<button
-  class="cuisinee"
-  type="button"
-  [attr.aria-pressed]="cuisinee"
-  (click)="compteur.basculer(r)"
->
-  {{ cuisinee ? '✓ Bravo, restes sauvés !' : "Je l'ai cuisinée" }}
-</button>
+@let fois = compteur.fois(r.nom);
+<div class="cuisine">
+  <button class="cuisinee" type="button" (click)="compteur.cuisiner(r)">
+    {{ fois ? "+1 : je l'ai refaite" : "Je l'ai cuisinée" }}
+  </button>
+  @if (fois) {
+    <span class="fois">✓ Cuisinée {{ fois }} fois</span>
+    <button class="annuler" type="button" (click)="compteur.annuler(r)">Annuler</button>
+  }
+</div>

@@ -13,16 +13,19 @@ const PLACARD = new Set(
 interface DonneesCompteur {
   restes: number;
   recettes: number;
+  /** Nombre de fois où chaque recette a été cuisinée. */
+  fois: Record<string, number>;
 }
 
 /** Compte les restes sauvés grâce aux recettes cuisinées, gardé dans le navigateur. */
 @Injectable({ providedIn: 'root' })
 export class Compteur {
-  private readonly donnees = signal<DonneesCompteur>(
-    lire<DonneesCompteur>(CLE, { restes: 0, recettes: 0 }),
-  );
-  /** Recettes cuisinées pendant cette visite, pour pouvoir annuler un clic. */
-  private readonly cuisinees = signal<ReadonlySet<string>>(new Set());
+  private readonly donnees = signal<DonneesCompteur>({
+    restes: 0,
+    recettes: 0,
+    fois: {},
+    ...lire<Partial<DonneesCompteur>>(CLE, {}),
+  });
 
   readonly restes = computed(() => this.donnees().restes);
   readonly recettes = computed(() => this.donnees().recettes);
@@ -31,24 +34,25 @@ export class Compteur {
     effect(() => ecrire(CLE, this.donnees()));
   }
 
-  estCuisinee(nom: string): boolean {
-    return this.cuisinees().has(nom);
+  fois(nom: string): number {
+    return this.donnees().fois[nom] ?? 0;
   }
 
-  basculer(recette: RecetteGeneree): void {
-    const restes = recette.ingredients.filter((i) => !PLACARD.has(i.id)).length;
-    const annule = this.estCuisinee(recette.nom);
-    const signe = annule ? -1 : 1;
+  cuisiner(recette: RecetteGeneree): void {
+    this.ajouter(recette, 1);
+  }
 
-    this.cuisinees.update((noms) => {
-      const suivant = new Set(noms);
-      if (annule) suivant.delete(recette.nom);
-      else suivant.add(recette.nom);
-      return suivant;
-    });
+  /** Annule le dernier « je l'ai cuisinée » de cette recette. */
+  annuler(recette: RecetteGeneree): void {
+    if (this.fois(recette.nom) > 0) this.ajouter(recette, -1);
+  }
+
+  private ajouter(recette: RecetteGeneree, sens: 1 | -1): void {
+    const restes = recette.ingredients.filter((i) => !PLACARD.has(i.id)).length;
     this.donnees.update((d) => ({
-      restes: Math.max(0, d.restes + signe * restes),
-      recettes: Math.max(0, d.recettes + signe),
+      restes: Math.max(0, d.restes + sens * restes),
+      recettes: Math.max(0, d.recettes + sens),
+      fois: { ...d.fois, [recette.nom]: Math.max(0, (d.fois[recette.nom] ?? 0) + sens) },
     }));
   }
 }

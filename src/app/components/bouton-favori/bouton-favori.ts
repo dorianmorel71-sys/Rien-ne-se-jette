@@ -1,43 +1,61 @@
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 
-/** Cœur pour ajouter ou retirer un favori. */
+/** Marque-page pour ajouter ou retirer un favori. */
 @Component({
   selector: 'app-bouton-favori',
   template: `
     <button
       type="button"
       [attr.aria-pressed]="actif()"
-      [attr.aria-label]="actif() ? 'Retirer des favoris' : 'Ajouter aux favoris'"
       [title]="actif() ? 'Retirer des favoris' : 'Ajouter aux favoris'"
       (click)="basculer.emit()"
     >
-      {{ actif() ? '♥' : '♡' }}
+      <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+        <path d="M6 3h12a1 1 0 0 1 1 1v17l-7-4.5L5 21V4a1 1 0 0 1 1-1z" />
+      </svg>
+      {{ actif() ? 'Gardé' : 'Garder' }}
     </button>
   `,
   styles: `
     button {
-      width: 38px;
-      height: 38px;
-      display: grid;
-      place-items: center;
-      font-size: 1.35rem;
-      line-height: 1;
-      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font: inherit;
+      font-size: 0.85rem;
+      font-weight: 700;
+      padding: 6px 13px 6px 10px;
+      border-radius: 999px;
       border: 1.5px solid var(--line);
       background: var(--surface);
-      color: var(--accent);
+      color: var(--muted);
       cursor: pointer;
+      white-space: nowrap;
       transition:
-        transform 0.15s,
-        background 0.2s;
+        border-color 0.2s,
+        background 0.2s,
+        color 0.2s;
+
+      svg {
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 2;
+        stroke-linejoin: round;
+      }
 
       &:hover {
-        transform: scale(1.08);
+        border-color: var(--mustard);
+        color: var(--fg);
       }
 
       &[aria-pressed='true'] {
-        background: var(--accent-soft);
-        border-color: var(--accent);
+        background: var(--mustard);
+        border-color: var(--mustard);
+        color: #2b1d14;
+
+        svg {
+          fill: currentColor;
+        }
       }
     }
   `,

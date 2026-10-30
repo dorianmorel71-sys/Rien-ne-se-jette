@@ -109,8 +109,14 @@ app-alerte {
   margin-top: 12px;
 }
 
+.cuisine {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
 .cuisinee {
-  align-self: flex-start;
   font: inherit;
   font-weight: 700;
   font-size: 0.9rem;
@@ -122,7 +128,33 @@ app-alerte {
   cursor: pointer;
   transition: background 0.2s;
 
-  &[aria-pressed='true'] {
+  &:hover {
     background: var(--leaf-soft);
   }
+
+  &:active {
+    transform: scale(0.97);
+  }
+}
+
+.fois {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--leaf);
+  background: var(--leaf-soft);
+  padding: 4px 11px;
+  border-radius: 999px;
+  font-variant-numeric: tabular-nums;
+}
+
+.annuler {
+  font: inherit;
+  font-size: 0.82rem;
+  background: none;
+  border: 0;
+  padding: 4px 0;
+  color: var(--muted);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
 }

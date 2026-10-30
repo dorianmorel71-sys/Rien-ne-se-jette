@@ -13,8 +13,10 @@ import {
 } from '@angular/core';
 import { INDISPENSABLES } from '../../data/ingredients';
 import { AlerteMinuteur } from '../alerte-minuteur/alerte-minuteur';
+import { RoueTemps } from '../roue-temps/roue-temps';
 import { RecetteGeneree } from '../../models/recette';
 import { Minuteurs } from '../../services/minuteurs';
+import { SONNERIES } from '../../utils/alarme';
 import { dureeDansEtape, formaterDuree } from '../../utils/duree';
 
 /** Verrou qui empêche l'écran de se mettre en veille (absent sur les vieux navigateurs). */
@@ -28,7 +30,7 @@ interface Verrou {
  */
 @Component({
   selector: 'app-mode-cuisine',
-  imports: [AlerteMinuteur],
+  imports: [AlerteMinuteur, RoueTemps],
   templateUrl: './mode-cuisine.html',
   styleUrl: './mode-cuisine.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -60,13 +62,10 @@ export class ModeCuisine {
   protected readonly reglage = signal(false);
   /** Durée réglée, en secondes. */
   protected readonly secondesReglees = signal(5 * 60);
-  protected readonly minutesReglage = computed(() => Math.floor(this.secondesReglees() / 60));
-  protected readonly secondesReglage = computed(() => this.secondesReglees() % 60);
+  /** Roues de réglage, ouvertes en touchant le temps. */
+  protected readonly roueOuverte = signal(false);
+  protected readonly sonneries = SONNERIES;
   protected readonly dureesRapides = [1, 3, 5, 10, 15, 20, 30, 45, 60];
-  protected readonly champsReglage = [
-    { nom: 'minutes' as const, pas: 60, plus: 'Une minute de plus', moins: 'Une minute de moins' },
-    { nom: 'secondes' as const, pas: 5, plus: '5 secondes de plus', moins: '5 secondes de moins' },
-  ];
   protected readonly formaterReglage = (secondes: number) => formaterDuree(secondes * 1000);
 
   private readonly dialogue = viewChild.required<ElementRef<HTMLDialogElement>>('dialogue');
@@ -107,24 +106,12 @@ export class ModeCuisine {
     this.minuteurs.lancer(`Étape ${this.ecran()}`, minutes);
   }
 
-  /** Ajoute ou retire des secondes, entre 0 et 3 h. */
-  protected ajusterReglage(secondes: number): void {
-    this.secondesReglees.update((s) => Math.min(3 * 3600, Math.max(0, s + secondes)));
-  }
-
-  /** Minutes ou secondes tapées au clavier. */
-  protected saisir(champ: 'minutes' | 'secondes', valeur: string): void {
-    const nombre = Math.max(0, Math.floor(Number(valeur) || 0));
-    const minutes = champ === 'minutes' ? Math.min(180, nombre) : this.minutesReglage();
-    const secondes = champ === 'secondes' ? Math.min(59, nombre) : this.secondesReglage();
-    this.secondesReglees.set(minutes * 60 + secondes);
-  }
-
   protected lancerReglage(): void {
     const secondes = this.secondesReglees();
     if (!secondes) return;
     this.minuteurs.lancer(`Minuteur ${this.formaterReglage(secondes)}`, secondes / 60);
     this.reglage.set(false);
+    this.roueOuverte.set(false);
   }
 
   protected suivant(): void {

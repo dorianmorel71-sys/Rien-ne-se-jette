@@ -1,0 +1,86 @@
+// Une ligne fait 44 px (comme HAUTEUR_LIGNE) ; on en voit 5, la choisie au centre.
+$ligne: 44px;
+$visible: $ligne * 5;
+// Deux lignes au-dessus et deux en dessous de la ligne choisie.
+$marge: $ligne * 2;
+
+.roues {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+  padding: 0 8px;
+  border-radius: 20px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+}
+
+.bande {
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  top: $marge;
+  height: $ligne;
+  border-radius: 12px;
+  background: var(--mustard-soft);
+  pointer-events: none;
+}
+
+.colonne {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.roue {
+  height: $visible;
+  width: 64px;
+  overflow-y: auto;
+  scroll-snap-type: y mandatory;
+  // Espace avant la première et après la dernière ligne, pour qu'elles viennent au centre.
+  padding-block: $marge;
+  scrollbar-width: none;
+  overscroll-behavior: contain;
+  // Les lignes s'estompent vers le haut et le bas, comme une roue qui tourne.
+  mask-image: linear-gradient(transparent, #000 35%, #000 65%, transparent);
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  &:focus-visible {
+    outline: 3px solid var(--mustard);
+    outline-offset: -3px;
+    border-radius: 12px;
+  }
+}
+
+.ligne {
+  height: $ligne;
+  display: grid;
+  place-items: center end;
+  padding-right: 6px;
+  scroll-snap-align: center;
+  font-size: 1.3rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--muted);
+  cursor: pointer;
+  user-select: none;
+  transition:
+    color 0.15s,
+    font-size 0.15s;
+
+  &.choisie {
+    color: var(--fg);
+    font-family: var(--f-display);
+    font-weight: 800;
+    font-size: 1.7rem;
+  }
+}
+
+.unite {
+  width: 34px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--fg);
+}

@@ -1,5 +1,8 @@
 import { computed, DestroyRef, inject, Injectable, signal } from '@angular/core';
-import { creerSonAlarme } from '../utils/alarme';
+import { creerSonAlarme, TypeSonnerie } from '../utils/alarme';
+import { ecrire, lire } from '../utils/stockage';
+
+const CLE_SONNERIE = 'rien-ne-se-jette.sonnerie';
 
 export interface Minuteur {
   id: number;
@@ -36,6 +39,8 @@ export class Minuteurs {
         .filter((m) => m.fin !== null)
         .sort((a, b) => a.fin! - b.fin!)[0],
   );
+  /** Sonnerie choisie, retenue sur l'appareil. */
+  readonly sonnerieChoisie = signal<TypeSonnerie>(lire<TypeSonnerie>(CLE_SONNERIE, 'carillon'));
   /** Vrai quand le mode cuisine est ouvert : il affiche lui-même les minuteurs. */
   readonly enCuisine = signal(false);
 
@@ -146,7 +151,7 @@ export class Minuteurs {
     const session = (navigator as { audioSession?: { type: string } }).audioSession;
     if (session) session.type = 'playback';
     if (!this.lecteur) {
-      this.lecteur = new Audio(URL.createObjectURL(creerSonAlarme()));
+      this.lecteur = new Audio(URL.createObjectURL(creerSonAlarme(this.sonnerieChoisie())));
       this.lecteur.loop = true;
       this.lecteur.preload = 'auto';
     }
@@ -178,6 +183,18 @@ export class Minuteurs {
   private taireSiFini(): void {
     if (this.sonnerie() || this.finTest) return;
     this.lecteur?.pause();
+  }
+
+  /** Change de sonnerie et la fait entendre. */
+  choisirSonnerie(type: TypeSonnerie): void {
+    this.sonnerieChoisie.set(type);
+    ecrire(CLE_SONNERIE, type);
+    if (this.lecteur) {
+      const ancien = this.lecteur.src;
+      this.lecteur.src = URL.createObjectURL(creerSonAlarme(type));
+      URL.revokeObjectURL(ancien);
+    }
+    this.testerSonnerie();
   }
 
   /** Fait entendre la sonnerie 3 secondes, pour régler le volume. */

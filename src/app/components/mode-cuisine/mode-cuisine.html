@@ -44,44 +44,18 @@
   @if (reglage()) {
     <section class="reglage" aria-label="Régler un minuteur">
       <p class="etiquette">Nouveau minuteur</p>
-      <div class="reglage-duree">
-        @for (champ of champsReglage; track champ.nom) {
-          <div class="champ-temps">
-            <button
-              type="button"
-              [attr.aria-label]="champ.plus"
-              (click)="ajusterReglage(champ.pas)"
-            >
-              +
-            </button>
-            <input
-              type="number"
-              inputmode="numeric"
-              min="0"
-              [max]="champ.nom === 'minutes' ? 180 : 59"
-              [attr.aria-label]="champ.nom"
-              [value]="
-                champ.nom === 'minutes'
-                  ? minutesReglage()
-                  : (secondesReglage() < 10 ? '0' : '') + secondesReglage()
-              "
-              (change)="saisir(champ.nom, $any($event.target).value)"
-              (focus)="$any($event.target).select()"
-            />
-            <span class="unite">{{ champ.nom === 'minutes' ? 'min' : 's' }}</span>
-            <button
-              type="button"
-              [attr.aria-label]="champ.moins"
-              (click)="ajusterReglage(-champ.pas)"
-            >
-              −
-            </button>
-          </div>
-          @if (champ.nom === 'minutes') {
-            <span class="deux-points" aria-hidden="true">:</span>
-          }
-        }
-      </div>
+      <button
+        class="temps-regle"
+        type="button"
+        [attr.aria-expanded]="roueOuverte()"
+        (click)="roueOuverte.set(!roueOuverte())"
+      >
+        {{ formaterReglage(secondesReglees()) }}
+        <span class="indice">{{ roueOuverte() ? 'OK' : 'Toucher pour régler' }}</span>
+      </button>
+      @if (roueOuverte()) {
+        <app-roue-temps [valeur]="secondesReglees()" (valeurChange)="secondesReglees.set($event)" />
+      }
       <div class="durees-rapides">
         @for (d of dureesRapides; track d) {
           <button
@@ -93,19 +67,27 @@
           </button>
         }
       </div>
-      <div class="boutons-reglage">
-        <button class="tester" type="button" (click)="minuteurs.testerSonnerie()">
-          🔔 Tester la sonnerie
-        </button>
-        <button
-          class="lancer"
-          type="button"
-          [disabled]="!secondesReglees()"
-          (click)="lancerReglage()"
-        >
-          Lancer {{ formaterReglage(secondesReglees()) }}
-        </button>
+      <div class="sonneries" role="radiogroup" aria-label="Sonnerie">
+        <span class="etiquette-sonnerie">🔔 Sonnerie</span>
+        @for (s of sonneries; track s.type) {
+          <button
+            type="button"
+            role="radio"
+            [attr.aria-checked]="minuteurs.sonnerieChoisie() === s.type"
+            (click)="minuteurs.choisirSonnerie(s.type)"
+          >
+            {{ s.nom }}
+          </button>
+        }
       </div>
+      <button
+        class="lancer"
+        type="button"
+        [disabled]="!secondesReglees()"
+        (click)="lancerReglage()"
+      >
+        Lancer {{ formaterReglage(secondesReglees()) }}
+      </button>
     </section>
   } @else {
     <main aria-live="polite">

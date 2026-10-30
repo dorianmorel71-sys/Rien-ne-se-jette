@@ -1,0 +1,27 @@
+<div class="roues">
+  <!-- Bande qui marque la ligne choisie, derrière les chiffres. -->
+  <div class="bande" aria-hidden="true"></div>
+  @for (colonne of colonnes; track colonne.nom; let i = $index) {
+    <div class="colonne">
+      <div
+        #roue
+        class="roue"
+        tabindex="0"
+        role="spinbutton"
+        [attr.aria-label]="colonne.nom"
+        [attr.aria-valuenow]="parties()[i]"
+        aria-valuemin="0"
+        [attr.aria-valuemax]="colonne.max"
+        (scroll)="defiler(i, roue)"
+        (keydown)="clavier(i, $event)"
+      >
+        @for (v of colonne.valeurs; track v) {
+          <div class="ligne" [class.choisie]="survolees()[i] === v" (click)="toucher(i, v, roue)">
+            {{ v }}
+          </div>
+        }
+      </div>
+      <span class="unite">{{ colonne.unite }}</span>
+    </div>
+  }
+</div>

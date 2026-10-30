@@ -13,6 +13,9 @@ import { normaliser } from '../../utils/texte';
 
 /** Nombre maximum de suggestions sous la recherche. */
 const SUGGESTIONS_MAX = 12;
+/** Recettes proposées pour ce soir : 3 visibles, jusqu'à 10 en tout. */
+const IDEES_VISIBLES = 3;
+const IDEES_MAX = 10;
 
 @Component({
   selector: 'app-frigo',
@@ -69,7 +72,18 @@ export class PageFrigo {
   });
 
   /** « Qu'est-ce que je cuisine ce soir ? » : les recettes qui sauvent le plus de restes urgents. */
-  protected readonly suggestions = computed(() => suggererRecettes(this.frigo.restes()));
+  protected readonly suggestions = computed(() => suggererRecettes(this.frigo.restes(), IDEES_MAX));
+  /** Les 3 premières ; les autres en touchant « Voir … autres idées ». */
+  protected readonly toutesIdees = signal(false);
+  protected readonly suggestionsVisibles = computed(() =>
+    this.toutesIdees() ? this.suggestions() : this.suggestions().slice(0, IDEES_VISIBLES),
+  );
+  /** Ce qu'on voit quand la liste est fermée : « Omelette, Gratin et 3 autres ». */
+  protected readonly apercuSuggestions = computed(() => {
+    const noms = this.suggestions().map((s) => s.recette.nom);
+    const autres = noms.length - 2;
+    return autres > 0 ? `${noms.slice(0, 2).join(', ')} et ${autres} autres` : noms.join(' et ');
+  });
   /** Suggestion dont on a déplié la recette. */
   protected readonly suggestionOuverte = signal<string | null>(null);
 

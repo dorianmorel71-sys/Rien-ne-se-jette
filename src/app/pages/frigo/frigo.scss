@@ -22,10 +22,21 @@
   gap: 10px;
 }
 
-.reglages {
+.panneau-ajout {
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px 18px;
+  flex-direction: column;
+  gap: 10px;
+  padding: 14px;
+  border-radius: 16px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+
+  .consigne {
+    margin: 4px 0 0;
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--muted);
+  }
 }
 
 .reglage {
@@ -42,14 +53,14 @@
   }
 
   button,
-  .calendrier {
+  .date {
     font: inherit;
     font-size: 0.88rem;
     font-weight: 700;
     padding: 5px 12px;
     border-radius: 999px;
     border: 1.5px solid var(--line);
-    background: var(--surface);
+    background: var(--bg);
     color: var(--fg);
     cursor: pointer;
 
@@ -66,17 +77,10 @@
     }
   }
 
-  // Le vrai champ date est invisible par-dessus l'icône : un clic ouvre le calendrier.
-  .calendrier {
-    position: relative;
-    overflow: hidden;
-
-    input {
-      position: absolute;
-      inset: 0;
-      opacity: 0;
-      cursor: pointer;
-    }
+  // Vrai champ date, visible : il ouvre le calendrier du téléphone partout.
+  .date {
+    min-height: 32px;
+    max-width: 150px;
   }
 }
 
@@ -339,21 +343,81 @@ details {
   }
 }
 
-// « Ce soir, je cuisine… »
+// « Ce soir, je cuisine… » : liste déroulante, fermée au départ.
 .ce-soir {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
   background: var(--mustard-soft);
   border-radius: var(--radius);
-  padding: 16px;
+  padding: 14px 16px;
 
-  h4 {
+  > summary {
+    list-style: none;
+    // Pas la couleur verte des « Comment le garder ».
     color: var(--fg);
+    font-weight: 400;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 2px 12px;
+    cursor: pointer;
+
+    &::-webkit-details-marker {
+      display: none;
+    }
+
+    &::after {
+      content: '';
+      grid-row: 1 / span 2;
+      grid-column: 2;
+      align-self: center;
+      width: 10px;
+      height: 10px;
+      border-right: 2.5px solid var(--mustard);
+      border-bottom: 2.5px solid var(--mustard);
+      transform: rotate(45deg) translate(-2px, -2px);
+      transition: transform 0.2s;
+    }
+  }
+
+  &[open] > summary::after {
+    transform: rotate(-135deg) translate(-2px, -2px);
+  }
+
+  &[open] > summary {
+    margin-bottom: 10px;
+  }
+
+  .titre-ce-soir {
+    font-family: var(--f-display);
+    font-size: 1.2rem;
+    font-weight: 800;
+  }
+
+  .apercu {
+    font-size: 0.88rem;
+    color: var(--muted);
   }
 
   .sous-titre {
-    margin: -6px 0 0;
+    margin: 0 0 10px;
     font-size: 0.9rem;
     color: var(--muted);
   }
+}
+
+.plus-idees {
+  align-self: flex-start;
+  margin-top: 10px;
+  font: inherit;
+  font-weight: 700;
+  font-size: 0.9rem;
+  padding: 7px 16px;
+  border-radius: 999px;
+  border: 1.5px solid var(--mustard);
+  background: var(--surface);
+  color: var(--fg);
+  cursor: pointer;
 }
 
 .idees {

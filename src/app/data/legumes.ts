@@ -6,6 +6,8 @@ export const LEGUMES: Legume[] = [
   {
     id: 'carotte',
     nom: 'Carotte',
+    saison: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+    compost: ['Fanes jaunies ou abîmées', 'Les légumes du bouillon, une fois filtrés'],
     emoji: '🥕',
     categorie: 'Légumes',
     conservation: [
@@ -38,6 +40,8 @@ export const LEGUMES: Legume[] = [
   {
     id: 'poireau',
     nom: 'Poireau',
+    saison: [1, 2, 3, 4, 9, 10, 11, 12],
+    compost: ['Racines si tu ne les cuisines pas', 'Les légumes du bouillon, une fois filtrés'],
     emoji: '🥬',
     categorie: 'Légumes',
     conservation: ['Vert : 5 jours au frigo, ou émincé et congelé cru'],
@@ -64,6 +68,8 @@ export const LEGUMES: Legume[] = [
   {
     id: 'brocoli',
     nom: 'Brocoli',
+    saison: [6, 7, 8, 9, 10, 11],
+    compost: ['Peau très fibreuse du tronc, après le bouillon'],
     emoji: '🥦',
     categorie: 'Légumes',
     conservation: [
@@ -90,6 +96,8 @@ export const LEGUMES: Legume[] = [
   {
     id: 'chou-fleur',
     nom: 'Chou-fleur',
+    saison: [1, 2, 3, 4, 9, 10, 11, 12],
+    compost: ['Feuilles abîmées'],
     emoji: '🥦',
     categorie: 'Légumes',
     conservation: ['Feuilles et trognon : 3 à 4 jours au frigo dans une boîte'],
@@ -115,6 +123,8 @@ export const LEGUMES: Legume[] = [
   {
     id: 'courgette',
     nom: 'Courgette',
+    saison: [6, 7, 8, 9],
+    compost: ['Bouts secs'],
     emoji: '🥒',
     categorie: 'Légumes',
     conservation: ["Épluchures : 2 jours au frigo, elles rendent vite de l'eau"],
@@ -140,6 +150,8 @@ export const LEGUMES: Legume[] = [
   {
     id: 'courge',
     nom: 'Courge / potimarron',
+    saison: [1, 2, 9, 10, 11, 12],
+    compost: ['Peau des courges dures si tu ne la rôtis pas'],
     emoji: '🎃',
     categorie: 'Légumes',
     conservation: [
@@ -172,6 +184,8 @@ export const LEGUMES: Legume[] = [
   {
     id: 'pomme-de-terre',
     nom: 'Pomme de terre',
+    saison: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+    compost: ['Germes et parties vertes : à ne pas manger, mais très bien au compost'],
     emoji: '🥔',
     categorie: 'Légumes',
     conservation: [
@@ -200,6 +214,8 @@ export const LEGUMES: Legume[] = [
   {
     id: 'oignon',
     nom: 'Oignon & échalote',
+    saison: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+    compost: ['Racines', 'Pelures après le bouillon'],
     emoji: '🧅',
     categorie: 'Herbes & aromates',
     conservation: ['Pelures : sèches, elles se gardent des semaines dans un sac'],
@@ -224,6 +240,8 @@ export const LEGUMES: Legume[] = [
   {
     id: 'betterave',
     nom: 'Betterave',
+    saison: [1, 2, 6, 7, 8, 9, 10, 11, 12],
+    compost: ['Bout de racine'],
     categorie: 'Légumes',
     conservation: [
       "Feuilles : coupe-les dès l'achat, 2 à 3 jours au frigo",
@@ -248,6 +266,8 @@ export const LEGUMES: Legume[] = [
   {
     id: 'radis',
     nom: 'Radis',
+    saison: [3, 4, 5, 6, 7, 8],
+    compost: ['Fanes jaunies'],
     categorie: 'Légumes',
     conservation: [
       'Fanes : à utiliser dans les 2 jours, elles fanent vite',
@@ -277,6 +297,8 @@ export const LEGUMES: Legume[] = [
   {
     id: 'celeri',
     nom: 'Céleri',
+    saison: [1, 2, 3, 9, 10, 11, 12],
+    compost: ['Base terreuse', 'Les légumes du bouillon, une fois filtrés'],
     emoji: '🥬',
     categorie: 'Légumes',
     conservation: [
@@ -302,6 +324,8 @@ export const LEGUMES: Legume[] = [
   {
     id: 'fenouil',
     nom: 'Fenouil',
+    saison: [6, 7, 8, 9, 10, 11],
+    compost: ['Tiges dures après le bouillon'],
     emoji: '🌿',
     categorie: 'Légumes',
     conservation: ["Plumet : 3 jours au frigo dans un verre d'eau, comme un bouquet"],
@@ -320,6 +344,8 @@ export const LEGUMES: Legume[] = [
   {
     id: 'petits-pois',
     nom: 'Petits pois',
+    saison: [5, 6, 7],
+    compost: ['Fibres des cosses filtrées du velouté'],
     emoji: '🫛',
     categorie: 'Légumes',
     conservation: ['Cosses : 2 jours au frigo, ou congelées pour un futur velouté'],
@@ -341,6 +367,8 @@ export const LEGUMES: Legume[] = [
   {
     id: 'asperge',
     nom: 'Asperge',
+    saison: [4, 5, 6],
+    compost: ['Fibres filtrées du velouté'],
     categorie: 'Légumes',
     conservation: ['Talons et épluchures : 2 jours au frigo, ou congelés'],
     restes: ['epl-asperge'],
@@ -358,6 +386,8 @@ export const LEGUMES: Legume[] = [
   {
     id: 'herbes',
     nom: 'Herbes fraîches',
+    saison: [4, 5, 6, 7, 8, 9, 10],
+    compost: ['Tiges dures (thym, romarin) après infusion'],
     emoji: '🌿',
     categorie: 'Herbes & aromates',
     conservation: [
@@ -382,6 +412,8 @@ export const LEGUMES: Legume[] = [
   {
     id: 'pomme',
     nom: 'Pomme',
+    saison: [1, 2, 3, 4, 9, 10, 11, 12],
+    compost: ['Pépins et queue'],
     emoji: '🍎',
     categorie: 'Fruits',
     conservation: ['Épluchures et trognons : 2 jours au frigo, ou congelés pour une gelée'],
@@ -410,6 +442,8 @@ export const LEGUMES: Legume[] = [
   {
     id: 'agrumes',
     nom: 'Citron & orange',
+    saison: [1, 2, 3, 11, 12],
+    compost: ['Écorces en petite quantité et coupées en morceaux : elles sont acides'],
     emoji: '🍋',
     categorie: 'Fruits',
     conservation: [
@@ -435,6 +469,8 @@ export const LEGUMES: Legume[] = [
   {
     id: 'tomate',
     nom: 'Tomate',
+    saison: [6, 7, 8, 9],
+    compost: ['Pédoncules', 'Feuilles et tiges du plant : elles ne se mangent pas'],
     emoji: '🍅',
     categorie: 'Légumes',
     conservation: [
@@ -457,6 +493,8 @@ export const LEGUMES: Legume[] = [
   {
     id: 'navet',
     nom: 'Navet',
+    saison: [1, 2, 3, 10, 11, 12],
+    compost: ['Bout de racine'],
     categorie: 'Légumes',
     conservation: ['Fanes : 2 jours au frigo dans un torchon humide'],
     restes: ['fanes-navet', 'epl-navet'],
@@ -484,6 +522,8 @@ export const LEGUMES: Legume[] = [
   {
     id: 'panais',
     nom: 'Panais',
+    saison: [1, 2, 3, 10, 11, 12],
+    compost: ['Bout de racine'],
     emoji: '🥕',
     categorie: 'Légumes',
     conservation: ['Épluchures : dans un sac au congélateur, à garder pour le prochain bouillon'],
@@ -508,6 +548,8 @@ export const LEGUMES: Legume[] = [
   {
     id: 'patate-douce',
     nom: 'Patate douce',
+    saison: [9, 10, 11, 12],
+    compost: ['Parties abîmées'],
     emoji: '🍠',
     categorie: 'Légumes',
     conservation: ['Restes cuits : 3 jours au frigo, ou en purée au congélateur'],
@@ -535,6 +577,8 @@ export const LEGUMES: Legume[] = [
   {
     id: 'topinambour',
     nom: 'Topinambour',
+    saison: [1, 2, 3, 10, 11, 12],
+    compost: ['Parties abîmées'],
     emoji: '🥔',
     categorie: 'Légumes',
     conservation: ['Topinambours : 1 semaine au frigo dans un sac en papier'],
@@ -556,6 +600,8 @@ export const LEGUMES: Legume[] = [
   {
     id: 'chou',
     nom: 'Chou',
+    saison: [1, 2, 3, 10, 11, 12],
+    compost: ['Feuilles très abîmées'],
     emoji: '🥬',
     categorie: 'Légumes',
     conservation: ['Chou entamé : 1 semaine au frigo, enveloppé', 'Trognon : 1 semaine au frigo'],
@@ -584,6 +630,8 @@ export const LEGUMES: Legume[] = [
   {
     id: 'chou-bruxelles',
     nom: 'Chou de Bruxelles',
+    saison: [1, 2, 10, 11, 12],
+    compost: ['Feuilles jaunies'],
     emoji: '🥬',
     categorie: 'Légumes',
     conservation: ['Feuilles : à cuisiner dans les 2 jours'],
@@ -608,6 +656,8 @@ export const LEGUMES: Legume[] = [
   {
     id: 'chou-rave',
     nom: 'Chou-rave',
+    saison: [6, 7, 8, 9, 10],
+    compost: ['Épluchures après le bouillon'],
     emoji: '🥬',
     categorie: 'Légumes',
     conservation: ["Feuilles : 2 jours au frigo, coupées dès l'achat"],
@@ -626,6 +676,8 @@ export const LEGUMES: Legume[] = [
   {
     id: 'kale',
     nom: 'Chou kale',
+    saison: [1, 2, 10, 11, 12],
+    compost: ['Nervures très dures'],
     emoji: '🥬',
     categorie: 'Légumes',
     conservation: [
@@ -653,6 +705,8 @@ export const LEGUMES: Legume[] = [
   {
     id: 'blettes',
     nom: 'Blettes',
+    saison: [6, 7, 8, 9, 10],
+    compost: ['Feuilles abîmées'],
     emoji: '🥬',
     categorie: 'Légumes',
     conservation: ['Côtes : 5 jours au frigo', 'Feuilles : 2 à 3 jours, elles fanent plus vite'],
@@ -678,6 +732,8 @@ export const LEGUMES: Legume[] = [
   {
     id: 'epinards',
     nom: 'Épinards',
+    saison: [3, 4, 5, 9, 10, 11],
+    compost: ['Feuilles gluantes ou abîmées'],
     emoji: '🥬',
     categorie: 'Légumes',
     conservation: [
@@ -709,6 +765,8 @@ export const LEGUMES: Legume[] = [
   {
     id: 'salade',
     nom: 'Salade',
+    saison: [4, 5, 6, 7, 8, 9, 10],
+    compost: ['Feuilles gluantes ou abîmées'],
     emoji: '🥗',
     categorie: 'Légumes',
     conservation: ['Salade lavée : 3 jours au frigo dans une boîte avec un papier absorbant'],
@@ -734,6 +792,8 @@ export const LEGUMES: Legume[] = [
   {
     id: 'endive',
     nom: 'Endive',
+    saison: [1, 2, 3, 4, 10, 11, 12],
+    compost: ['Feuilles brunes'],
     categorie: 'Légumes',
     conservation: ["Au frigo et à l'abri de la lumière : elle verdit et devient amère au jour"],
     restes: ['endives-molles'],
@@ -757,6 +817,8 @@ export const LEGUMES: Legume[] = [
   {
     id: 'concombre',
     nom: 'Concombre',
+    saison: [5, 6, 7, 8, 9],
+    compost: ['Bouts secs'],
     emoji: '🥒',
     categorie: 'Légumes',
     conservation: ['Concombre entamé : 3 jours au frigo, côté coupé couvert'],
@@ -785,6 +847,8 @@ export const LEGUMES: Legume[] = [
   {
     id: 'poivron',
     nom: 'Poivron',
+    saison: [7, 8, 9, 10],
+    compost: ['Pédoncule et graines'],
     emoji: '🫑',
     categorie: 'Légumes',
     conservation: ['Poivron entamé : 4 jours au frigo', 'Rôti et pelé : se congèle très bien'],
@@ -806,6 +870,8 @@ export const LEGUMES: Legume[] = [
   {
     id: 'aubergine',
     nom: 'Aubergine',
+    saison: [7, 8, 9],
+    compost: ['Pédoncule : il ne se mange pas et il pique'],
     emoji: '🍆',
     categorie: 'Légumes',
     conservation: ["Caviar d'aubergine : 3 jours au frigo"],
@@ -831,6 +897,8 @@ export const LEGUMES: Legume[] = [
   {
     id: 'haricots-verts',
     nom: 'Haricots verts',
+    saison: [6, 7, 8, 9],
+    compost: ['Fils'],
     emoji: '🫛',
     categorie: 'Légumes',
     conservation: ['Bouts : 2 jours au frigo, ou au sac à bouillon du congélateur'],
@@ -849,6 +917,8 @@ export const LEGUMES: Legume[] = [
   {
     id: 'feves',
     nom: 'Fèves',
+    saison: [5, 6, 7],
+    compost: ['Peaux dures des grosses fèves'],
     emoji: '🫛',
     categorie: 'Légumes',
     conservation: ['Cosses : à cuisiner dans les 2 jours'],
@@ -872,6 +942,8 @@ export const LEGUMES: Legume[] = [
   {
     id: 'champignons',
     nom: 'Champignons',
+    saison: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+    compost: ['Bout terreux du pied'],
     emoji: '🍄',
     categorie: 'Légumes',
     conservation: [
@@ -902,6 +974,8 @@ export const LEGUMES: Legume[] = [
   {
     id: 'artichaut',
     nom: 'Artichaut',
+    saison: [5, 6, 7, 8, 9],
+    compost: ['Foin du cœur et feuilles grattées'],
     categorie: 'Légumes',
     conservation: ['Artichaut cuit : 2 jours au frigo maximum'],
     couleur: '#6b8f5a',
@@ -918,6 +992,8 @@ export const LEGUMES: Legume[] = [
   {
     id: 'mais',
     nom: 'Maïs',
+    saison: [8, 9, 10],
+    compost: ['Épis, après le bouillon'],
     emoji: '🌽',
     categorie: 'Légumes',
     conservation: ['Épis égrenés : 2 jours au frigo, ou congelés pour un bouillon'],
@@ -937,6 +1013,8 @@ export const LEGUMES: Legume[] = [
   {
     id: 'legumineuses',
     nom: 'Pois chiches & haricots secs',
+    saison: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+    compost: ['Eau de trempage des légumes secs'],
     emoji: '🫘',
     categorie: 'Légumes',
     conservation: [
@@ -969,6 +1047,8 @@ export const LEGUMES: Legume[] = [
   {
     id: 'ail',
     nom: 'Ail',
+    saison: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+    compost: ['Peaux'],
     emoji: '🧄',
     categorie: 'Herbes & aromates',
     conservation: ["Gousses : au sec et à l'abri de la lumière, pas au frigo"],
@@ -989,6 +1069,7 @@ export const LEGUMES: Legume[] = [
   {
     id: 'gingembre',
     nom: 'Gingembre',
+    compost: ['Morceaux fibreux, après infusion'],
     emoji: '🫚',
     categorie: 'Herbes & aromates',
     conservation: [
@@ -1013,6 +1094,7 @@ export const LEGUMES: Legume[] = [
   {
     id: 'avocat',
     nom: 'Avocat',
+    compost: ['Noyau et peau, coupés en morceaux : ils se décomposent lentement'],
     emoji: '🥑',
     categorie: 'Fruits',
     conservation: ['Avocat entamé : 1 jour au frigo, avec le noyau et un filet de citron'],
@@ -1039,6 +1121,7 @@ export const LEGUMES: Legume[] = [
   {
     id: 'banane',
     nom: 'Banane',
+    compost: ['Peaux des bananes non bio'],
     emoji: '🍌',
     categorie: 'Fruits',
     conservation: [
@@ -1069,6 +1152,8 @@ export const LEGUMES: Legume[] = [
   {
     id: 'poire',
     nom: 'Poire',
+    saison: [1, 8, 9, 10, 11, 12],
+    compost: ['Pépins et queue'],
     emoji: '🍐',
     categorie: 'Fruits',
     conservation: ['Poires trop mûres : à cuisiner dans la journée', 'Compote : 5 jours au frigo'],
@@ -1091,6 +1176,8 @@ export const LEGUMES: Legume[] = [
   {
     id: 'fraise',
     nom: 'Fraise',
+    saison: [5, 6, 7],
+    compost: ['Fraises moisies'],
     emoji: '🍓',
     categorie: 'Fruits',
     conservation: [
@@ -1116,6 +1203,8 @@ export const LEGUMES: Legume[] = [
   {
     id: 'kiwi',
     nom: 'Kiwi',
+    saison: [1, 2, 3, 4, 11, 12],
+    compost: ['Bouts durs'],
     emoji: '🥝',
     categorie: 'Fruits',
     conservation: ['Kiwis mûrs : 1 semaine au frigo'],
@@ -1134,6 +1223,7 @@ export const LEGUMES: Legume[] = [
   {
     id: 'ananas',
     nom: 'Ananas',
+    compost: ['Couronne de feuilles, coupée, si tu ne la plantes pas'],
     emoji: '🍍',
     categorie: 'Fruits',
     conservation: ['Écorce : à utiliser dans les 2 jours', 'Ananas coupé : 3 jours au frigo'],
@@ -1159,6 +1249,7 @@ export const LEGUMES: Legume[] = [
   {
     id: 'mangue',
     nom: 'Mangue',
+    compost: ['Noyau et peau'],
     emoji: '🥭',
     categorie: 'Fruits',
     conservation: ['Mangue coupée : 2 jours au frigo, ou en dés au congélateur'],
@@ -1178,6 +1269,8 @@ export const LEGUMES: Legume[] = [
   {
     id: 'peche-abricot',
     nom: 'Pêche, abricot & prune',
+    saison: [6, 7, 8, 9],
+    compost: ['Noyaux : ils se décomposent très lentement, enterre-les ou jette-les'],
     emoji: '🍑',
     categorie: 'Fruits',
     conservation: [
@@ -1200,6 +1293,8 @@ export const LEGUMES: Legume[] = [
   {
     id: 'cerise',
     nom: 'Cerise',
+    saison: [5, 6, 7],
+    compost: ['Noyaux'],
     emoji: '🍒',
     categorie: 'Fruits',
     conservation: ['Queues : séchées, elles se gardent des mois dans un bocal'],
@@ -1216,6 +1311,8 @@ export const LEGUMES: Legume[] = [
   {
     id: 'raisin',
     nom: 'Raisin',
+    saison: [8, 9, 10],
+    compost: ['Rafles (les tiges de la grappe)'],
     emoji: '🍇',
     categorie: 'Fruits',
     conservation: ['Raisins : 1 semaine au frigo', 'Se congèlent tels quels'],
@@ -1237,6 +1334,8 @@ export const LEGUMES: Legume[] = [
   {
     id: 'pasteque',
     nom: 'Pastèque',
+    saison: [7, 8, 9],
+    compost: ['Peau verte dure'],
     emoji: '🍉',
     categorie: 'Fruits',
     conservation: [
@@ -1258,6 +1357,8 @@ export const LEGUMES: Legume[] = [
   {
     id: 'melon',
     nom: 'Melon',
+    saison: [6, 7, 8, 9],
+    compost: ['Peau'],
     emoji: '🍈',
     categorie: 'Fruits',
     conservation: ['Melon entamé : 3 jours au frigo, filmé (il parfume tout le frigo)'],
@@ -1279,6 +1380,8 @@ export const LEGUMES: Legume[] = [
   {
     id: 'rhubarbe',
     nom: 'Rhubarbe',
+    saison: [4, 5, 6],
+    compost: ['Feuilles : toxiques à manger, mais très bien au compost'],
     categorie: 'Fruits',
     conservation: ['Tiges : 1 semaine au frigo', 'Sirop : 2 semaines au frigo'],
     restes: ['epl-rhubarbe'],

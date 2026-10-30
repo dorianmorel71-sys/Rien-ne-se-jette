@@ -1,8 +1,9 @@
-import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
 import { Router } from '@angular/router';
 import { Legume } from '../../models/legume';
 import { Favoris } from '../../services/favoris';
 import { SelectionRestes } from '../../services/selection-restes';
+import { libelleSaison } from '../../utils/saison';
 import { Alerte } from '../alerte/alerte';
 import { BoutonFavori } from '../bouton-favori/bouton-favori';
 
@@ -20,6 +21,19 @@ export class FicheLegume {
   protected readonly favoris = inject(Favoris);
 
   readonly legume = input.required<Legume>();
+
+  private readonly moisCourant = new Date().getMonth() + 1;
+
+  protected readonly saison = computed(() => {
+    const mois = this.legume().saison;
+    if (!mois) return { badge: 'Importé', classe: 'importe', texte: 'Pas produit en France' };
+    const enCe = mois.includes(this.moisCourant);
+    return {
+      badge: enCe ? '☀️ De saison' : 'Hors saison',
+      classe: enCe ? 'oui' : 'non',
+      texte: libelleSaison(mois),
+    };
+  });
 
   /** Coche les restes de ce légume et ouvre les recettes correspondantes. */
   voirRecettes(): void {

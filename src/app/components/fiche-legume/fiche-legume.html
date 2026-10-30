@@ -16,6 +16,12 @@
 
 <p class="intro">{{ l.intro }}</p>
 
+@let s = saison();
+<p class="saison">
+  <span class="badge-saison" [class]="'badge-saison ' + s.classe">{{ s.badge }}</span>
+  📅 {{ s.texte }}
+</p>
+
 <div class="parties">
   @for (partie of l.parties; track partie.nom) {
     <div class="partie">
@@ -35,6 +41,17 @@
     <ul>
       @for (conseil of l.conservation; track conseil) {
         <li>{{ conseil }}</li>
+      }
+    </ul>
+  </div>
+}
+
+@if (l.compost?.length) {
+  <div class="compost">
+    <h3>♻️ Au compost</h3>
+    <ul>
+      @for (element of l.compost; track element) {
+        <li>{{ element }}</li>
       }
     </ul>
   </div>

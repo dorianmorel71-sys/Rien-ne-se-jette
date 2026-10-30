@@ -16,6 +16,10 @@ export interface Legume {
   emoji?: string;
   /** Ingrédients de « Mes restes » qui viennent de ce légume. */
   restes?: string[];
+  /** Mois (1 à 12) où on le trouve produit en France ; absent s'il est importé. */
+  saison?: number[];
+  /** Ce qui ne se cuisine pas et part au compost. */
+  compost?: string[];
   /** Comment garder les restes en attendant de les cuisiner. */
   conservation?: string[];
   /** Couleur de la pastille dans la liste. */

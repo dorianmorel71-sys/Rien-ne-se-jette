@@ -11,6 +11,8 @@ import {
 import { Router } from '@angular/router';
 import { FicheLegume } from '../../components/fiche-legume/fiche-legume';
 import { CATEGORIES_LEGUMES, LEGUMES } from '../../data/legumes';
+import { astuceDuJour } from '../../data/astuces';
+import { nomMois } from '../../utils/saison';
 import { normaliser } from '../../utils/texte';
 
 /** Largeur sous laquelle on fait défiler jusqu'à la fiche après un choix. */
@@ -30,11 +32,19 @@ export class ParLegume {
   readonly id = input<string>();
 
   readonly recherche = signal('');
+  readonly deSaison = signal(false);
+
+  private readonly moisCourant = new Date().getMonth() + 1;
+  protected readonly nomMoisCourant = nomMois(this.moisCourant);
+  protected readonly astuce = astuceDuJour();
 
   readonly legumesFiltres = computed(() => {
     const filtre = normaliser(this.recherche().trim());
+    const mois = this.moisCourant;
     return LEGUMES.filter(
-      (l) => !filtre || normaliser(l.nom).includes(filtre) || normaliser(l.id).includes(filtre),
+      (l) =>
+        (!filtre || normaliser(l.nom).includes(filtre) || normaliser(l.id).includes(filtre)) &&
+        (!this.deSaison() || !!l.saison?.includes(mois)),
     );
   });
 

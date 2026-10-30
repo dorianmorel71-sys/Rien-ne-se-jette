@@ -1,13 +1,41 @@
 <div class="wrap">
-  <header>
-    <h1>Rien ne se <span>jette</span></h1>
-    @if (compteur.recettes()) {
-      <p class="compteur" [title]="compteur.recettes() + ' recettes cuisinées'">
-        🌱 <strong>{{ compteur.restes() }}</strong>
-        {{ compteur.restes() > 1 ? 'restes sauvés' : 'reste sauvé' }}
-      </p>
-    }
-  </header>
+  <div class="cote">
+    <header>
+      <h1>Rien ne se <span>jette</span></h1>
+      @if (compteur.recettes()) {
+        <p class="compteur" [title]="compteur.recettes() + ' recettes cuisinées'">
+          🌱 <strong>{{ compteur.restes() }}</strong>
+          {{ compteur.restes() > 1 ? 'restes sauvés' : 'reste sauvé' }}
+        </p>
+      }
+    </header>
+
+    <nav class="menu" aria-label="Menu">
+      @for (lien of liens; track lien.chemin) {
+        <a [routerLink]="lien.chemin" routerLinkActive="actif" ariaCurrentWhenActive="page">
+          <span class="icone" aria-hidden="true">
+            {{ lien.icone }}
+            @switch (lien.chemin) {
+              @case ('/frigo') {
+                @if (frigo.urgents()) {
+                  <span class="compte urgent">{{ frigo.urgents() }}</span>
+                }
+              }
+              @case ('/favoris') {
+                @if (favoris.nombre()) {
+                  <span class="compte">{{ favoris.nombre() }}</span>
+                }
+              }
+            }
+          </span>
+          <span class="libelle">{{ lien.libelle }}</span>
+          @if (lien.chemin === '/frigo' && frigo.urgents()) {
+            <span class="visually-hidden">, {{ frigo.urgents() }} à finir vite</span>
+          }
+        </a>
+      }
+    </nav>
+  </div>
 
   <main>
     <router-outlet />
@@ -24,29 +52,3 @@
     </p>
   </footer>
 </div>
-
-<nav class="menu" aria-label="Menu">
-  @for (lien of liens; track lien.chemin) {
-    <a [routerLink]="lien.chemin" routerLinkActive="actif" ariaCurrentWhenActive="page">
-      <span class="icone" aria-hidden="true">
-        {{ lien.icone }}
-        @switch (lien.chemin) {
-          @case ('/frigo') {
-            @if (frigo.urgents()) {
-              <span class="compte urgent">{{ frigo.urgents() }}</span>
-            }
-          }
-          @case ('/favoris') {
-            @if (favoris.nombre()) {
-              <span class="compte">{{ favoris.nombre() }}</span>
-            }
-          }
-        }
-      </span>
-      {{ lien.libelle }}
-      @if (lien.chemin === '/frigo' && frigo.urgents()) {
-        <span class="visually-hidden">, {{ frigo.urgents() }} à finir vite</span>
-      }
-    </a>
-  }
-</nav>

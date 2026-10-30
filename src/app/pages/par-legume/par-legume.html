@@ -1,74 +1,78 @@
-<aside class="astuce">
-  <span class="ampoule" aria-hidden="true">💡</span>
-  <div>
-    <strong>Astuce du jour</strong>
-    <p>{{ astuce }}</p>
-  </div>
-</aside>
+<div class="choix">
+  <aside class="astuce">
+    <span class="ampoule" aria-hidden="true">💡</span>
+    <div>
+      <strong>Astuce du jour</strong>
+      <p>{{ astuce }}</p>
+    </div>
+  </aside>
 
-<input
-  class="recherche"
-  type="search"
-  placeholder="Tape un légume : carotte, poireau, courge…"
-  autocomplete="off"
-  aria-label="Rechercher un légume ou un fruit"
-  [value]="recherche()"
-  (input)="rechercher($any($event.target).value)"
-  (keydown.enter)="validerRecherche()"
-/>
+  <input
+    class="recherche"
+    type="search"
+    placeholder="Tape un légume : carotte, poireau, courge…"
+    autocomplete="off"
+    aria-label="Rechercher un légume ou un fruit"
+    [value]="recherche()"
+    (input)="rechercher($any($event.target).value)"
+    (keydown.enter)="validerRecherche()"
+  />
 
-<button
-  class="filtre-saison"
-  type="button"
-  [attr.aria-pressed]="deSaison()"
-  (click)="deSaison.set(!deSaison())"
->
-  ☀️ De saison en {{ nomMoisCourant }}
-</button>
+  <button
+    class="filtre-saison"
+    type="button"
+    [attr.aria-pressed]="deSaison()"
+    (click)="deSaison.set(!deSaison())"
+  >
+    ☀️ De saison en {{ nomMoisCourant }}
+  </button>
 
-<div class="groupes">
-  @for (groupe of groupes(); track groupe.titre) {
-    <details
-      class="famille"
-      [attr.data-famille]="groupe.titre"
-      [open]="toutOuvrir() || ouvertes().has(groupe.titre)"
-      (toggle)="replier(groupe.titre, $any($event.target).open)"
-    >
-      <summary>
-        <span class="titre">{{ groupe.titre }}</span>
-        <span class="nombre">{{ groupe.legumes.length }}</span>
-      </summary>
-      <div class="chips contenu">
-        @for (l of groupe.legumes; track l.id) {
-          <button
-            class="chip"
-            type="button"
-            [attr.aria-pressed]="l.id === legume().id"
-            (click)="choisir(l.id, true)"
-          >
-            @if (l.emoji) {
-              <span class="emoji" aria-hidden="true">{{ l.emoji }}</span>
-            } @else {
-              <i [style.background]="l.couleur"></i>
-            }
-            {{ l.nom }}
-          </button>
+  <div class="groupes">
+    @for (groupe of groupes(); track groupe.titre) {
+      <details
+        class="famille"
+        [attr.data-famille]="groupe.titre"
+        [open]="toutOuvrir() || ouvertes().has(groupe.titre)"
+        (toggle)="replier(groupe.titre, $any($event.target).open)"
+      >
+        <summary>
+          <span class="titre">{{ groupe.titre }}</span>
+          <span class="nombre">{{ groupe.legumes.length }}</span>
+        </summary>
+        <div class="chips contenu">
+          @for (l of groupe.legumes; track l.id) {
+            <button
+              class="chip"
+              type="button"
+              [attr.aria-pressed]="l.id === legume().id"
+              (click)="choisir(l.id, true)"
+            >
+              @if (l.emoji) {
+                <span class="emoji" aria-hidden="true">{{ l.emoji }}</span>
+              } @else {
+                <i [style.background]="l.couleur"></i>
+              }
+              {{ l.nom }}
+            </button>
+          }
+        </div>
+      </details>
+    } @empty {
+      <p class="vide">
+        @if (recherche()) {
+          Pas encore de fiche pour « {{ recherche() }} ». Essaie un autre légume.
+        } @else {
+          Rien de saison ne correspond.
         }
-      </div>
-    </details>
-  } @empty {
-    <p class="vide">
-      @if (recherche()) {
-        Pas encore de fiche pour « {{ recherche() }} ». Essaie un autre légume.
-      } @else {
-        Rien de saison ne correspond.
-      }
-    </p>
-  }
+      </p>
+    }
+  </div>
 </div>
 
-<app-fiche-legume [legume]="legume()" [style.--c]="legume().couleur" aria-live="polite" />
+<div class="cote-fiche">
+  <app-fiche-legume [legume]="legume()" [style.--c]="legume().couleur" aria-live="polite" />
 
-<div>
-  <button class="hasard" type="button" (click)="auHasard()">Un légume au hasard</button>
+  <div>
+    <button class="hasard" type="button" (click)="auHasard()">Un légume au hasard</button>
+  </div>
 </div>

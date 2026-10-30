@@ -1,3 +1,5 @@
+@use '../styles/ecran';
+
 // Hauteur de la barre de menu, pour que la fin de page ne passe pas dessous.
 $hauteur-menu: 64px;
 
@@ -153,5 +155,75 @@ footer {
     &:last-child {
       margin-bottom: 0;
     }
+  }
+}
+
+// ---------- Ordinateur : menu dans une colonne à gauche ----------
+@include ecran.ordi {
+  .wrap {
+    max-width: 1280px;
+    padding: 32px 32px 48px;
+    display: grid;
+    grid-template-columns: 230px minmax(0, 1fr);
+    grid-template-rows: auto 1fr;
+    column-gap: 40px;
+    row-gap: 32px;
+  }
+
+  .cote {
+    grid-row: 1 / span 2;
+    position: sticky;
+    top: 32px;
+    align-self: start;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+
+    h1 {
+      font-size: 2.6rem;
+    }
+  }
+
+  .menu {
+    position: static;
+    transform: none;
+    width: auto;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 8px;
+
+    a {
+      flex-direction: row;
+      justify-content: flex-start;
+      gap: 12px;
+      padding: 11px 14px;
+      border-radius: 14px;
+      font-size: 1rem;
+    }
+
+    .icone {
+      width: 28px;
+      text-align: center;
+    }
+
+    .compte {
+      right: -10px;
+    }
+  }
+
+  main {
+    grid-column: 2;
+  }
+
+  footer {
+    grid-column: 2;
+    margin-top: 0;
   }
 }

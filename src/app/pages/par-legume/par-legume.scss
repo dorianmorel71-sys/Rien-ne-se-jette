@@ -1,7 +1,30 @@
-:host {
+@use '../../../styles/ecran';
+
+:host,
+.choix,
+.cote-fiche {
   display: flex;
   flex-direction: column;
   gap: 20px;
+}
+
+// Sur ordinateur, la fiche reste visible à droite pendant qu'on parcourt la liste.
+@include ecran.ordi {
+  :host {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+    gap: 32px;
+    align-items: start;
+  }
+
+  .cote-fiche {
+    position: sticky;
+    top: 32px;
+    max-height: calc(100vh - 64px);
+    overflow-y: auto;
+    // Laisse respirer l'ombre de la fiche.
+    padding: 0 4px 8px;
+  }
 }
 
 .astuce {

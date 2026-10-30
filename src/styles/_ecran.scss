@@ -1,0 +1,6 @@
+// Mise en page « ordinateur » : menu sur le côté et pages sur deux colonnes.
+@mixin ordi {
+  @media (min-width: 1000px) {
+    @content;
+  }
+}

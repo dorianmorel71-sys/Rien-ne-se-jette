@@ -1,3 +1,5 @@
+@use '../../../styles/ecran';
+
 :host {
   display: flex;
   flex-direction: column;
@@ -191,5 +193,13 @@ details {
     background: none;
     border: 1.5px solid var(--line);
     color: var(--muted);
+  }
+}
+
+@include ecran.ordi {
+  .liste {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    align-items: start;
   }
 }

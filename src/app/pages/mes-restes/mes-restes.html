@@ -1,137 +1,141 @@
-@if (selection.estExemple()) {
-  <p class="note-exemple">
-    Exemple : quelques restes sont déjà cochés. Coche ce que tu as vraiment, placard compris.
+<div class="colonne-restes">
+  @if (selection.estExemple()) {
+    <p class="note-exemple">
+      Exemple : quelques restes sont déjà cochés. Coche ce que tu as vraiment, placard compris.
+    </p>
+  }
+
+  <input
+    class="recherche"
+    type="search"
+    placeholder="Cherche un reste : chou, pain, banane…"
+    autocomplete="off"
+    aria-label="Rechercher un reste"
+    [value]="recherche()"
+    (input)="recherche.set($any($event.target).value)"
+  />
+
+  <div class="groupes">
+    @for (groupe of groupes(); track groupe.titre) {
+      @let coches = nombreCoches(groupe.ingredients);
+      <details
+        class="famille"
+        [attr.data-groupe]="groupe.titre"
+        [open]="toutOuvrir() || ouvertes().has(groupe.titre)"
+        (toggle)="replier(groupe.titre, $any($event.target).open)"
+      >
+        <summary>
+          <span class="titre">{{ groupe.titre }}</span>
+          <span class="nombre">{{ groupe.ingredients.length }}</span>
+          @if (coches) {
+            <span class="coches">✓ {{ coches }}</span>
+          }
+        </summary>
+        <div class="restes contenu">
+          @for (ingredient of groupe.ingredients; track ingredient.id) {
+            <button
+              class="reste"
+              type="button"
+              [attr.aria-pressed]="selection.estCoche(ingredient.id)"
+              (click)="selection.basculer(ingredient.id)"
+            >
+              {{ ingredient.nom }}
+            </button>
+          }
+        </div>
+      </details>
+    } @empty {
+      <p class="vide">Rien ne correspond à « {{ recherche() }} ».</p>
+    }
+  </div>
+
+  <p class="indispensables">
+    Les recettes n'utilisent que ce que tu as coché, plus {{ indispensables }}.
   </p>
-}
 
-<input
-  class="recherche"
-  type="search"
-  placeholder="Cherche un reste : chou, pain, banane…"
-  autocomplete="off"
-  aria-label="Rechercher un reste"
-  [value]="recherche()"
-  (input)="recherche.set($any($event.target).value)"
-/>
-
-<div class="groupes">
-  @for (groupe of groupes(); track groupe.titre) {
-    @let coches = nombreCoches(groupe.ingredients);
-    <details
-      class="famille"
-      [attr.data-groupe]="groupe.titre"
-      [open]="toutOuvrir() || ouvertes().has(groupe.titre)"
-      (toggle)="replier(groupe.titre, $any($event.target).open)"
-    >
-      <summary>
-        <span class="titre">{{ groupe.titre }}</span>
-        <span class="nombre">{{ groupe.ingredients.length }}</span>
-        @if (coches) {
-          <span class="coches">✓ {{ coches }}</span>
+  @let nb = selection.nombre();
+  <div class="barre">
+    <span>
+      @switch (nb) {
+        @case (0) {
+          Rien de coché
         }
-      </summary>
-      <div class="restes contenu">
-        @for (ingredient of groupe.ingredients; track ingredient.id) {
+        @case (1) {
+          1 ingrédient coché
+        }
+        @default {
+          {{ nb }} ingrédients cochés
+        }
+      }
+    </span>
+    <div class="boutons">
+      @if (aRanger().length) {
+        <button class="frigo" type="button" (click)="mettreAuFrigo()">🧊 Mettre au frigo</button>
+      } @else if (rangesAuFrigo()) {
+        <a class="frigo" routerLink="/frigo">✓ Au frigo</a>
+      }
+      <button type="button" (click)="selection.toutDecocher()">Tout décocher</button>
+    </div>
+  </div>
+</div>
+
+<div class="colonne-recettes">
+  @if (nb > 0 && selection.recettes().length > 0) {
+    <div class="filtres" role="group" aria-label="Filtrer les recettes">
+      <div class="types">
+        @for (t of types; track t.libelle) {
           <button
-            class="reste"
             type="button"
-            [attr.aria-pressed]="selection.estCoche(ingredient.id)"
-            (click)="selection.basculer(ingredient.id)"
+            [attr.aria-pressed]="type() === t.valeur"
+            (click)="type.set(t.valeur)"
           >
-            {{ ingredient.nom }}
+            {{ t.libelle }}
           </button>
         }
       </div>
-    </details>
-  } @empty {
-    <p class="vide">Rien ne correspond à « {{ recherche() }} ».</p>
-  }
-</div>
-
-<p class="indispensables">
-  Les recettes n'utilisent que ce que tu as coché, plus {{ indispensables }}.
-</p>
-
-@let nb = selection.nombre();
-<div class="barre">
-  <span>
-    @switch (nb) {
-      @case (0) {
-        Rien de coché
-      }
-      @case (1) {
-        1 ingrédient coché
-      }
-      @default {
-        {{ nb }} ingrédients cochés
-      }
-    }
-  </span>
-  <div class="boutons">
-    @if (aRanger().length) {
-      <button class="frigo" type="button" (click)="mettreAuFrigo()">🧊 Mettre au frigo</button>
-    } @else if (rangesAuFrigo()) {
-      <a class="frigo" routerLink="/frigo">✓ Au frigo</a>
-    }
-    <button type="button" (click)="selection.toutDecocher()">Tout décocher</button>
-  </div>
-</div>
-
-@if (nb > 0 && selection.recettes().length > 0) {
-  <div class="filtres" role="group" aria-label="Filtrer les recettes">
-    <div class="types">
-      @for (t of types; track t.libelle) {
-        <button
-          type="button"
-          [attr.aria-pressed]="type() === t.valeur"
-          (click)="type.set(t.valeur)"
-        >
-          {{ t.libelle }}
-        </button>
-      }
+      <button
+        class="filtre"
+        type="button"
+        [attr.aria-pressed]="rapide()"
+        (click)="rapide.set(!rapide())"
+      >
+        ⚡ 20 min max
+      </button>
+      <button
+        class="filtre"
+        type="button"
+        [attr.aria-pressed]="sansFour()"
+        (click)="sansFour.set(!sansFour())"
+      >
+        Sans four
+      </button>
+      <button
+        class="filtre"
+        type="button"
+        [attr.aria-pressed]="vegetarien()"
+        (click)="vegetarien.set(!vegetarien())"
+      >
+        🌱 Végétarien
+      </button>
     </div>
-    <button
-      class="filtre"
-      type="button"
-      [attr.aria-pressed]="rapide()"
-      (click)="rapide.set(!rapide())"
-    >
-      ⚡ 20 min max
-    </button>
-    <button
-      class="filtre"
-      type="button"
-      [attr.aria-pressed]="sansFour()"
-      (click)="sansFour.set(!sansFour())"
-    >
-      Sans four
-    </button>
-    <button
-      class="filtre"
-      type="button"
-      [attr.aria-pressed]="vegetarien()"
-      (click)="vegetarien.set(!vegetarien())"
-    >
-      🌱 Végétarien
-    </button>
-  </div>
-}
+  }
 
-<div class="recettes" #recettes>
-  @if (nb === 0) {
-    <p class="vide">Coche ce que tu as pour voir les recettes possibles.</p>
-  } @else {
-    @for (recette of recettesFiltrees(); track recette.nom; let premiere = $first) {
-      <app-carte-recette [recette]="recette" [ouverte]="premiere" />
-    } @empty {
-      @if (selection.recettes().length) {
-        <p class="vide">Aucune recette avec ces filtres. Essaie d'en retirer un.</p>
-      } @else {
-        <p class="vide">
-          Pas de recette avec seulement ces ingrédients. Coche ce que tu as dans ton placard (œufs,
-          lait, oignon…) pour en débloquer.
-        </p>
+  <div class="recettes" #recettes>
+    @if (nb === 0) {
+      <p class="vide">Coche ce que tu as pour voir les recettes possibles.</p>
+    } @else {
+      @for (recette of recettesFiltrees(); track recette.nom; let premiere = $first) {
+        <app-carte-recette [recette]="recette" [ouverte]="premiere" />
+      } @empty {
+        @if (selection.recettes().length) {
+          <p class="vide">Aucune recette avec ces filtres. Essaie d'en retirer un.</p>
+        } @else {
+          <p class="vide">
+            Pas de recette avec seulement ces ingrédients. Coche ce que tu as dans ton placard
+            (œufs, lait, oignon…) pour en débloquer.
+          </p>
+        }
       }
     }
-  }
+  </div>
 </div>

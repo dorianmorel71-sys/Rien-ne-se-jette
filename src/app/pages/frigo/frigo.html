@@ -1,0 +1,83 @@
+<p class="intro">
+  Note ce que tu mets de côté : on te dit quoi finir en premier, et on trouve les recettes qui vont
+  avec.
+</p>
+
+<div class="ajout">
+  <input
+    class="recherche"
+    type="search"
+    placeholder="Ajoute un reste : fanes, riz, pain…"
+    autocomplete="off"
+    aria-label="Ajouter un reste au frigo"
+    [value]="recherche()"
+    (input)="recherche.set($any($event.target).value)"
+  />
+  @if (recherche().trim()) {
+    <div class="suggestions">
+      @for (i of suggestions(); track i.id) {
+        <button type="button" (click)="ranger(i.id)">+ {{ i.nom }}</button>
+      } @empty {
+        <p class="vide">Rien à ajouter pour « {{ recherche() }} ».</p>
+      }
+    </div>
+  }
+</div>
+
+@if (frigo.nombre() === 0) {
+  <div class="frigo-vide">
+    <p class="grand">🧊 Ton frigo est vide</p>
+    <p>
+      Cherche un reste ci-dessus, ou coche tes restes dans « Mes restes » puis touche « Mettre au
+      frigo ».
+    </p>
+  </div>
+} @else {
+  <ul class="liste">
+    @for (r of frigo.restes(); track r.ingredient.id) {
+      <li [attr.data-etat]="etat(r)">
+        <div class="ligne">
+          <div>
+            <p class="nom">{{ r.ingredient.nom }}</p>
+            <p class="dates">
+              Rangé
+              {{ r.depuis === frigo.jour() ? "aujourd'hui" : 'le ' + libelleDate(r.depuis) }} ·
+              jusqu'au {{ libelleDate(r.limite) }}
+            </p>
+          </div>
+          <span class="echeance">{{ echeance(r) }}</span>
+        </div>
+        @if (r.joursRestants < 0) {
+          <p class="passe">
+            Regarde, sens et goûte avant de l'utiliser. S'il a changé d'aspect, direction le
+            compost.
+          </p>
+        }
+        @if (r.conseils.length) {
+          <details>
+            <summary>Comment le garder</summary>
+            <ul>
+              @for (c of r.conseils; track c) {
+                <li>{{ c }}</li>
+              }
+            </ul>
+          </details>
+        }
+        <button class="retirer" type="button" (click)="frigo.retirer([r.ingredient.id])">
+          Utilisé ou jeté
+        </button>
+      </li>
+    }
+  </ul>
+
+  <div class="actions">
+    <button class="principal" type="button" (click)="voirRecettes()">
+      Voir les recettes avec mon frigo
+    </button>
+    <button class="secondaire" type="button" (click)="frigo.vider()">Vider le frigo</button>
+  </div>
+  <p class="note">
+    Les durées sont indicatives, pour des restes bien emballés au frigo. Quand tu cuisines une
+    recette, ses restes sortent du frigo tout seuls.
+  </p>
+}

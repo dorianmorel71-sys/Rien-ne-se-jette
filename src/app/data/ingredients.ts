@@ -195,6 +195,27 @@ export const GROUPES_INGREDIENTS: GroupeIngredients[] = [
         avecArticle: 'la croûte de parmesan',
       },
       { id: 'yaourt', nom: 'Yaourt à finir', avecArticle: 'le yaourt' },
+      { id: 'blancs-oeufs', nom: "Blancs d'œufs", avecArticle: "les blancs d'œufs" },
+      { id: 'jaunes-oeufs', nom: "Jaunes d'œufs", avecArticle: "les jaunes d'œufs" },
+      {
+        id: 'viande-cuite',
+        nom: 'Restes de viande cuite (rôti, pot-au-feu…)',
+        avecArticle: 'les restes de viande',
+      },
+      { id: 'poisson-cuit', nom: 'Restes de poisson cuit', avecArticle: 'les restes de poisson' },
+      { id: 'crepes', nom: 'Crêpes en trop', avecArticle: 'les crêpes' },
+      {
+        id: 'miettes-gateau',
+        nom: 'Gâteau sec ou biscuits cassés',
+        avecArticle: 'les miettes de gâteau',
+      },
+      {
+        id: 'fond-confiture',
+        nom: 'Fond de pot de confiture',
+        avecArticle: 'le fond de confiture',
+      },
+      { id: 'fond-vin', nom: 'Fond de bouteille de vin', avecArticle: 'le fond de vin' },
+      { id: 'cafe-froid', nom: 'Café refroidi', avecArticle: 'le café' },
     ],
   },
   {

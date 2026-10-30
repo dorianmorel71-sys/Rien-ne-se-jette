@@ -1,7 +1,7 @@
 import { Ingredient, ModeleRecette, RecetteGeneree } from '../models/recette';
 
 /** Restes qui rendent une recette non végétarienne. */
-const VIANDES = new Set(['poulet-cuit', 'jambon']);
+const VIANDES = new Set(['poulet-cuit', 'jambon', 'viande-cuite', 'poisson-cuit']);
 
 /** Durée totale en minutes : « 10 min + 1 h au four » → 70. */
 export function enMinutes(temps: string): number {

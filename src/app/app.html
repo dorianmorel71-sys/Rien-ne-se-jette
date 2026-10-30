@@ -17,6 +17,12 @@
   <nav class="onglets" aria-label="Modes">
     <a routerLink="/legume" routerLinkActive="actif" ariaCurrentWhenActive="page">Par légume</a>
     <a routerLink="/restes" routerLinkActive="actif" ariaCurrentWhenActive="page">Mes restes</a>
+    <a routerLink="/frigo" routerLinkActive="actif" ariaCurrentWhenActive="page">
+      Frigo
+      @if (frigo.urgents()) {
+        <span class="compte urgent" title="À finir vite">{{ frigo.urgents() }}</span>
+      }
+    </a>
     <a routerLink="/favoris" routerLinkActive="actif" ariaCurrentWhenActive="page">
       Favoris
       @if (favoris.nombre()) {

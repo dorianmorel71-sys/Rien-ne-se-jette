@@ -20,17 +20,19 @@ src/
 ├── styles/_tokens.scss      couleurs et polices (thème clair / sombre)
 └── app/
     ├── app.ts|html|scss     coquille : titre, onglets, pied de page
-    ├── app.routes.ts        #/legume/:id et #/restes
+    ├── app.routes.ts        #/legume/:id, #/restes, #/frigo et #/favoris
     ├── models/              interfaces Legume, Recette…
     ├── data/                fiches légumes, restes et recettes
     ├── services/            SelectionRestes (ingrédients cochés) + génération des recettes
     ├── pages/
     │   ├── par-legume/      recherche + fiche d'un légume
-    │   └── mes-restes/      restes à cocher + recettes
+    │   ├── mes-restes/      restes à cocher + recettes
+    │   ├── frigo/           restes mis de côté, les plus urgents d'abord
+    │   └── favoris/
     └── components/
         ├── fiche-legume/
         ├── carte-recette/
         └── alerte/          encadré « Attention »
 ```
 
-Pour ajouter un légume ou une recette, il suffit de compléter `src/app/data/legumes.ts` ou `src/app/data/recettes.ts` (les ingrédients à cocher sont dans `src/app/data/ingredients.ts`).
+Pour ajouter un légume ou une recette, il suffit de compléter `src/app/data/legumes.ts` ou `src/app/data/recettes.ts` (les ingrédients à cocher sont dans `src/app/data/ingredients.ts`, et leur durée au frigo dans `src/app/data/frigo.ts`).

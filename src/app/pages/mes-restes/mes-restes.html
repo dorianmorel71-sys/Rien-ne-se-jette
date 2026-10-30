@@ -55,7 +55,14 @@
       }
     }
   </span>
-  <button type="button" (click)="selection.toutDecocher()">Tout décocher</button>
+  <div class="boutons">
+    @if (aRanger().length) {
+      <button class="frigo" type="button" (click)="mettreAuFrigo()">🧊 Mettre au frigo</button>
+    } @else if (rangesAuFrigo()) {
+      <a class="frigo" routerLink="/frigo">✓ Au frigo</a>
+    }
+    <button type="button" (click)="selection.toutDecocher()">Tout décocher</button>
+  </div>
 </div>
 
 @if (nb > 0 && selection.recettes().length > 0) {

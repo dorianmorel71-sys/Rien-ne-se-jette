@@ -1,0 +1,195 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.intro,
+.note {
+  margin: 0;
+  color: var(--muted);
+}
+
+.note {
+  font-size: 0.88rem;
+}
+
+.ajout {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+
+  button {
+    font: inherit;
+    font-size: 0.92rem;
+    font-weight: 700;
+    padding: 6px 13px;
+    border-radius: 999px;
+    border: 1.5px solid var(--leaf);
+    background: var(--leaf-soft);
+    color: var(--fg);
+    cursor: pointer;
+  }
+
+  .vide {
+    margin: 0;
+    color: var(--muted);
+  }
+}
+
+.frigo-vide {
+  text-align: center;
+  background: var(--surface);
+  border: 2px dashed var(--line);
+  border-radius: var(--radius);
+  padding: 32px 20px;
+  color: var(--muted);
+
+  p {
+    margin: 0 auto;
+    max-width: 40ch;
+  }
+
+  .grand {
+    font-family: var(--f-display);
+    font-weight: 800;
+    font-size: 1.5rem;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+}
+
+.liste {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+// La couleur de la bordure dit l'urgence.
+.liste > li {
+  --c: var(--leaf);
+  --c-soft: var(--leaf-soft);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-left: 6px solid var(--c);
+  border-radius: 16px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  &[data-etat='bientot'] {
+    --c: var(--mustard);
+    --c-soft: var(--mustard-soft);
+  }
+  &[data-etat='urgent'] {
+    --c: var(--accent);
+    --c-soft: var(--accent-soft);
+  }
+  &[data-etat='passe'] {
+    --c: var(--berry);
+    --c-soft: var(--berry-soft);
+  }
+}
+
+.ligne {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.nom {
+  margin: 0;
+  font-weight: 700;
+}
+
+.dates {
+  margin: 2px 0 0;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.echeance {
+  flex-shrink: 0;
+  font-size: 0.82rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: var(--c-soft);
+  color: var(--c);
+  white-space: nowrap;
+}
+
+.passe {
+  margin: 0;
+  font-size: 0.88rem;
+}
+
+details {
+  font-size: 0.88rem;
+
+  summary {
+    cursor: pointer;
+    color: var(--leaf);
+    font-weight: 700;
+  }
+
+  ul {
+    margin: 6px 0 0;
+    padding-left: 18px;
+  }
+}
+
+.retirer {
+  align-self: flex-start;
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 700;
+  background: none;
+  border: 1.5px solid var(--line);
+  border-radius: 999px;
+  color: var(--muted);
+  cursor: pointer;
+  padding: 4px 12px;
+
+  &:hover {
+    border-color: var(--c);
+    color: var(--fg);
+  }
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+
+  button {
+    font: inherit;
+    font-weight: 700;
+    border-radius: 999px;
+    cursor: pointer;
+    padding: 10px 18px;
+  }
+
+  .principal {
+    border: 0;
+    background: var(--accent);
+    color: var(--on-accent);
+  }
+
+  .secondaire {
+    background: none;
+    border: 1.5px solid var(--line);
+    color: var(--muted);
+  }
+}

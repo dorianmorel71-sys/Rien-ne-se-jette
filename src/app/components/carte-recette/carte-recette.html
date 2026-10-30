@@ -48,7 +48,7 @@
 
 @let fois = compteur.fois(r.nom);
 <div class="cuisine">
-  <button class="cuisinee" type="button" (click)="compteur.cuisiner(r)">
+  <button class="cuisinee" type="button" (click)="cuisiner()">
     {{ fois ? "+1 : je l'ai refaite" : "Je l'ai cuisinée" }}
   </button>
   @if (fois) {

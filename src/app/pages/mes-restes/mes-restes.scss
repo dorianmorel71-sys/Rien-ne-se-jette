@@ -106,7 +106,14 @@ h4 {
   font-weight: 700;
   font-variant-numeric: tabular-nums;
 
-  button {
+  .boutons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  button,
+  a {
     font: inherit;
     font-weight: 700;
     font-size: 0.9rem;
@@ -116,6 +123,13 @@ h4 {
     color: var(--accent);
     cursor: pointer;
     padding: 5px 14px;
+    text-decoration: none;
+  }
+
+  .frigo {
+    border-color: var(--leaf);
+    background: var(--leaf-soft);
+    color: var(--leaf);
   }
 }
 

@@ -53,7 +53,7 @@ header {
 
 .onglets {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, auto);
   gap: 4px;
   background: var(--surface);
   border: 1px solid var(--line);
@@ -92,6 +92,22 @@ header {
       color: #2b1d14;
       font-size: 0.75rem;
       line-height: 1.4em;
+
+      &.urgent {
+        background: var(--berry);
+        color: #fff;
+      }
+    }
+  }
+
+  // Quatre onglets sur un petit écran : on resserre.
+  @media (max-width: 480px) {
+    gap: 2px;
+    padding: 4px;
+
+    a {
+      font-size: 0.86rem;
+      padding: 9px 4px;
     }
   }
 }

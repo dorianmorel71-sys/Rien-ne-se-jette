@@ -1,0 +1,454 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Rien ne se jette</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600&display=swap">
+<style>
+/* Layout: appli une colonne — recherche, rangée de légumes, fiche détaillée partie par partie */
+:root {
+  --bg: #f3f5ef;
+  --surface: #ffffff;
+  --fg: #1f2a22;
+  --muted: #5d6b60;
+  --line: #dde3d8;
+  --accent: #a3264f;      /* betterave */
+  --accent-soft: #f6e3ea;
+  --leaf: #3f7a3a;
+  --leaf-soft: #e3efdf;
+  --warn: #9a5a00;
+  --warn-soft: #fbf0dc;
+  --f-display: "Bricolage Grotesque", "Avenir Next", system-ui, sans-serif;
+  --f-body: "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #141a16; --surface: #1c241e; --fg: #e8eee6; --muted: #9caa9f; --line: #2c372f;
+  --accent: #e2668f; --accent-soft: #3a1f2a; --leaf: #8cc785; --leaf-soft: #20321f;
+  --warn: #f0b860; --warn-soft: #33270f; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #141a16; --surface: #1c241e; --fg: #e8eee6; --muted: #9caa9f; --line: #2c372f;
+  --accent: #e2668f; --accent-soft: #3a1f2a; --leaf: #8cc785; --leaf-soft: #20321f;
+  --warn: #f0b860; --warn-soft: #33270f; color-scheme: dark; }
+
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font-family: var(--f-body); font-size: 16px; line-height: 1.5; }
+.wrap { max-width: 720px; margin: 0 auto; padding-block: 24px 48px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  display: flex; flex-direction: column; gap: 20px; }
+
+header h1 { font-family: var(--f-display); font-weight: 800; font-size: clamp(2rem, 8vw, 2.8rem); line-height: 1; margin: 0; letter-spacing: -0.02em; text-wrap: balance; }
+header h1 span { color: var(--accent); }
+header p { margin: 8px 0 0; color: var(--muted); max-width: 52ch; }
+
+.search { position: relative; }
+.search input { width: 100%; font: inherit; font-size: 1.05rem; padding: 14px 16px; border-radius: 14px; border: 1.5px solid var(--line); background: var(--surface); color: var(--fg); }
+.search input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { font: inherit; font-weight: 600; font-size: .95rem; padding: 8px 14px; border-radius: 999px; border: 1.5px solid var(--line); background: var(--surface); color: var(--fg); cursor: pointer; display: inline-flex; align-items: center; gap: 8px; }
+.chip i { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+.chip:hover { border-color: var(--muted); }
+.chip[aria-pressed="true"] { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+.chip:focus-visible, button:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.empty { color: var(--muted); }
+
+.fiche { background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 22px 18px; display: flex; flex-direction: column; gap: 18px; }
+.fiche-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.fiche h2 { font-family: var(--f-display); font-weight: 700; font-size: 2rem; margin: 0; line-height: 1.05; }
+.score { font-size: .8rem; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: var(--leaf); background: var(--leaf-soft); padding: 5px 10px; border-radius: 999px; font-variant-numeric: tabular-nums; }
+.intro { margin: -8px 0 0; color: var(--muted); }
+
+.parts { display: flex; flex-direction: column; gap: 0; }
+.part { display: grid; grid-template-columns: 112px 1fr; gap: 14px; padding: 14px 0; border-top: 1px dashed var(--line); }
+.part:first-child { border-top: 0; padding-top: 0; }
+.part h3 { font-family: var(--f-display); font-weight: 700; font-size: 1.05rem; margin: 0; color: var(--accent); }
+.part ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.part li { padding-left: 16px; position: relative; }
+.part li::before { content: ""; position: absolute; left: 0; top: .62em; width: 7px; height: 7px; border-radius: 2px; background: var(--leaf); }
+.part li b { font-weight: 600; }
+@media (max-width: 480px) { .part { grid-template-columns: 1fr; gap: 6px; } }
+
+.warn { background: var(--warn-soft); color: var(--fg); border-radius: 12px; padding: 12px 14px; font-size: .95rem; }
+.warn strong { color: var(--warn); text-transform: uppercase; font-size: .78rem; letter-spacing: .06em; display: block; margin-bottom: 2px; }
+
+.nav { display: flex; gap: 10px; flex-wrap: wrap; }
+.nav button { font: inherit; font-weight: 600; padding: 10px 14px; border-radius: 12px; border: 1.5px solid var(--line); background: transparent; color: var(--fg); cursor: pointer; }
+.nav button.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+.tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; background: var(--line); padding: 4px; border-radius: 14px; }
+.tabs button { font: inherit; font-weight: 600; padding: 10px 8px; border: 0; border-radius: 11px; background: transparent; color: var(--muted); cursor: pointer; }
+.tabs button[aria-selected="true"] { background: var(--surface); color: var(--fg); box-shadow: 0 1px 2px rgba(0,0,0,.08); }
+.vue { display: flex; flex-direction: column; gap: 20px; }
+
+.groupe h4 { font-size: .78rem; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); margin: 0 0 8px; font-weight: 600; }
+.groupes { display: flex; flex-direction: column; gap: 14px; }
+.reste { font: inherit; font-size: .93rem; font-weight: 500; padding: 7px 12px; border-radius: 10px; border: 1.5px solid var(--line); background: var(--surface); color: var(--fg); cursor: pointer; }
+.reste[aria-pressed="true"] { background: var(--leaf-soft); border-color: var(--leaf); color: var(--fg); font-weight: 600; }
+.reste[aria-pressed="true"]::before { content: "✓ "; color: var(--leaf); }
+.barre { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; font-size: .93rem; color: var(--muted); }
+.barre button { font: inherit; font-weight: 600; background: none; border: 0; color: var(--accent); cursor: pointer; padding: 4px 0; }
+.note-ex { background: var(--accent-soft); border-radius: 10px; padding: 8px 12px; font-size: .9rem; }
+
+.recettes { display: flex; flex-direction: column; gap: 14px; }
+.recette { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 18px; display: flex; flex-direction: column; gap: 10px; }
+.recette-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.recette h3 { font-family: var(--f-display); font-weight: 700; font-size: 1.35rem; margin: 0; line-height: 1.1; }
+.match { font-size: .8rem; font-weight: 600; color: var(--leaf); background: var(--leaf-soft); padding: 4px 10px; border-radius: 999px; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.meta { font-size: .88rem; color: var(--muted); margin: 0; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.tag { font-size: .82rem; padding: 3px 9px; border-radius: 999px; border: 1px solid var(--line); color: var(--muted); }
+.tag.ok { border-color: var(--leaf); color: var(--leaf); background: var(--leaf-soft); font-weight: 600; }
+.recette ol { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 4px; }
+.recette details summary { cursor: pointer; font-weight: 600; color: var(--accent); }
+.recette details[open] summary { margin-bottom: 8px; }
+
+footer { color: var(--muted); font-size: .88rem; border-top: 1px solid var(--line); padding-top: 14px; }
+footer p { margin: 0 0 6px; max-width: 65ch; }
+@media (prefers-reduced-motion: no-preference) { .fiche { animation: in .25s ease-out; } @keyframes in { from { transform: translateY(6px); } to { transform: none; } } }
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>Rien ne se <span>jette</span></h1>
+    <p>Choisis un légume ou un fruit : on te dit quoi faire des épluchures, des fanes, du trognon et des graines.</p>
+  </header>
+
+  <div class="tabs" role="tablist">
+    <button id="tab-legume" role="tab" type="button" aria-selected="true">Par légume</button>
+    <button id="tab-restes" role="tab" type="button" aria-selected="false">Mes restes</button>
+  </div>
+
+  <section class="vue" id="vue-restes" hidden>
+    <p class="note-ex" id="note-ex">Exemple : quelques restes sont déjà cochés. Coche ce qu'il te reste vraiment.</p>
+    <div class="groupes" id="groupes"></div>
+    <div class="barre"><span id="compte"></span><button id="vider" type="button">Tout décocher</button></div>
+    <div class="recettes" id="recettes"></div>
+  </section>
+
+  <section class="vue" id="vue-legume">
+  <div class="search">
+    <label for="q" class="sr" hidden>Rechercher un légume</label>
+    <input id="q" type="search" placeholder="Tape un légume : carotte, poireau, courge…" autocomplete="off" aria-label="Rechercher un légume ou un fruit">
+  </div>
+
+  <div class="chips" id="chips" role="list"></div>
+
+  <article class="fiche" id="fiche" aria-live="polite"></article>
+
+  <div class="nav">
+    <button id="hasard" class="primary" type="button">Un légume au hasard</button>
+  </div>
+  </section>
+
+  <footer>
+    <p>Avant de cuisiner une peau ou des fanes, lave-les bien à l'eau. Privilégie le bio pour les épluchures, car les traitements se concentrent en surface.</p>
+    <p>Ces idées sont des conseils de cuisine courants. En cas de doute sur une partie d'une plante, ne la mange pas.</p>
+  </footer>
+</div>
+
+<script>
+const DATA = [
+  { id:"carotte", nom:"Carotte", c:"#e07a1f", score:"3 parties sur 3",
+    intro:"Presque tout se mange dans la carotte, y compris les fanes.",
+    parts:[
+      { p:"Fanes", u:["<b>Pesto</b> : mixées avec ail, huile, parmesan et noix","Hachées dans un taboulé ou une omelette","Dans une soupe, comme du persil"] },
+      { p:"Épluchures", u:["<b>Chips</b> au four : huile, sel, 15 min à 180 °C","Dans un bouillon de légumes maison"] },
+      { p:"Bout du dessus", u:["Posé dans une coupelle d'eau, il refait des fanes"] }
+    ]},
+  { id:"poireau", nom:"Poireau", c:"#5c9a3c", score:"3 parties sur 3",
+    intro:"Le vert du poireau a plus de goût que le blanc, il faut juste le cuire plus longtemps.",
+    parts:[
+      { p:"Vert", u:["<b>Fondue de poireaux</b> : émincé fin, cuit doucement au beurre 20 min","Dans une soupe ou une quiche","Coupé en lanières pour un bouillon"] },
+      { p:"Racines", u:["Bien lavées, frites en <b>tempura</b> ou à la poêle : très croustillant"] },
+      { p:"Feuilles abîmées", u:["Dans le bouillon, puis au compost"] }
+    ]},
+  { id:"brocoli", nom:"Brocoli", c:"#2f7d4f", score:"3 parties sur 3",
+    intro:"Le tronc est souvent jeté alors qu'il est tendre une fois épluché.",
+    parts:[
+      { p:"Tronc", u:["Épluché et coupé en bâtonnets : <b>sauté à la poêle</b> ou en wok","Râpé cru en salade, comme du chou-rave","Mixé dans une soupe ou un velouté"] },
+      { p:"Feuilles", u:["Cuites comme des épinards, ou en chips au four"] },
+      { p:"Peau du tronc", u:["Dans le bouillon de légumes"] }
+    ]},
+  { id:"chou-fleur", nom:"Chou-fleur", c:"#c9b98a", score:"3 parties sur 3",
+    intro:"Les feuilles vertes rôties au four ont un goût proche des chips de chou kale.",
+    parts:[
+      { p:"Feuilles", u:["<b>Rôties</b> au four avec huile et sel, 15 min à 200 °C","Dans une soupe ou un gratin"] },
+      { p:"Trognon", u:["Coupé fin et cuit avec le reste","Râpé cru en salade"] },
+      { p:"Miettes", u:["Les petits bouts qui tombent : en « riz » de chou-fleur à la poêle"] }
+    ]},
+  { id:"courgette", nom:"Courgette", c:"#4f8a2a", score:"2 parties sur 2",
+    intro:"La peau se mange déjà, mais si la recette demande de l'éplucher, garde-la.",
+    parts:[
+      { p:"Épluchures", u:["<b>Pesto</b> d'épluchures","Tagliatelles de peau sautées à l'ail","Dans une omelette ou un cake salé"] },
+      { p:"Cœur à graines", u:["Sur les grosses courgettes : dans une soupe ou un velouté"] }
+    ]},
+  { id:"courge", nom:"Courge / potimarron", c:"#d9631e", score:"3 parties sur 3",
+    intro:"Les graines grillées font un snack parfait pour l'apéro.",
+    parts:[
+      { p:"Graines", u:["<b>Grillées</b> : rincées, séchées, huile et sel, 15–20 min à 170 °C","En topping sur une soupe ou une salade"] },
+      { p:"Peau", u:["Potimarron : la peau se mange, ne l'épluche pas","Butternut : la peau se mange rôtie au four"] },
+      { p:"Filaments", u:["Dans le bouillon ou la soupe"] }
+    ],
+    warn:"Une courge au goût très amer ne se mange pas, même cuite. Jette-la entière." },
+  { id:"pomme-de-terre", nom:"Pomme de terre", c:"#b58a4c", score:"1 partie",
+    intro:"Les épluchures font de vraies chips, à condition de bien les choisir.",
+    parts:[
+      { p:"Épluchures", u:["<b>Chips</b> au four : huile, sel, paprika, 15 min à 200 °C","À la friteuse à air, 8–10 min"] },
+      { p:"Eau de cuisson", u:["Pour arroser les plantes une fois refroidie (sans sel)"] }
+    ],
+    warn:"Ne mange jamais les parties vertes ni les germes : retire-les et jette-les." },
+  { id:"oignon", nom:"Oignon & ail", c:"#a8743f", score:"2 parties",
+    intro:"Les pelures donnent du goût et une belle couleur dorée aux bouillons.",
+    parts:[
+      { p:"Pelures", u:["Dans un <b>bouillon</b> : couleur et goût, puis retire-les","Pour teindre des œufs de Pâques"] },
+      { p:"Tiges vertes", u:["Si l'oignon ou l'ail a germé : les pousses se mangent comme de la ciboulette"] }
+    ]},
+  { id:"betterave", nom:"Betterave", c:"#8e1f45", score:"3 parties sur 3",
+    intro:"Les feuilles de betterave se cuisinent comme des blettes.",
+    parts:[
+      { p:"Feuilles", u:["<b>Sautées</b> à l'ail comme des épinards","En gratin ou dans une quiche"] },
+      { p:"Tiges", u:["Coupées en tronçons et sautées, ou en pickles au vinaigre"] },
+      { p:"Peau", u:["Chips au four, ou dans le bouillon pour la couleur"] }
+    ]},
+  { id:"radis", nom:"Radis", c:"#d0315a", score:"2 parties sur 2",
+    intro:"Les fanes de radis font une soupe vraiment bonne.",
+    parts:[
+      { p:"Fanes", u:["<b>Soupe de fanes</b> : avec une pomme de terre, mixée","Pesto, ou hachées dans une omelette"] },
+      { p:"Radis ramollis", u:["5 min dans l'eau glacée, ils redeviennent croquants","Rôtis au four ou poêlés au beurre"] }
+    ]},
+  { id:"celeri", nom:"Céleri", c:"#7fae4d", score:"3 parties",
+    intro:"Les feuilles de céleri s'utilisent comme une herbe aromatique.",
+    parts:[
+      { p:"Feuilles", u:["Hachées comme du <b>persil</b>","Séchées au four doux pour faire un sel au céleri"] },
+      { p:"Base et bouts", u:["Dans le bouillon de légumes"] },
+      { p:"Épluchures (céleri-rave)", u:["Chips au four, ou dans le bouillon"] }
+    ]},
+  { id:"fenouil", nom:"Fenouil", c:"#9cc26a", score:"2 parties",
+    intro:"Les petites feuilles vertes ont un goût anisé très fin.",
+    parts:[
+      { p:"Plumet vert", u:["Haché sur un poisson, une salade ou des pâtes","Dans une vinaigrette"] },
+      { p:"Tiges", u:["Dans le bouillon ou une soupe de poisson"] }
+    ]},
+  { id:"petits-pois", nom:"Petits pois", c:"#6fae3a", score:"1 partie",
+    intro:"Les cosses donnent un velouté doux et bien vert.",
+    parts:[
+      { p:"Cosses", u:["<b>Velouté de cosses</b> : cuites 20 min avec un oignon, mixées puis passées au chinois"] }
+    ],
+    warn:"Retire la membrane dure à l'intérieur ou passe le velouté au tamis : elle est trop fibreuse." },
+  { id:"asperge", nom:"Asperge", c:"#8aa04a", score:"2 parties",
+    intro:"Les bouts durs et les épluchures parfument une soupe.",
+    parts:[
+      { p:"Talons durs", u:["<b>Velouté</b> : cuits longtemps, mixés et filtrés"] },
+      { p:"Épluchures", u:["Dans l'eau de cuisson des asperges, pour plus de goût"] }
+    ]},
+  { id:"herbes", nom:"Herbes fraîches", c:"#3b8f5a", score:"2 parties",
+    intro:"Persil, coriandre, basilic : les tiges ont autant de goût que les feuilles.",
+    parts:[
+      { p:"Tiges", u:["Mixées dans un <b>pesto</b> ou une sauce verte","Dans le bouillon ou une soupe"] },
+      { p:"Herbes fanées", u:["Mixées avec de l'huile et congelées en bac à glaçons"] }
+    ]},
+  { id:"pomme", nom:"Pomme", c:"#c33b2d", score:"2 parties",
+    intro:"Les épluchures et les trognons font une gelée sans acheter de fruits en plus.",
+    parts:[
+      { p:"Épluchures", u:["<b>Chips sucrées</b> : cannelle, 1 h à 100 °C","Infusion avec un bâton de cannelle"] },
+      { p:"Trognons", u:["Avec les épluchures : <b>gelée de pomme</b> (cuire, filtrer, sucre)","Vinaigre de pomme maison"] }
+    ],
+    warn:"Ne mange pas les pépins : retire-les avant de mixer." },
+  { id:"agrumes", nom:"Citron & orange", c:"#e3a417", score:"2 parties",
+    intro:"Le zeste est la partie la plus parfumée du fruit.",
+    parts:[
+      { p:"Zeste", u:["Râpé et <b>congelé</b> pour les gâteaux et les sauces","Sel ou sucre aromatisé au zeste"] },
+      { p:"Écorces", u:["Confites au sucre","Séchées pour une infusion"] }
+    ],
+    warn:"Prends des agrumes bio ou non traités après récolte pour utiliser la peau." },
+  { id:"tomate", nom:"Tomate", c:"#d8402c", score:"2 parties",
+    intro:"Les peaux et les graines retirées pour une sauce peuvent encore servir.",
+    parts:[
+      { p:"Peaux", u:["Séchées au four doux puis mixées : <b>poudre de tomate</b> pour assaisonner"] },
+      { p:"Graines et jus", u:["Dans une vinaigrette ou un gaspacho"] }
+    ],
+    warn:"Les feuilles et les tiges du plant de tomate ne se mangent pas." }
+];
+
+const $ = s => document.querySelector(s);
+const chips = $("#chips"), fiche = $("#fiche"), q = $("#q");
+let current = null;
+
+const norm = s => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+
+function renderChips(filter = "") {
+  const f = norm(filter.trim());
+  const list = DATA.filter(d => !f || norm(d.nom).includes(f) || norm(d.id).includes(f));
+  chips.innerHTML = list.length
+    ? list.map(d => `<button class="chip" role="listitem" type="button" data-id="${d.id}" aria-pressed="${current===d.id}"><i style="background:${d.c}"></i>${d.nom}</button>`).join("")
+    : `<p class="empty">Pas encore de fiche pour « ${filter.replace(/[<>&]/g,"")} ». Essaie un autre légume.</p>`;
+  return list;
+}
+
+function show(id, updateHash = true) {
+  const d = DATA.find(x => x.id === id) || DATA[0];
+  current = d.id;
+  fiche.innerHTML = `
+    <div class="fiche-head"><h2>${d.nom}</h2><span class="score">${d.score}</span></div>
+    <p class="intro">${d.intro}</p>
+    <div class="parts">${d.parts.map(p => `
+      <div class="part"><h3>${p.p}</h3><ul>${p.u.map(u => `<li>${u}</li>`).join("")}</ul></div>`).join("")}
+    </div>
+    ${d.warn ? `<div class="warn"><strong>Attention</strong>${d.warn}</div>` : ""}`;
+  fiche.style.animation = "none"; fiche.offsetHeight; fiche.style.animation = "";
+  chips.querySelectorAll(".chip").forEach(b => b.setAttribute("aria-pressed", b.dataset.id === d.id));
+  if (updateHash && location.hash !== "#" + d.id) history.replaceState(null, "", "#" + d.id);
+}
+
+chips.addEventListener("click", e => {
+  const b = e.target.closest(".chip"); if (!b) return;
+  show(b.dataset.id);
+  if (window.innerWidth < 700) fiche.scrollIntoView({ behavior: "smooth", block: "start" });
+});
+q.addEventListener("input", () => { const l = renderChips(q.value); if (l.length === 1) show(l[0].id); });
+q.addEventListener("keydown", e => { if (e.key === "Enter") { const l = renderChips(q.value); if (l.length) show(l[0].id); } });
+$("#hasard").addEventListener("click", () => {
+  const others = DATA.filter(d => d.id !== current);
+  q.value = ""; renderChips(); show(others[Math.floor(Math.random() * others.length)].id);
+});
+/* ---------- Mode « Mes restes » ---------- */
+const GROUPES = [
+  { g:"Épluchures et fanes", items:[
+    ["fanes-carotte","Fanes de carotte"],["epl-carotte","Épluchures de carotte"],["epl-pdt","Épluchures de pomme de terre"],
+    ["epl-courgette","Épluchures de courgette"],["fanes-radis","Fanes de radis"],["feuilles-betterave","Feuilles de betterave"],
+    ["pelures-oignon","Pelures d'oignon"],["cosses-pois","Cosses de petits pois"]]},
+  { g:"Bouts de légumes", items:[
+    ["vert-poireau","Vert de poireau"],["tronc-brocoli","Tronc de brocoli"],["feuilles-chou-fleur","Feuilles de chou-fleur"],
+    ["feuilles-celeri","Feuilles de céleri"],["tiges-herbes","Tiges d'herbes"],["graines-courge","Graines de courge"],
+    ["legumes-fatigues","Légumes un peu fatigués"]]},
+  { g:"Restes de repas", items:[
+    ["pain-rassis","Pain rassis"],["riz-cuit","Riz cuit"],["pates-cuites","Pâtes cuites"],["fromage-bouts","Bouts de fromage"]]},
+  { g:"Fruits", items:[
+    ["epl-pomme","Épluchures et trognons de pomme"],["zeste","Peau de citron ou d'orange"],["peaux-tomate","Peaux de tomate"]]}
+];
+const NOMS = Object.fromEntries(GROUPES.flatMap(g => g.items));
+
+const RECETTES = [
+  { nom:"Bouillon zéro déchet", temps:"10 min + 45 min de cuisson",
+    ing:["epl-carotte","vert-poireau","pelures-oignon","tiges-herbes","feuilles-celeri","tronc-brocoli","cosses-pois"],
+    base:"eau, sel, 1 feuille de laurier",
+    etapes:["Mets tous les restes bien lavés dans une grande casserole et couvre d'eau (environ 1,5 L).","Ajoute le sel et le laurier, laisse frémir 45 min à couvert.","Filtre, puis garde 4 jours au frigo ou congèle en portions. Les restes cuits vont au compost."] },
+  { nom:"Pesto de fanes", temps:"10 min",
+    ing:["fanes-carotte","fanes-radis","tiges-herbes","epl-courgette","graines-courge","fromage-bouts"],
+    base:"1 gousse d'ail, huile d'olive, sel",
+    etapes:["Lave et sèche les fanes ou épluchures.","Mixe avec l'ail, les graines (ou des noix) et le fromage râpé.","Ajoute l'huile petit à petit jusqu'à une texture de sauce. Sur des pâtes, en tartine ou dans un sandwich."] },
+  { nom:"Soupe verte des restes", temps:"35 min",
+    ing:["fanes-radis","fanes-carotte","vert-poireau","feuilles-betterave","feuilles-celeri","legumes-fatigues","feuilles-chou-fleur"],
+    base:"1 pomme de terre, 1 oignon, 1 L d'eau ou de bouillon",
+    etapes:["Fais revenir l'oignon émincé et le vert de poireau 5 min dans un peu d'huile.","Ajoute la pomme de terre en dés, l'eau et les autres restes, cuis 25 min.","Mixe, sale, poivre. Un peu de fromage ou de crème en finition."] },
+  { nom:"Chips d'épluchures mélangées", temps:"5 min + 15 min au four",
+    ing:["epl-pdt","epl-carotte","feuilles-chou-fleur","feuilles-betterave"],
+    base:"huile, sel, paprika ou épices au choix",
+    etapes:["Préchauffe le four à 200 °C. Lave et sèche bien les épluchures.","Mélange avec un filet d'huile, le sel et les épices, étale sans superposer.","Enfourne 12 à 15 min en surveillant : elles doivent dorer sans brûler."],
+    warn:"Retire les parties vertes des épluchures de pomme de terre." },
+  { nom:"Galettes croustillantes", temps:"25 min",
+    ing:["epl-carotte","epl-courgette","tronc-brocoli","riz-cuit","fromage-bouts","tiges-herbes","fanes-carotte"],
+    base:"1 œuf, 3 c. à soupe de farine, sel",
+    etapes:["Râpe ou hache finement les restes de légumes, presse la courgette pour enlever l'eau.","Mélange avec l'œuf, la farine, le riz et le fromage. La pâte doit tenir.","Forme des galettes et dore-les 4 min de chaque côté dans une poêle huilée."] },
+  { nom:"Omelette fond de frigo", temps:"15 min",
+    ing:["legumes-fatigues","pates-cuites","fromage-bouts","vert-poireau","tiges-herbes","fanes-radis","feuilles-betterave","epl-pdt"],
+    base:"3 œufs, sel, poivre",
+    etapes:["Fais revenir les légumes coupés petits (et les pâtes) 5 min à la poêle.","Bats les œufs avec les herbes hachées, sel et poivre.","Verse sur les légumes, ajoute le fromage, cuis à feu doux à couvert 5 min."] },
+  { nom:"Gratin des restes", temps:"10 min + 20 min au four",
+    ing:["pates-cuites","riz-cuit","legumes-fatigues","fromage-bouts","vert-poireau","tronc-brocoli","feuilles-chou-fleur","pain-rassis"],
+    base:"20 cl de lait ou de crème, 1 œuf",
+    etapes:["Mélange pâtes ou riz avec les légumes coupés dans un plat.","Bats le lait et l'œuf, verse dessus. Couvre de fromage et de pain rassis émietté.","Enfourne 20 min à 200 °C, jusqu'à ce que ce soit doré."] },
+  { nom:"Riz sauté express", temps:"15 min",
+    ing:["riz-cuit","tronc-brocoli","vert-poireau","legumes-fatigues","fanes-radis","feuilles-chou-fleur"],
+    base:"1 œuf, sauce soja, 1 gousse d'ail",
+    etapes:["Fais sauter l'ail et les légumes coupés fins 4 min à feu vif.","Ajoute le riz froid, fais-le dorer 3 min en remuant.","Pousse sur le côté, brouille l'œuf, mélange tout et ajoute la sauce soja."] },
+  { nom:"Velouté de cosses", temps:"40 min",
+    ing:["cosses-pois","vert-poireau","feuilles-celeri","tiges-herbes"],
+    base:"1 pomme de terre, 1 oignon, 1 L d'eau",
+    etapes:["Fais revenir l'oignon et le poireau, ajoute les cosses, la pomme de terre et l'eau.","Cuis 25 min, puis mixe longtemps.","Passe au tamis pour retirer les fibres, rectifie le sel."] },
+  { nom:"Pain perdu salé", temps:"20 min",
+    ing:["pain-rassis","fromage-bouts","tiges-herbes","legumes-fatigues","vert-poireau"],
+    base:"2 œufs, 15 cl de lait, sel, poivre",
+    etapes:["Bats œufs, lait, herbes hachées, sel et poivre.","Trempe les tranches de pain, dore-les à la poêle 3 min par face.","Garnis de fromage fondu et de légumes poêlés."] },
+  { nom:"Quiche sans gâchis", temps:"15 min + 35 min au four",
+    ing:["legumes-fatigues","vert-poireau","feuilles-betterave","fromage-bouts","fanes-carotte","tronc-brocoli","feuilles-chou-fleur"],
+    base:"1 pâte, 3 œufs, 20 cl de crème ou de lait",
+    etapes:["Fais revenir les restes de légumes coupés 5 à 10 min.","Étale-les sur la pâte, ajoute le fromage.","Verse œufs et crème battus, enfourne 35 min à 180 °C."] },
+  { nom:"Sel aromatique maison", temps:"10 min + 1 h au four doux",
+    ing:["feuilles-celeri","zeste","peaux-tomate","tiges-herbes"],
+    base:"gros sel",
+    etapes:["Étale les restes sur une plaque et sèche-les 1 h au four à 90 °C.","Mixe avec deux fois leur volume de gros sel.","Garde dans un bocal : parfait sur les légumes, viandes et salades."] },
+  { nom:"Chips de pomme et infusion", temps:"10 min + 1 h au four",
+    ing:["epl-pomme","zeste"],
+    base:"cannelle, un peu de sucre",
+    etapes:["Pour les chips : épluchures, cannelle et sucre, 1 h au four à 100 °C.","Pour l'infusion : trognons (sans pépins) et zeste dans l'eau frémissante 10 min.","Filtre et bois chaud, avec un peu de miel si tu veux."] },
+  { nom:"Croûtons et chapelure", temps:"15 min",
+    ing:["pain-rassis","tiges-herbes","fromage-bouts","zeste"],
+    base:"huile d'olive, ail",
+    etapes:["Coupe le pain en cubes, mélange avec huile, ail et herbes.","Dore 10 min au four à 180 °C ou à la poêle.","Le reste mixé fait une chapelure, avec un peu de zeste ou de fromage râpé."] }
+];
+
+const EXEMPLE = ["fanes-carotte","vert-poireau","epl-pdt","fromage-bouts","riz-cuit"];
+let choix = new Set(EXEMPLE), estExemple = true;
+
+function renderGroupes() {
+  $("#groupes").innerHTML = GROUPES.map(g => `
+    <div class="groupe"><h4>${g.g}</h4><div class="chips">${g.items.map(([id, nom]) =>
+      `<button class="reste" type="button" data-r="${id}" aria-pressed="${choix.has(id)}">${nom}</button>`).join("")}</div></div>`).join("");
+}
+
+function renderRecettes() {
+  const n = choix.size;
+  $("#compte").textContent = n ? `${n} reste${n > 1 ? "s" : ""} coché${n > 1 ? "s" : ""}` : "Aucun reste coché";
+  $("#note-ex").hidden = !estExemple;
+  const res = RECETTES.map(r => ({ r, ok: r.ing.filter(i => choix.has(i)) }))
+    .filter(x => x.ok.length)
+    .sort((a, b) => b.ok.length - a.ok.length || (b.ok.length / b.r.ing.length) - (a.ok.length / a.r.ing.length));
+  if (!n) { $("#recettes").innerHTML = `<p class="empty">Coche au moins un reste pour voir les recettes possibles.</p>`; return; }
+  if (!res.length) { $("#recettes").innerHTML = `<p class="empty">Pas encore de recette avec ces restes.</p>`; return; }
+  $("#recettes").innerHTML = res.map(({ r, ok }, i) => `
+    <article class="recette">
+      <div class="recette-head"><h3>${r.nom}</h3><span class="match">${ok.length} de tes restes</span></div>
+      <p class="meta">${r.temps} · Il te faut aussi : ${r.base}</p>
+      <div class="tags">${ok.map(id => `<span class="tag ok">${NOMS[id]}</span>`).join("")}${
+        r.ing.filter(id => !choix.has(id)).slice(0, 3).map(id => `<span class="tag">+ ${NOMS[id]}</span>`).join("")}</div>
+      <details ${i === 0 ? "open" : ""}><summary>Voir la recette</summary>
+        <ol>${r.etapes.map(e => `<li>${e}</li>`).join("")}</ol>
+        ${r.warn ? `<div class="warn" style="margin-top:10px"><strong>Attention</strong>${r.warn}</div>` : ""}
+      </details>
+    </article>`).join("");
+}
+
+$("#groupes").addEventListener("click", e => {
+  const b = e.target.closest(".reste"); if (!b) return;
+  if (estExemple) estExemple = false;
+  const id = b.dataset.r;
+  choix.has(id) ? choix.delete(id) : choix.add(id);
+  b.setAttribute("aria-pressed", choix.has(id));
+  renderRecettes();
+});
+$("#vider").addEventListener("click", () => { choix.clear(); estExemple = false; renderGroupes(); renderRecettes(); });
+
+function setVue(v, updateHash = true) {
+  const restes = v === "restes";
+  $("#vue-restes").hidden = !restes; $("#vue-legume").hidden = restes;
+  $("#tab-restes").setAttribute("aria-selected", restes); $("#tab-legume").setAttribute("aria-selected", !restes);
+  if (updateHash) history.replaceState(null, "", "#" + (restes ? "restes" : current));
+}
+$("#tab-restes").addEventListener("click", () => setVue("restes"));
+$("#tab-legume").addEventListener("click", () => setVue("legume"));
+
+function route() {
+  const h = location.hash.slice(1);
+  if (h === "restes") setVue("restes", false);
+  else { setVue("legume", false); show(h || "carotte", false); }
+}
+window.addEventListener("hashchange", route);
+
+renderChips();
+show("carotte", false);
+renderGroupes(); renderRecettes();
+route();
+</script>
+
+</body></html>

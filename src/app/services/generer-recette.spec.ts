@@ -1,5 +1,5 @@
 import { Ingredient, ModeleRecette } from '../models/recette';
-import { enumerer, genererRecette } from './generer-recette';
+import { enMinutes, enumerer, genererRecette } from './generer-recette';
 
 const INGREDIENTS = new Map<string, Ingredient>(
   [
@@ -55,5 +55,14 @@ describe('genererRecette', () => {
   it('masque les étapes {restes} quand aucun reste n’est nécessaire ni coché', () => {
     const recette = genererRecette({ ...MODELE, minRestes: 0 }, new Set(['oeufs']), INGREDIENTS);
     expect(recette?.etapes).toEqual(['Ajoute de l’eau.']);
+  });
+});
+
+describe('enMinutes', () => {
+  it('additionne les durées, attente comprise', () => {
+    expect(enMinutes('15 min')).toBe(15);
+    expect(enMinutes('10 min + 1 h au four')).toBe(70);
+    expect(enMinutes('15 min + 24 h au frigo')).toBe(15 + 24 * 60);
+    expect(enMinutes('10 min + 2 à 3 jours')).toBe(10 + 3 * 1440);
   });
 });

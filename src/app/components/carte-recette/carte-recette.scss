@@ -96,3 +96,21 @@ ol {
 app-alerte {
   margin-top: 12px;
 }
+
+.cuisinee {
+  align-self: flex-start;
+  font: inherit;
+  font-weight: 700;
+  font-size: 0.9rem;
+  padding: 7px 16px;
+  border-radius: 999px;
+  border: 1.5px solid var(--leaf);
+  background: transparent;
+  color: var(--leaf);
+  cursor: pointer;
+  transition: background 0.2s;
+
+  &[aria-pressed='true'] {
+    background: var(--leaf-soft);
+  }
+}

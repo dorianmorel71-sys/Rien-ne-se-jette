@@ -2,7 +2,16 @@ import { TestBed } from '@angular/core/testing';
 import { RecetteGeneree } from '../models/recette';
 import { Favoris } from './favoris';
 
-const RECETTE: RecetteGeneree = { nom: 'Soupe test', temps: '10 min', ingredients: [], etapes: [] };
+const RECETTE: RecetteGeneree = {
+  nom: 'Soupe test',
+  temps: '10 min',
+  type: 'salé',
+  minutes: 10,
+  four: false,
+  vegetarien: true,
+  ingredients: [],
+  etapes: [],
+};
 
 describe('Favoris', () => {
   let favoris: Favoris;

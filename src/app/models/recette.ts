@@ -20,9 +20,14 @@ export interface GroupeIngredients {
 export type Etape = string | { texte: string; si?: string; sauf?: string };
 
 /** Modèle à partir duquel on génère une recette avec uniquement ce qui est coché. */
+/** Salé par défaut. */
+export type TypeRecette = 'salé' | 'sucré' | 'boisson';
+
 export interface ModeleRecette {
   nom: string;
   temps: string;
+  /** À préciser seulement pour le sucré et les boissons. */
+  type?: Exclude<TypeRecette, 'salé'>;
   /** Tous doivent être cochés pour proposer la recette. */
   requis: string[];
   /** Restes interchangeables, insérés à la place de `{restes}` dans les étapes. */
@@ -39,6 +44,11 @@ export interface ModeleRecette {
 export interface RecetteGeneree {
   nom: string;
   temps: string;
+  type: TypeRecette;
+  /** Durée totale, attente comprise. */
+  minutes: number;
+  four: boolean;
+  vegetarien: boolean;
   ingredients: Ingredient[];
   etapes: string[];
   avertissement?: string;

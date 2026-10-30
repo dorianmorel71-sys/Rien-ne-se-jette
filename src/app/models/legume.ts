@@ -14,6 +14,8 @@ export interface Legume {
   categorie: CategorieLegume;
   /** Ingrédients de « Mes restes » qui viennent de ce légume. */
   restes?: string[];
+  /** Comment garder les restes en attendant de les cuisiner. */
+  conservation?: string[];
   /** Couleur de la pastille dans la liste. */
   couleur: string;
   score: string;

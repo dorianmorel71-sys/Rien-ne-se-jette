@@ -10,8 +10,12 @@ import {
 } from '@angular/core';
 import { CarteRecette } from '../../components/carte-recette/carte-recette';
 import { GROUPES_INGREDIENTS, INDISPENSABLES } from '../../data/ingredients';
+import { TypeRecette } from '../../models/recette';
 import { SelectionRestes } from '../../services/selection-restes';
 import { normaliser } from '../../utils/texte';
+
+/** Durée maximale, attente comprise, pour le filtre « rapide ». */
+const MINUTES_RAPIDE = 20;
 
 @Component({
   selector: 'app-mes-restes',
@@ -35,6 +39,29 @@ export class MesRestes {
       ingredients: g.ingredients.filter((i) => normaliser(i.nom).includes(filtre)),
     })).filter((g) => g.ingredients.length > 0);
   });
+
+  protected readonly types: { valeur: TypeRecette | null; libelle: string }[] = [
+    { valeur: null, libelle: 'Tout' },
+    { valeur: 'salé', libelle: 'Salé' },
+    { valeur: 'sucré', libelle: 'Sucré' },
+    { valeur: 'boisson', libelle: 'Boissons' },
+  ];
+  protected readonly type = signal<TypeRecette | null>(null);
+  protected readonly rapide = signal(false);
+  protected readonly sansFour = signal(false);
+  protected readonly vegetarien = signal(false);
+
+  protected readonly recettesFiltrees = computed(() =>
+    this.selection
+      .recettes()
+      .filter(
+        (r) =>
+          (!this.type() || r.type === this.type()) &&
+          (!this.rapide() || r.minutes <= MINUTES_RAPIDE) &&
+          (!this.sansFour() || !r.four) &&
+          (!this.vegetarien() || r.vegetarien),
+      ),
+  );
 
   private readonly recettes = viewChild.required<ElementRef<HTMLElement>>('recettes');
 

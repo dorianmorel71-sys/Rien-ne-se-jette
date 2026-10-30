@@ -147,3 +147,19 @@ li {
     font-weight: 700;
   }
 }
+
+.conservation {
+  background: var(--leaf-soft);
+  border-radius: 14px;
+  padding: 14px 16px;
+
+  h3 {
+    font-style: normal;
+    color: var(--leaf);
+    margin-bottom: 8px;
+  }
+
+  li::before {
+    background: var(--leaf);
+  }
+}

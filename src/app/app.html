@@ -5,6 +5,13 @@
       Choisis un légume ou un fruit : on te dit quoi faire des épluchures, des fanes, du trognon et
       des graines.
     </p>
+    @if (compteur.recettes()) {
+      <p class="compteur">
+        🌱 Tu as sauvé
+        <strong>{{ compteur.restes() }} {{ compteur.restes() > 1 ? 'restes' : 'reste' }}</strong> en
+        {{ compteur.recettes() }} {{ compteur.recettes() > 1 ? 'recettes' : 'recette' }}
+      </p>
+    }
   </header>
 
   <nav class="onglets" aria-label="Modes">

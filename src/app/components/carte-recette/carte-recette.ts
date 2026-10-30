@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
 import { RecetteGeneree } from '../../models/recette';
+import { Compteur } from '../../services/compteur';
 import { Favoris } from '../../services/favoris';
 import { Alerte } from '../alerte/alerte';
 import { BoutonFavori } from '../bouton-favori/bouton-favori';
@@ -14,6 +15,7 @@ import { BoutonFavori } from '../bouton-favori/bouton-favori';
 })
 export class CarteRecette {
   protected readonly favoris = inject(Favoris);
+  protected readonly compteur = inject(Compteur);
 
   readonly recette = input.required<RecetteGeneree>();
   /** Affiche les étapes dépliées (utilisé pour la meilleure recette). */

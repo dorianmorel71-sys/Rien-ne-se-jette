@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { Compteur } from './services/compteur';
 import { Favoris } from './services/favoris';
 
 @Component({
@@ -11,4 +12,5 @@ import { Favoris } from './services/favoris';
 })
 export class App {
   protected readonly favoris = inject(Favoris);
+  protected readonly compteur = inject(Compteur);
 }

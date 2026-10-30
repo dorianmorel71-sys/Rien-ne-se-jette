@@ -1,5 +1,17 @@
 import { Ingredient, ModeleRecette, RecetteGeneree } from '../models/recette';
 
+/** Restes qui rendent une recette non végétarienne. */
+const VIANDES = new Set(['poulet-cuit', 'jambon']);
+
+/** Durée totale en minutes : « 10 min + 1 h au four » → 70. */
+export function enMinutes(temps: string): number {
+  const unites: Record<string, number> = { min: 1, h: 60, jour: 1440, jours: 1440 };
+  return [...temps.matchAll(/(\d+)\s*(min|h|jours?)\b/g)].reduce(
+    (total, [, nombre, unite]) => total + Number(nombre) * unites[unite],
+    0,
+  );
+}
+
 /** « a », « a et b », « a, b et c ». */
 export function enumerer(elements: string[]): string {
   if (elements.length <= 1) return elements.join('');
@@ -30,13 +42,16 @@ export function genererRecette(
     .map((e) => majuscule(e.texte.replace('{restes}', texteRestes)));
 
   const avertissement = modele.avertissement;
+  const utilises = [...modele.requis, ...restes, ...optionnels];
 
   return {
     nom: modele.nom,
     temps: modele.temps,
-    ingredients: [...modele.requis, ...restes, ...optionnels]
-      .map((id) => ingredients.get(id))
-      .filter((i): i is Ingredient => !!i),
+    type: modele.type ?? 'salé',
+    minutes: enMinutes(modele.temps),
+    four: etapes.some((e) => /\bfour\b|enfourne/i.test(e)),
+    vegetarien: !utilises.some((id) => VIANDES.has(id)),
+    ingredients: utilises.map((id) => ingredients.get(id)).filter((i): i is Ingredient => !!i),
     etapes,
     avertissement:
       avertissement && (!avertissement.si || coches.has(avertissement.si))

@@ -13,7 +13,15 @@
   </div>
 </div>
 
-<p class="meta">{{ r.temps }}</p>
+<p class="meta">
+  {{ r.temps }}
+  @if (!r.four) {
+    · sans four
+  }
+  @if (r.vegetarien) {
+    · végétarien
+  }
+</p>
 
 <div class="tags">
   @for (ingredient of r.ingredients; track ingredient.id) {
@@ -32,3 +40,13 @@
     <app-alerte>{{ r.avertissement }}</app-alerte>
   }
 </details>
+
+@let cuisinee = compteur.estCuisinee(r.nom);
+<button
+  class="cuisinee"
+  type="button"
+  [attr.aria-pressed]="cuisinee"
+  (click)="compteur.basculer(r)"
+>
+  {{ cuisinee ? '✓ Bravo, restes sauvés !' : "Je l'ai cuisinée" }}
+</button>

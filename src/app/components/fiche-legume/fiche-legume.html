@@ -26,6 +26,17 @@
   }
 </div>
 
+@if (l.conservation?.length) {
+  <div class="conservation">
+    <h3>🧊 Pour les garder</h3>
+    <ul>
+      @for (conseil of l.conservation; track conseil) {
+        <li>{{ conseil }}</li>
+      }
+    </ul>
+  </div>
+}
+
 @if (l.avertissement) {
   <app-alerte>{{ l.avertissement }}</app-alerte>
 }

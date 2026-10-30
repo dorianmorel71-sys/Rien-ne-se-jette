@@ -11,6 +11,18 @@
 }
 
 header {
+  .compteur {
+    display: inline-block;
+    margin-top: 14px;
+    background: var(--leaf-soft);
+    color: var(--leaf);
+    border-radius: 999px;
+    padding: 6px 14px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    max-width: none;
+  }
+
   h1 {
     font-family: var(--f-display);
     font-weight: 800;

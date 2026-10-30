@@ -58,17 +58,61 @@
   <button type="button" (click)="selection.toutDecocher()">Tout décocher</button>
 </div>
 
+@if (nb > 0 && selection.recettes().length > 0) {
+  <div class="filtres" role="group" aria-label="Filtrer les recettes">
+    <div class="types">
+      @for (t of types; track t.libelle) {
+        <button
+          type="button"
+          [attr.aria-pressed]="type() === t.valeur"
+          (click)="type.set(t.valeur)"
+        >
+          {{ t.libelle }}
+        </button>
+      }
+    </div>
+    <button
+      class="filtre"
+      type="button"
+      [attr.aria-pressed]="rapide()"
+      (click)="rapide.set(!rapide())"
+    >
+      ⚡ 20 min max
+    </button>
+    <button
+      class="filtre"
+      type="button"
+      [attr.aria-pressed]="sansFour()"
+      (click)="sansFour.set(!sansFour())"
+    >
+      Sans four
+    </button>
+    <button
+      class="filtre"
+      type="button"
+      [attr.aria-pressed]="vegetarien()"
+      (click)="vegetarien.set(!vegetarien())"
+    >
+      🌱 Végétarien
+    </button>
+  </div>
+}
+
 <div class="recettes" #recettes>
   @if (nb === 0) {
     <p class="vide">Coche ce que tu as pour voir les recettes possibles.</p>
   } @else {
-    @for (recette of selection.recettes(); track recette.nom; let premiere = $first) {
+    @for (recette of recettesFiltrees(); track recette.nom; let premiere = $first) {
       <app-carte-recette [recette]="recette" [ouverte]="premiere" />
     } @empty {
-      <p class="vide">
-        Pas de recette avec seulement ces ingrédients. Coche ce que tu as dans ton placard (œufs,
-        lait, oignon…) pour en débloquer.
-      </p>
+      @if (selection.recettes().length) {
+        <p class="vide">Aucune recette avec ces filtres. Essaie d'en retirer un.</p>
+      } @else {
+        <p class="vide">
+          Pas de recette avec seulement ces ingrédients. Coche ce que tu as dans ton placard (œufs,
+          lait, oignon…) pour en débloquer.
+        </p>
+      }
     }
   }
 </div>

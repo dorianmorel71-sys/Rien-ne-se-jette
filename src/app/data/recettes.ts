@@ -757,6 +757,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
   {
     nom: 'Gâteau aux bananes trop mûres',
     temps: '15 min + 45 min au four',
+    type: 'sucré',
     requis: ['bananes-mures', 'oeufs', 'farine'],
     restes: [],
     minRestes: 0,
@@ -777,6 +778,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
   {
     nom: 'Gâteau au yaourt',
     temps: '10 min + 35 min au four',
+    type: 'sucré',
     requis: ['yaourt', 'oeufs', 'farine'],
     restes: ['fruits-abimes', 'bananes-mures'],
     minRestes: 0,
@@ -795,6 +797,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
   {
     nom: 'Crumble des fruits abîmés',
     temps: '15 min + 30 min au four',
+    type: 'sucré',
     requis: ['fruits-abimes', 'farine', 'beurre'],
     restes: [],
     minRestes: 0,
@@ -816,6 +819,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
   {
     nom: 'Compote des fruits abîmés',
     temps: '25 min',
+    type: 'sucré',
     requis: [],
     restes: ['fruits-abimes', 'bananes-mures', 'epl-pomme', 'epl-rhubarbe'],
     optionnels: ['sucre', 'miel', 'zeste', 'epices'],
@@ -833,6 +837,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
   {
     nom: 'Smoothie anti-gaspi',
     temps: '5 min',
+    type: 'boisson',
     requis: [],
     restes: ['bananes-mures', 'fruits-abimes', 'raisins-rides', 'avocat-mur'],
     optionnels: ['yaourt', 'lait', 'miel'],
@@ -848,6 +853,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
   {
     nom: 'Pain perdu sucré',
     temps: '15 min',
+    type: 'sucré',
     requis: ['oeufs', 'lait'],
     restes: ['pain-rassis', 'brioche-rassise'],
     optionnels: ['sucre', 'beurre', 'bananes-mures', 'epices', 'miel'],
@@ -865,6 +871,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
   {
     nom: 'Meringues au jus de pois chiches',
     temps: '15 min + 1 h 30 au four',
+    type: 'sucré',
     requis: ['aquafaba', 'sucre'],
     restes: [],
     minRestes: 0,
@@ -881,6 +888,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
   {
     nom: 'Chips de pomme et infusion',
     temps: '10 min + 1 h au four',
+    type: 'sucré',
     requis: ['epl-pomme'],
     restes: [],
     minRestes: 0,
@@ -906,6 +914,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
   {
     nom: 'Gelée de pomme',
     temps: '1 h',
+    type: 'sucré',
     requis: ['epl-pomme', 'sucre'],
     restes: [],
     minRestes: 0,
@@ -924,6 +933,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
   {
     nom: 'Écorces confites',
     temps: '1 h 15',
+    type: 'sucré',
     requis: ['zeste', 'sucre'],
     restes: [],
     minRestes: 0,
@@ -939,6 +949,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
   {
     nom: 'Sucre parfumé au zeste',
     temps: '10 min + 1 jour de séchage',
+    type: 'sucré',
     requis: ['zeste', 'sucre'],
     restes: [],
     minRestes: 0,
@@ -1111,6 +1122,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
   {
     nom: "Tepache (boisson à l'ananas)",
     temps: '10 min + 2 à 3 jours',
+    type: 'boisson',
     requis: ['ecorce-ananas', 'sucre'],
     restes: [],
     minRestes: 0,
@@ -1130,6 +1142,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
   {
     nom: 'Infusion des restes',
     temps: '15 min',
+    type: 'boisson',
     requis: [],
     restes: ['epl-gingembre', 'queues-cerises', 'queues-fraises', 'ecorce-ananas', 'zeste'],
     optionnels: ['citron', 'miel', 'epices'],
@@ -1145,6 +1158,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
   {
     nom: 'Eau aromatisée',
     temps: '5 min + 2 h au frigo',
+    type: 'boisson',
     requis: [],
     restes: ['queues-fraises', 'epl-concombre', 'zeste', 'ecorce-ananas', 'tiges-herbes'],
     optionnels: ['citron'],
@@ -1157,6 +1171,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
   {
     nom: 'Sirop de rhubarbe',
     temps: '40 min',
+    type: 'boisson',
     requis: ['epl-rhubarbe', 'sucre'],
     restes: [],
     minRestes: 0,
@@ -1215,6 +1230,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
   {
     nom: "Mousse au chocolat à l'avocat",
     temps: '10 min + 30 min au frais',
+    type: 'sucré',
     requis: ['avocat-mur', 'cacao'],
     restes: [],
     minRestes: 0,

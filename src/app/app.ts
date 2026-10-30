@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { RappelMinuteur } from './components/rappel-minuteur/rappel-minuteur';
 import { Compte } from './services/compte';
 import { Compteur } from './services/compteur';
 import { Favoris } from './services/favoris';
@@ -9,7 +10,7 @@ import { Installation } from './services/installation';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, RouterLink, RouterLinkActive],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive, RappelMinuteur],
   templateUrl: './app.html',
   styleUrl: './app.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

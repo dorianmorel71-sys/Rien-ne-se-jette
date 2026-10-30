@@ -13,6 +13,10 @@ dialog {
   flex-direction: column;
   gap: 16px;
 
+  &:focus {
+    outline: none;
+  }
+
   &::backdrop {
     background: rgba(43, 29, 20, 0.6);
   }
@@ -40,6 +44,35 @@ header {
   font-weight: 800;
   font-size: 1.3rem;
   color: var(--accent);
+}
+
+.boutons-entete {
+  display: flex;
+  gap: 8px;
+}
+
+.bouton-minuteur {
+  font: inherit;
+  font-weight: 700;
+  font-size: 0.95rem;
+  height: 44px;
+  padding: 0 14px;
+  border-radius: 999px;
+  border: 1.5px solid var(--line);
+  background: var(--surface);
+  color: var(--fg);
+  cursor: pointer;
+
+  &[aria-pressed='true'] {
+    background: var(--mustard-soft);
+    border-color: var(--mustard);
+  }
+
+  @media (max-width: 380px) {
+    .libelle {
+      display: none;
+    }
+  }
 }
 
 .fermer {
@@ -171,4 +204,174 @@ footer {
   text-align: center;
   font-size: 0.8rem;
   color: var(--muted);
+}
+
+// ---------- Minuteurs ----------
+.lancer-etape {
+  align-self: flex-start;
+  font: inherit;
+  font-weight: 700;
+  font-size: 1.05rem;
+  padding: 12px 20px;
+  border-radius: 999px;
+  border: 2px solid var(--mustard);
+  background: var(--mustard-soft);
+  color: var(--fg);
+  cursor: pointer;
+}
+
+.reglage {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 18px;
+  text-align: center;
+}
+
+.reglage-duree {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+
+  button {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: 2px solid var(--line);
+    background: var(--surface);
+    color: var(--fg);
+    font-size: 1.6rem;
+    cursor: pointer;
+  }
+}
+
+.duree-reglee {
+  min-width: 5ch;
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: 2.6rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.durees-rapides {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  max-width: 420px;
+
+  button {
+    font: inherit;
+    font-weight: 700;
+    font-size: 0.92rem;
+    padding: 7px 14px;
+    border-radius: 999px;
+    border: 1.5px solid var(--line);
+    background: var(--surface);
+    color: var(--fg);
+    cursor: pointer;
+
+    &[aria-pressed='true'] {
+      background: var(--mustard-soft);
+      border-color: var(--mustard);
+    }
+  }
+}
+
+.lancer {
+  font: inherit;
+  font-weight: 700;
+  font-size: 1.1rem;
+  padding: 14px 28px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--leaf);
+  color: #fff;
+  cursor: pointer;
+}
+
+.minuteurs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 8px 8px 14px;
+    border-radius: 14px;
+    background: var(--surface);
+    border: 1.5px solid var(--line);
+  }
+
+  .nom {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+
+  .temps {
+    font-family: var(--f-display);
+    font-weight: 800;
+    font-size: 1.5rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  button {
+    flex-shrink: 0;
+    min-width: 40px;
+    height: 40px;
+    padding: 0 10px;
+    border-radius: 999px;
+    border: 1.5px solid var(--line);
+    background: var(--bg);
+    color: var(--fg);
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  .pause .temps {
+    opacity: 0.5;
+  }
+
+  .sonne {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--on-accent);
+    animation: clignote 0.8s ease-in-out infinite alternate;
+
+    .nom {
+      color: inherit;
+    }
+
+    .stop {
+      background: #fff;
+      color: var(--accent);
+      border-color: #fff;
+    }
+  }
+}
+
+@keyframes clignote {
+  to {
+    background: var(--berry);
+    border-color: var(--berry);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .minuteurs .sonne {
+    animation: none;
+  }
 }

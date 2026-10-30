@@ -1,6 +1,8 @@
 @let r = recette();
+<!-- Le focus va sur la fenêtre elle-même : pas de contour sur un bouton à l'ouverture. -->
 <dialog
   #dialogue
+  autofocus
   [attr.aria-label]="'Mode cuisine : ' + r.nom"
   (close)="fermer.emit()"
   (touchstart)="toucher($event)"
@@ -13,14 +15,24 @@
       }
       {{ r.nom }}
     </p>
-    <button
-      class="fermer"
-      type="button"
-      aria-label="Quitter le mode cuisine"
-      (click)="dialogue.close()"
-    >
-      ✕
-    </button>
+    <div class="boutons-entete">
+      <button
+        class="bouton-minuteur"
+        type="button"
+        [attr.aria-pressed]="reglage()"
+        (click)="reglage.set(!reglage())"
+      >
+        ⏱️ <span class="libelle">Minuteur</span>
+      </button>
+      <button
+        class="fermer"
+        type="button"
+        aria-label="Quitter le mode cuisine"
+        (click)="dialogue.close()"
+      >
+        ✕
+      </button>
+    </div>
   </header>
 
   <div class="progression" aria-hidden="true">
@@ -29,26 +41,91 @@
     }
   </div>
 
-  <main aria-live="polite">
-    @if (ecran() === 0) {
-      <p class="etiquette">Prépare</p>
-      <ul class="ingredients">
-        @for (i of r.ingredients; track i.id) {
-          <li>{{ i.nom }}</li>
+  @if (reglage()) {
+    <section class="reglage" aria-label="Régler un minuteur">
+      <p class="etiquette">Nouveau minuteur</p>
+      <div class="reglage-duree">
+        <button type="button" aria-label="Une minute de moins" (click)="ajusterReglage(-1)">
+          −
+        </button>
+        <span class="duree-reglee">{{ minutesReglees() }} min</span>
+        <button type="button" aria-label="Une minute de plus" (click)="ajusterReglage(1)">+</button>
+      </div>
+      <div class="durees-rapides">
+        @for (d of dureesRapides; track d) {
+          <button
+            type="button"
+            [attr.aria-pressed]="minutesReglees() === d"
+            (click)="minutesReglees.set(d)"
+          >
+            {{ d }} min
+          </button>
         }
-      </ul>
-      <p class="plus">Et {{ indispensables }}.</p>
-    } @else if (fin()) {
-      <p class="grand-emoji" aria-hidden="true">🎉</p>
-      <p class="etape">Bon appétit !</p>
-    } @else {
-      <p class="etiquette">Étape {{ ecran() }} sur {{ r.etapes.length }}</p>
-      <p class="etape">{{ r.etapes[ecran() - 1] }}</p>
-      @if (ecran() === r.etapes.length && r.avertissement) {
-        <p class="avertissement">⚠️ {{ r.avertissement }}</p>
+      </div>
+      <button class="lancer" type="button" (click)="lancerReglage()">
+        Lancer {{ minutesReglees() }} min
+      </button>
+    </section>
+  } @else {
+    <main aria-live="polite">
+      @if (ecran() === 0) {
+        <p class="etiquette">Prépare</p>
+        <ul class="ingredients">
+          @for (i of r.ingredients; track i.id) {
+            <li>{{ i.nom }}</li>
+          }
+        </ul>
+        <p class="plus">Et {{ indispensables }}.</p>
+      } @else if (fin()) {
+        <p class="grand-emoji" aria-hidden="true">🎉</p>
+        <p class="etape">Bon appétit !</p>
+      } @else {
+        <p class="etiquette">Étape {{ ecran() }} sur {{ r.etapes.length }}</p>
+        <p class="etape">{{ r.etapes[ecran() - 1] }}</p>
+        @if (dureeEtape(); as minutes) {
+          <button class="lancer-etape" type="button" (click)="lancerEtape(minutes)">
+            ⏱️ Lancer {{ minutes }} min
+          </button>
+        }
+        @if (ecran() === r.etapes.length && r.avertissement) {
+          <p class="avertissement">⚠️ {{ r.avertissement }}</p>
+        }
       }
-    }
-  </main>
+    </main>
+  }
+
+  @if (minuteurs.liste().length) {
+    <ul class="minuteurs" aria-label="Minuteurs">
+      @for (m of minuteurs.liste(); track m.id) {
+        <li [class.sonne]="m.sonne" [class.pause]="m.fin === null && !m.sonne">
+          <span class="nom">{{ m.nom }}</span>
+          <span class="temps" role="timer">
+            {{ m.sonne ? "C'est prêt !" : formater(minuteurs.restant(m)) }}
+          </span>
+          @if (m.sonne) {
+            <button type="button" class="stop" (click)="minuteurs.arreter(m.id)">Arrêter</button>
+            <button type="button" (click)="minuteurs.ajouter(m.id, 1)">+1 min</button>
+          } @else {
+            @if (m.fin === null) {
+              <button type="button" aria-label="Reprendre" (click)="minuteurs.reprendre(m.id)">
+                ▶
+              </button>
+            } @else {
+              <button type="button" aria-label="Pause" (click)="minuteurs.pause(m.id)">❚❚</button>
+            }
+            <button type="button" (click)="minuteurs.ajouter(m.id, 1)">+1</button>
+            <button
+              type="button"
+              aria-label="Supprimer le minuteur"
+              (click)="minuteurs.arreter(m.id)"
+            >
+              ✕
+            </button>
+          }
+        </li>
+      }
+    </ul>
+  }
 
   <footer>
     <button class="precedent" type="button" [disabled]="ecran() === 0" (click)="precedent()">
@@ -57,7 +134,7 @@
     @if (fin()) {
       <button class="suivant" type="button" (click)="terminer()">Je l'ai cuisinée ✓</button>
     } @else {
-      <button class="suivant" type="button" autofocus (click)="suivant()">
+      <button class="suivant" type="button" (click)="suivant()">
         {{ ecran() === 0 ? "C'est parti" : 'Suivant' }} →
       </button>
     }

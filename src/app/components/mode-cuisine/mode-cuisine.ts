@@ -13,6 +13,8 @@ import {
 } from '@angular/core';
 import { INDISPENSABLES } from '../../data/ingredients';
 import { RecetteGeneree } from '../../models/recette';
+import { Minuteurs } from '../../services/minuteurs';
+import { dureeDansEtape, formaterDuree } from '../../utils/duree';
 
 /** Verrou qui empêche l'écran de se mettre en veille (absent sur les vieux navigateurs). */
 interface Verrou {
@@ -45,11 +47,24 @@ export class ModeCuisine {
   protected readonly fin = computed(() => this.ecran() === this.nombreEcrans() - 1);
   protected readonly ecranAllume = signal(false);
 
+  protected readonly minuteurs = inject(Minuteurs);
+  protected readonly formater = formaterDuree;
+  /** Durée trouvée dans l'étape affichée, pour la lancer en un geste. */
+  protected readonly dureeEtape = computed(() => {
+    const etape = this.recette().etapes[this.ecran() - 1];
+    return etape && !this.fin() ? dureeDansEtape(etape) : null;
+  });
+  /** Panneau de réglage d'un minuteur libre. */
+  protected readonly reglage = signal(false);
+  protected readonly minutesReglees = signal(5);
+  protected readonly dureesRapides = [1, 3, 5, 10, 15, 20, 30, 45, 60];
+
   private readonly dialogue = viewChild.required<ElementRef<HTMLDialogElement>>('dialogue');
   private verrou?: Verrou;
   private departToucher = 0;
 
   constructor() {
+    this.minuteurs.enCuisine.set(true);
     afterNextRender(() => {
       this.dialogue().nativeElement.showModal();
       void this.garderEcranAllume();
@@ -61,6 +76,7 @@ export class ModeCuisine {
     document.addEventListener('visibilitychange', auRetour);
     inject(DestroyRef).onDestroy(() => {
       document.removeEventListener('visibilitychange', auRetour);
+      this.minuteurs.enCuisine.set(false);
       void this.verrou?.release();
     });
   }
@@ -75,6 +91,19 @@ export class ModeCuisine {
     } catch {
       this.ecranAllume.set(false);
     }
+  }
+
+  protected lancerEtape(minutes: number): void {
+    this.minuteurs.lancer(`Étape ${this.ecran()}`, minutes);
+  }
+
+  protected ajusterReglage(minutes: number): void {
+    this.minutesReglees.update((m) => Math.min(180, Math.max(1, m + minutes)));
+  }
+
+  protected lancerReglage(): void {
+    this.minuteurs.lancer(`Minuteur ${this.minutesReglees()} min`, this.minutesReglees());
+    this.reglage.set(false);
   }
 
   protected suivant(): void {

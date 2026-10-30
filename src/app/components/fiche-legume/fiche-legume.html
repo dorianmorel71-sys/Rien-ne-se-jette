@@ -1,7 +1,10 @@
 @let l = legume();
 
 <div class="entete">
-  <h2>{{ l.nom }}</h2>
+  <div class="titre">
+    <span class="medaillon" aria-hidden="true">{{ l.emoji ?? l.nom.charAt(0) }}</span>
+    <h2>{{ l.nom }}</h2>
+  </div>
   <div class="actions">
     <span class="score">{{ l.score }}</span>
     <app-bouton-favori

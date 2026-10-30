@@ -13,7 +13,12 @@
       <div class="chips">
         @for (l of legumes(); track l.id) {
           <a class="chip" [routerLink]="['/legume', l.id]">
-            <i [style.background]="l.couleur"></i>{{ l.nom }}
+            @if (l.emoji) {
+              <span class="emoji" aria-hidden="true">{{ l.emoji }}</span>
+            } @else {
+              <i [style.background]="l.couleur"></i>
+            }
+            {{ l.nom }}
           </a>
         }
       </div>

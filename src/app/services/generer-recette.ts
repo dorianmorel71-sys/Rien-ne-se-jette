@@ -46,6 +46,7 @@ export function genererRecette(
 
   return {
     nom: modele.nom,
+    emoji: modele.emoji,
     temps: modele.temps,
     type: modele.type ?? 'salé',
     minutes: enMinutes(modele.temps),

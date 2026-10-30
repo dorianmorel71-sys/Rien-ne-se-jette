@@ -53,6 +53,13 @@ h4 {
   align-items: center;
   gap: 8px;
 
+  .emoji {
+    font-size: 1.15rem;
+    line-height: 1;
+    width: 22px;
+    text-align: center;
+  }
+
   i {
     width: 18px;
     height: 18px;

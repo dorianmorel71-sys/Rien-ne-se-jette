@@ -1,7 +1,12 @@
 @let r = recette();
 
 <div class="entete">
-  <h3>{{ r.nom }}</h3>
+  <h3>
+    @if (r.emoji) {
+      <span class="emoji" aria-hidden="true">{{ r.emoji }}</span>
+    }
+    {{ r.nom }}
+  </h3>
   <div class="actions">
     @if (!archivee()) {
       <span class="correspondance">{{ r.ingredients.length }} de tes ingrédients</span>

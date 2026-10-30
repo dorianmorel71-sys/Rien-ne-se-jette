@@ -25,6 +25,7 @@ export type TypeRecette = 'salé' | 'sucré' | 'boisson';
 
 export interface ModeleRecette {
   nom: string;
+  emoji: string;
   temps: string;
   /** À préciser seulement pour le sucré et les boissons. */
   type?: Exclude<TypeRecette, 'salé'>;
@@ -43,6 +44,7 @@ export interface ModeleRecette {
 /** Recette générée : uniquement les ingrédients cochés et les étapes qui les concernent. */
 export interface RecetteGeneree {
   nom: string;
+  emoji?: string;
   temps: string;
   type: TypeRecette;
   /** Durée totale, attente comprise. */

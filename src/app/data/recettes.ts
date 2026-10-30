@@ -4,6 +4,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
   // ---------- Bouillons et soupes ----------
   {
     nom: 'Bouillon zéro déchet',
+    emoji: '🍲',
     temps: '10 min + 45 min de cuisson',
     requis: [],
     restes: [
@@ -42,6 +43,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
   },
   {
     nom: 'Soupe verte des restes',
+    emoji: '🥣',
     temps: '35 min',
     requis: [],
     restes: [
@@ -77,6 +79,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
   },
   {
     nom: 'Velouté de cosses',
+    emoji: '🥣',
     temps: '40 min',
     requis: [],
     restes: ['cosses-pois', 'cosses-feves'],
@@ -94,6 +97,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
   },
   {
     nom: "Velouté de talons d'asperge",
+    emoji: '🥣',
     temps: '35 min',
     requis: ['epl-asperge'],
     restes: [],
@@ -110,6 +114,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
   },
   {
     nom: 'Minestrone du frigo',
+    emoji: '🍲',
     temps: '40 min',
     requis: [],
     restes: [
@@ -156,6 +161,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
   },
   {
     nom: 'Soupe de pain à la tomate',
+    emoji: '🍅',
     temps: '30 min',
     requis: ['pain-rassis', 'tomates-mures'],
     restes: [],
@@ -173,6 +179,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
   },
   {
     nom: 'Gaspacho des tomates trop mûres',
+    emoji: '🍅',
     temps: '15 min + 1 h au frais',
     requis: ['tomates-mures'],
     restes: [],
@@ -193,6 +200,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
   // ---------- Sauces, pestos et tartinades ----------
   {
     nom: 'Pesto de fanes',
+    emoji: '🌿',
     temps: '10 min',
     requis: [],
     restes: [
@@ -220,6 +228,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
   },
   {
     nom: 'Sauce tomate maison',
+    emoji: '🍅',
     temps: '40 min',
     requis: ['tomates-mures'],
     restes: ['legumes-fatigues', 'coeur-courgette', 'pieds-champignons'],
@@ -238,6 +247,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
   },
   {
     nom: 'Houmous express',
+    emoji: '🫘',
     temps: '10 min',
     requis: ['legumineuses'],
     restes: ['fanes-carotte', 'fanes-radis', 'tiges-herbes', 'herbes-fanees'],
@@ -258,6 +268,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
   },
   {
     nom: "Cubes d'herbes à l'huile",
+    emoji: '🧊',
     temps: '10 min',
     requis: [],
     restes: ['herbes-fanees', 'tiges-herbes', 'plumet-fenouil', 'feuilles-celeri'],
@@ -271,6 +282,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
   },
   {
     nom: 'Sel aromatique maison',
+    emoji: '🧂',
     temps: '10 min + 1 h au four doux',
     requis: [],
     restes: ['feuilles-celeri', 'zeste', 'peaux-tomate', 'tiges-herbes', 'herbes-fanees'],
@@ -283,6 +295,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
   },
   {
     nom: 'Poudre de tomate',
+    emoji: '🍅',
     temps: '5 min + 2 h au four doux',
     requis: ['peaux-tomate'],
     restes: [],
@@ -296,6 +309,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
   },
   {
     nom: 'Pickles express',
+    emoji: '🫙',
     temps: '15 min + 24 h au frigo',
     requis: ['vinaigre'],
     restes: [
@@ -328,6 +342,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
   // ---------- Chips et grignotage ----------
   {
     nom: "Chips d'épluchures",
+    emoji: '🥔',
     temps: '5 min + 15 min au four',
     requis: [],
     restes: [
@@ -357,6 +372,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
   },
   {
     nom: 'Graines de courge grillées',
+    emoji: '🎃',
     temps: '10 min + 20 min au four',
     requis: ['graines-courge'],
     restes: [],
@@ -372,6 +388,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
   },
   {
     nom: 'Croûtons et chapelure',
+    emoji: '🍞',
     temps: '15 min',
     requis: ['pain-rassis'],
     restes: [],
@@ -390,6 +407,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
   // ---------- Plats ----------
   {
     nom: 'Omelette fond de frigo',
+    emoji: '🍳',
     temps: '15 min',
     requis: ['oeufs'],
     restes: [
@@ -422,6 +440,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
   },
   {
     nom: 'Galettes croustillantes',
+    emoji: '🥞',
     temps: '25 min',
     requis: ['oeufs'],
     restes: [
@@ -458,6 +477,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
   },
   {
     nom: 'Croquettes de purée',
+    emoji: '🥔',
     temps: '25 min',
     requis: ['oeufs'],
     restes: ['puree', 'pdt-cuites'],
@@ -476,6 +496,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
   },
   {
     nom: 'Hachis parmentier des restes',
+    emoji: '🥘',
     temps: '15 min + 25 min au four',
     requis: ['puree'],
     restes: ['poulet-cuit', 'jambon', 'legumes-cuits', 'legumes-fatigues', 'pieds-champignons'],
@@ -495,6 +516,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
   },
   {
     nom: 'Gratin des restes',
+    emoji: '🧀',
     temps: '10 min + 20 min au four',
     requis: ['lait'],
     restes: [
@@ -530,6 +552,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
   },
   {
     nom: 'Gratin de côtes de blettes',
+    emoji: '🧀',
     temps: '15 min + 20 min au four',
     requis: ['cotes-blettes', 'lait', 'farine'],
     restes: [],
@@ -548,6 +571,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
   },
   {
     nom: 'Quiche sans gâchis',
+    emoji: '🥧',
     temps: '15 min + 35 min au four',
     requis: ['pate', 'oeufs'],
     restes: [
@@ -583,6 +607,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
   },
   {
     nom: 'Riz sauté express',
+    emoji: '🍚',
     temps: '15 min',
     requis: ['riz-cuit'],
     restes: [
@@ -614,6 +639,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
   },
   {
     nom: 'Pâtes sautées à la poêle',
+    emoji: '🍝',
     temps: '15 min',
     requis: ['pates-cuites'],
     restes: [
@@ -643,6 +669,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
   },
   {
     nom: 'Poêlée de pieds de champignons',
+    emoji: '🍄',
     temps: '15 min',
     requis: ['pieds-champignons'],
     restes: [],
@@ -660,6 +687,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
   },
   {
     nom: 'Pain perdu salé',
+    emoji: '🍞',
     temps: '20 min',
     requis: ['pain-rassis', 'oeufs'],
     restes: ['legumes-fatigues', 'vert-poireau', 'pieds-champignons', 'tomates-mures'],
@@ -679,6 +707,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
   // ---------- Salades ----------
   {
     nom: 'Salade du frigo',
+    emoji: '🥗',
     temps: '10 min',
     requis: [],
     restes: [
@@ -711,6 +740,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
   },
   {
     nom: 'Taboulé des restes',
+    emoji: '🥗',
     temps: '15 min',
     requis: ['semoule-cuite'],
     restes: [
@@ -734,6 +764,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
   },
   {
     nom: 'Salade de pommes de terre',
+    emoji: '🥔',
     temps: '10 min',
     requis: ['pdt-cuites'],
     restes: ['tiges-herbes', 'herbes-fanees', 'plumet-fenouil', 'jambon'],
@@ -756,6 +787,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
   // ---------- Sucré ----------
   {
     nom: 'Gâteau aux bananes trop mûres',
+    emoji: '🍌',
     temps: '15 min + 45 min au four',
     type: 'sucré',
     requis: ['bananes-mures', 'oeufs', 'farine'],
@@ -777,6 +809,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
   },
   {
     nom: 'Gâteau au yaourt',
+    emoji: '🍰',
     temps: '10 min + 35 min au four',
     type: 'sucré',
     requis: ['yaourt', 'oeufs', 'farine'],
@@ -796,6 +829,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
   },
   {
     nom: 'Crumble des fruits abîmés',
+    emoji: '🥧',
     temps: '15 min + 30 min au four',
     type: 'sucré',
     requis: ['fruits-abimes', 'farine', 'beurre'],
@@ -818,6 +852,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
   },
   {
     nom: 'Compote des fruits abîmés',
+    emoji: '🍎',
     temps: '25 min',
     type: 'sucré',
     requis: [],
@@ -836,6 +871,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
   },
   {
     nom: 'Smoothie anti-gaspi',
+    emoji: '🥤',
     temps: '5 min',
     type: 'boisson',
     requis: [],
@@ -852,6 +888,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
   },
   {
     nom: 'Pain perdu sucré',
+    emoji: '🍞',
     temps: '15 min',
     type: 'sucré',
     requis: ['oeufs', 'lait'],
@@ -870,6 +907,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
   },
   {
     nom: 'Meringues au jus de pois chiches',
+    emoji: '🤍',
     temps: '15 min + 1 h 30 au four',
     type: 'sucré',
     requis: ['aquafaba', 'sucre'],
@@ -887,6 +925,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
   },
   {
     nom: 'Chips de pomme et infusion',
+    emoji: '🍎',
     temps: '10 min + 1 h au four',
     type: 'sucré',
     requis: ['epl-pomme'],
@@ -913,6 +952,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
   },
   {
     nom: 'Gelée de pomme',
+    emoji: '🍯',
     temps: '1 h',
     type: 'sucré',
     requis: ['epl-pomme', 'sucre'],
@@ -932,6 +972,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
   },
   {
     nom: 'Écorces confites',
+    emoji: '🍊',
     temps: '1 h 15',
     type: 'sucré',
     requis: ['zeste', 'sucre'],
@@ -948,6 +989,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
   },
   {
     nom: 'Sucre parfumé au zeste',
+    emoji: '🍋',
     temps: '10 min + 1 jour de séchage',
     type: 'sucré',
     requis: ['zeste', 'sucre'],
@@ -966,6 +1008,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
   // ---------- Nouveaux restes : légumes ----------
   {
     nom: 'Bouillon de maïs',
+    emoji: '🌽',
     temps: '5 min + 40 min de cuisson',
     requis: ['epis-mais'],
     restes: [],
@@ -983,6 +1026,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
   },
   {
     nom: 'Coleslaw des trognons',
+    emoji: '🥗',
     temps: '15 min + 15 min au frais',
     requis: [],
     restes: ['trognon-chou', 'tronc-brocoli', 'trognon-chou-fleur', 'feuilles-chou'],
@@ -1000,6 +1044,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
   },
   {
     nom: 'Chips de feuilles',
+    emoji: '🥬',
     temps: '5 min + 12 min au four',
     requis: [],
     restes: ['feuilles-bruxelles', 'epinards-fanes', 'feuilles-chou-rave', 'feuilles-chou'],
@@ -1014,6 +1059,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
   },
   {
     nom: 'Épinards fondus à la crème',
+    emoji: '🥬',
     temps: '15 min',
     requis: ['epinards-fanes'],
     restes: [],
@@ -1032,6 +1078,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
   },
   {
     nom: 'Endives caramélisées',
+    emoji: '🍯',
     temps: '25 min',
     requis: ['endives-molles'],
     restes: [],
@@ -1054,6 +1101,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
   },
   {
     nom: "Poivrons rôtis à l'huile",
+    emoji: '🫑',
     temps: '10 min + 30 min au four',
     requis: ['poivron-ride'],
     restes: [],
@@ -1071,6 +1119,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
   },
   {
     nom: "Caviar d'aubergine",
+    emoji: '🍆',
     temps: '10 min + 40 min au four',
     requis: ['aubergine-molle'],
     restes: [],
@@ -1091,6 +1140,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
   },
   {
     nom: 'Curry des restes',
+    emoji: '🍛',
     temps: '25 min',
     requis: ['lait-coco'],
     restes: [
@@ -1121,6 +1171,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
   // ---------- Nouveaux restes : fruits et boissons ----------
   {
     nom: "Tepache (boisson à l'ananas)",
+    emoji: '🍍',
     temps: '10 min + 2 à 3 jours',
     type: 'boisson',
     requis: ['ecorce-ananas', 'sucre'],
@@ -1141,6 +1192,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
   },
   {
     nom: 'Infusion des restes',
+    emoji: '🫖',
     temps: '15 min',
     type: 'boisson',
     requis: [],
@@ -1157,6 +1209,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
   },
   {
     nom: 'Eau aromatisée',
+    emoji: '💧',
     temps: '5 min + 2 h au frigo',
     type: 'boisson',
     requis: [],
@@ -1170,6 +1223,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
   },
   {
     nom: 'Sirop de rhubarbe',
+    emoji: '🍹',
     temps: '40 min',
     type: 'boisson',
     requis: ['epl-rhubarbe', 'sucre'],
@@ -1188,6 +1242,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
   },
   {
     nom: 'Pickles de pastèque',
+    emoji: '🍉',
     temps: '20 min + 24 h au frigo',
     requis: ['ecorce-pasteque', 'vinaigre'],
     restes: [],
@@ -1212,6 +1267,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
   },
   {
     nom: 'Guacamole express',
+    emoji: '🥑',
     temps: '10 min',
     requis: ['avocat-mur'],
     restes: [],
@@ -1229,6 +1285,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
   },
   {
     nom: "Mousse au chocolat à l'avocat",
+    emoji: '🍫',
     temps: '10 min + 30 min au frais',
     type: 'sucré',
     requis: ['avocat-mur', 'cacao'],
@@ -1247,6 +1304,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
   },
   {
     nom: 'Effiloché de peaux de banane',
+    emoji: '🌯',
     temps: '30 min',
     requis: ['peau-banane'],
     restes: [],
@@ -1267,6 +1325,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
   },
   {
     nom: 'Raisins rôtis au fromage',
+    emoji: '🍇',
     temps: '20 min',
     requis: ['raisins-rides'],
     restes: [],
@@ -1287,6 +1346,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
   },
   {
     nom: 'Chutney des fruits abîmés',
+    emoji: '🫙',
     temps: '1 h',
     requis: ['vinaigre', 'sucre'],
     restes: ['fruits-abimes', 'peau-banane', 'raisins-rides', 'ecorce-pasteque', 'epl-rhubarbe'],

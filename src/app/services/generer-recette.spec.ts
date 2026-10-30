@@ -12,6 +12,7 @@ const INGREDIENTS = new Map<string, Ingredient>(
 
 const MODELE: ModeleRecette = {
   nom: 'Test',
+  emoji: '🍳',
   temps: '5 min',
   requis: ['oeufs'],
   restes: ['a', 'b'],

@@ -21,7 +21,12 @@
             [attr.aria-pressed]="l.id === legume().id"
             (click)="choisir(l.id, true)"
           >
-            <i [style.background]="l.couleur"></i>{{ l.nom }}
+            @if (l.emoji) {
+              <span class="emoji" aria-hidden="true">{{ l.emoji }}</span>
+            } @else {
+              <i [style.background]="l.couleur"></i>
+            }
+            {{ l.nom }}
           </button>
         }
       </div>

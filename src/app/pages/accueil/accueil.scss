@@ -1,0 +1,197 @@
+@use '../../../styles/ecran';
+
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+// Nappe vichy tomate, comme l'icône et la page de connexion.
+.presentation {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+  padding: clamp(22px, 6vw, 40px);
+  border-radius: var(--radius);
+  color: #fff;
+  background:
+    repeating-linear-gradient(90deg, transparent 0 22px, rgba(255, 255, 255, 0.07) 22px 44px),
+    repeating-linear-gradient(0deg, transparent 0 22px, rgba(255, 255, 255, 0.07) 22px 44px),
+    #d9482b;
+  box-shadow: var(--shadow);
+
+  img {
+    border-radius: 22px;
+    box-shadow: 0 10px 24px -10px rgba(60, 20, 5, 0.6);
+  }
+
+  h2 {
+    margin: 0;
+    font-family: var(--f-display);
+    font-weight: 800;
+    font-size: clamp(1.9rem, 7vw, 2.6rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+
+    em {
+      font-style: italic;
+      color: #fbe8c4;
+    }
+  }
+
+  p {
+    margin: 0;
+    max-width: 46ch;
+    font-size: 1.05rem;
+    line-height: 1.5;
+  }
+
+  .bilan {
+    padding: 6px 14px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.18);
+    font-size: 0.95rem;
+  }
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 4px;
+
+  a {
+    font-weight: 700;
+    text-decoration: none;
+    border-radius: 999px;
+    padding: 12px 24px;
+  }
+
+  .principal {
+    background: #fbf3e4;
+    color: #d9482b;
+    font-size: 1.05rem;
+    box-shadow: 0 3px 0 rgba(60, 20, 5, 0.3);
+  }
+
+  .secondaire {
+    border: 2px solid rgba(255, 255, 255, 0.7);
+    color: #fff;
+  }
+}
+
+.etapes {
+  display: grid;
+  gap: 12px;
+}
+
+.etape {
+  --c: var(--leaf);
+  --c-soft: var(--leaf-soft);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 16px 18px 16px 70px;
+  border-radius: 18px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-left: 6px solid var(--c);
+  color: var(--fg);
+  text-decoration: none;
+  transition: transform 0.15s;
+
+  &[data-couleur='tomate'] {
+    --c: var(--accent);
+    --c-soft: var(--accent-soft);
+  }
+  &[data-couleur='glace'] {
+    --c: var(--ice);
+    --c-soft: var(--ice-soft);
+  }
+  &[data-couleur='moutarde'] {
+    --c: var(--mustard);
+    --c-soft: var(--mustard-soft);
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+
+  .emoji {
+    position: absolute;
+    left: 14px;
+    top: 16px;
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 14px;
+    background: var(--c-soft);
+    font-size: 1.4rem;
+  }
+
+  .numero {
+    position: absolute;
+    left: 44px;
+    top: 10px;
+    display: grid;
+    place-items: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--c);
+    color: #fff;
+    font-size: 0.72rem;
+    font-weight: 700;
+  }
+
+  strong {
+    font-family: var(--f-display);
+    font-weight: 800;
+    font-size: 1.15rem;
+  }
+
+  .texte {
+    font-size: 0.92rem;
+    color: var(--muted);
+    line-height: 1.45;
+  }
+
+  .action {
+    margin-top: 4px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--c);
+  }
+}
+
+.astuces {
+  margin: 0;
+  padding: 14px 16px;
+  border-radius: 16px;
+  background: var(--mustard-soft);
+  font-size: 0.92rem;
+}
+
+@include ecran.ordi {
+  // Présentation en bandeau, les quatre cartes deux par deux en dessous.
+  .presentation {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    column-gap: 28px;
+    align-items: center;
+
+    img {
+      grid-row: 1 / span 4;
+      width: 120px;
+      height: 120px;
+    }
+  }
+
+  .etapes {
+    grid-template-columns: 1fr 1fr;
+  }
+}

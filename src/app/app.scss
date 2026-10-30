@@ -200,6 +200,11 @@ header {
 }
 
 footer {
+  .lien-accueil a {
+    font-weight: 700;
+    color: var(--fg);
+  }
+
   color: var(--muted);
   font-size: 0.86rem;
   background: var(--mustard-soft);

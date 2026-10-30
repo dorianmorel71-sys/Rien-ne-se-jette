@@ -1,0 +1,37 @@
+<section class="presentation">
+  <img src="icons/icone.svg" alt="" width="80" height="80" />
+  <h2>Épluchures, fanes, restes : <em>tout se cuisine.</em></h2>
+  <p>
+    Rien ne se jette t'aide à cuisiner ce que tu allais jeter, et à finir ce qui traîne au frigo
+    avant qu'il ne soit trop tard.
+  </p>
+  @if (compteur.restes()) {
+    <p class="bilan">
+      🌱 Déjà <strong>{{ compteur.restes() }}</strong>
+      {{ compteur.restes() > 1 ? 'restes sauvés' : 'reste sauvé' }} grâce à toi
+    </p>
+  }
+  <div class="actions">
+    <a class="principal" routerLink="/legume/carotte">C'est parti</a>
+    @if (compte.actif && !compte.utilisateur()) {
+      <a class="secondaire" routerLink="/compte">Se connecter</a>
+    }
+  </div>
+</section>
+
+<section class="etapes" aria-label="Ce que tu peux faire">
+  @for (e of etapes; track e.titre; let i = $index) {
+    <a class="etape" [attr.data-couleur]="e.couleur" [routerLink]="e.lien">
+      <span class="emoji" aria-hidden="true">{{ e.emoji }}</span>
+      <span class="numero" aria-hidden="true">{{ i + 1 }}</span>
+      <strong>{{ e.titre }}</strong>
+      <span class="texte">{{ e.texte }}</span>
+      <span class="action">{{ e.action }} →</span>
+    </a>
+  }
+</section>
+
+<p class="astuces">
+  💡 Installe l'appli sur ton écran d'accueil : elle marche même sans réseau. Un compte (gratuit,
+  facultatif) garde tes favoris et ton frigo sur tous tes appareils.
+</p>

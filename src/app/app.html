@@ -1,35 +1,13 @@
 <div class="wrap">
   <header>
     <h1>Rien ne se <span>jette</span></h1>
-    <p>
-      Choisis un légume ou un fruit : on te dit quoi faire des épluchures, des fanes, du trognon et
-      des graines.
-    </p>
     @if (compteur.recettes()) {
-      <p class="compteur">
-        🌱 Tu as sauvé
-        <strong>{{ compteur.restes() }} {{ compteur.restes() > 1 ? 'restes' : 'reste' }}</strong> en
-        {{ compteur.recettes() }} {{ compteur.recettes() > 1 ? 'recettes' : 'recette' }}
+      <p class="compteur" [title]="compteur.recettes() + ' recettes cuisinées'">
+        🌱 <strong>{{ compteur.restes() }}</strong>
+        {{ compteur.restes() > 1 ? 'restes sauvés' : 'reste sauvé' }}
       </p>
     }
   </header>
-
-  <nav class="onglets" aria-label="Modes">
-    <a routerLink="/legume" routerLinkActive="actif" ariaCurrentWhenActive="page">Par légume</a>
-    <a routerLink="/restes" routerLinkActive="actif" ariaCurrentWhenActive="page">Mes restes</a>
-    <a routerLink="/frigo" routerLinkActive="actif" ariaCurrentWhenActive="page">
-      Frigo
-      @if (frigo.urgents()) {
-        <span class="compte urgent" title="À finir vite">{{ frigo.urgents() }}</span>
-      }
-    </a>
-    <a routerLink="/favoris" routerLinkActive="actif" ariaCurrentWhenActive="page">
-      Favoris
-      @if (favoris.nombre()) {
-        <span class="compte">{{ favoris.nombre() }}</span>
-      }
-    </a>
-  </nav>
 
   <main>
     <router-outlet />
@@ -46,3 +24,29 @@
     </p>
   </footer>
 </div>
+
+<nav class="menu" aria-label="Menu">
+  @for (lien of liens; track lien.chemin) {
+    <a [routerLink]="lien.chemin" routerLinkActive="actif" ariaCurrentWhenActive="page">
+      <span class="icone" aria-hidden="true">
+        {{ lien.icone }}
+        @switch (lien.chemin) {
+          @case ('/frigo') {
+            @if (frigo.urgents()) {
+              <span class="compte urgent">{{ frigo.urgents() }}</span>
+            }
+          }
+          @case ('/favoris') {
+            @if (favoris.nombre()) {
+              <span class="compte">{{ favoris.nombre() }}</span>
+            }
+          }
+        }
+      </span>
+      {{ lien.libelle }}
+      @if (lien.chemin === '/frigo' && frigo.urgents()) {
+        <span class="visually-hidden">, {{ frigo.urgents() }} à finir vite</span>
+      }
+    </a>
+  }
+</nav>

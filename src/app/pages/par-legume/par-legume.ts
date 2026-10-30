@@ -1,4 +1,5 @@
 import {
+  afterNextRender,
   ChangeDetectionStrategy,
   Component,
   computed,
@@ -59,6 +60,25 @@ export class ParLegume {
   );
 
   readonly legume = computed(() => LEGUMES.find((l) => l.id === this.id()) ?? LEGUMES[0]);
+
+  /** Familles dépliées ; au départ, celle du légume affiché. */
+  protected readonly ouvertes = signal<ReadonlySet<string>>(new Set());
+  /** Pendant une recherche ou un filtre, on montre tout ce qui correspond. */
+  protected readonly toutOuvrir = computed(() => !!this.recherche().trim() || this.deSaison());
+
+  constructor() {
+    afterNextRender(() => this.ouvertes.set(new Set([this.legume().categorie])));
+  }
+
+  protected replier(famille: string, ouverte: boolean): void {
+    if (this.toutOuvrir()) return;
+    this.ouvertes.update((o) => {
+      const suivant = new Set(o);
+      if (ouverte) suivant.add(famille);
+      else suivant.delete(famille);
+      return suivant;
+    });
+  }
 
   private readonly fiche = viewChild(FicheLegume, { read: ElementRef });
 

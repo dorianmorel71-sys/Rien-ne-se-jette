@@ -61,3 +61,74 @@ a:focus-visible {
     box-shadow: 0 0 0 4px var(--accent-soft);
   }
 }
+
+// Famille repliable (légumes, restes) : titre, compteur et chevron.
+// Chaque page choisit la couleur avec --c et --c-soft.
+.famille {
+  --c: var(--leaf);
+  --c-soft: var(--leaf-soft);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-left: 6px solid var(--c);
+  border-radius: 16px;
+
+  > summary {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px;
+    cursor: pointer;
+    border-radius: 12px;
+
+    &::-webkit-details-marker {
+      display: none;
+    }
+
+    // Chevron qui pivote à l'ouverture.
+    &::after {
+      content: '';
+      width: 9px;
+      height: 9px;
+      margin-left: auto;
+      border-right: 2.5px solid var(--c);
+      border-bottom: 2.5px solid var(--c);
+      transform: rotate(45deg) translate(-2px, -2px);
+      transition: transform 0.2s;
+    }
+  }
+
+  &[open] > summary::after {
+    transform: rotate(-135deg) translate(-2px, -2px);
+  }
+
+  .titre {
+    font-family: var(--f-display);
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--c);
+    letter-spacing: -0.01em;
+  }
+
+  .nombre {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--muted);
+    background: var(--bg);
+    border-radius: 999px;
+    padding: 1px 9px;
+  }
+
+  .coches {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--c);
+    background: var(--c-soft);
+    border-radius: 999px;
+    padding: 1px 9px;
+  }
+
+  .contenu {
+    padding: 0 14px 14px;
+  }
+}

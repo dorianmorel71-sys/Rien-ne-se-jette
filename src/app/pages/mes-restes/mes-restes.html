@@ -16,9 +16,21 @@
 
 <div class="groupes">
   @for (groupe of groupes(); track groupe.titre) {
-    <div [attr.data-groupe]="groupe.titre">
-      <h4>{{ groupe.titre }}</h4>
-      <div class="restes">
+    @let coches = nombreCoches(groupe.ingredients);
+    <details
+      class="famille"
+      [attr.data-groupe]="groupe.titre"
+      [open]="toutOuvrir() || ouvertes().has(groupe.titre)"
+      (toggle)="replier(groupe.titre, $any($event.target).open)"
+    >
+      <summary>
+        <span class="titre">{{ groupe.titre }}</span>
+        <span class="nombre">{{ groupe.ingredients.length }}</span>
+        @if (coches) {
+          <span class="coches">✓ {{ coches }}</span>
+        }
+      </summary>
+      <div class="restes contenu">
         @for (ingredient of groupe.ingredients; track ingredient.id) {
           <button
             class="reste"
@@ -30,7 +42,7 @@
           </button>
         }
       </div>
-    </div>
+    </details>
   } @empty {
     <p class="vide">Rien ne correspond à « {{ recherche() }} ».</p>
   }

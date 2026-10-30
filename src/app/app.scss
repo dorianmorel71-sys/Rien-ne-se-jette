@@ -1,36 +1,32 @@
+// Hauteur de la barre de menu, pour que la fin de page ne passe pas dessous.
+$hauteur-menu: 64px;
+
 .wrap {
   max-width: 760px;
   margin: 0 auto;
-  padding-block: max(32px, env(safe-area-inset-top, 0px))
-    max(56px, env(safe-area-inset-bottom, 0px));
+  padding-top: max(20px, env(safe-area-inset-top, 0px));
+  padding-bottom: calc(#{$hauteur-menu} + 32px + env(safe-area-inset-bottom, 0px));
   padding-left: max(16px, env(safe-area-inset-left, 0px));
   padding-right: max(16px, env(safe-area-inset-right, 0px));
   display: flex;
   flex-direction: column;
-  gap: 28px;
+  gap: 24px;
 }
 
 header {
-  .compteur {
-    display: inline-block;
-    margin-top: 14px;
-    background: var(--leaf-soft);
-    color: var(--leaf);
-    border-radius: 999px;
-    padding: 6px 14px;
-    font-size: 0.95rem;
-    font-weight: 500;
-    max-width: none;
-  }
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
 
   h1 {
     font-family: var(--f-display);
     font-weight: 800;
-    font-size: clamp(2.6rem, 11vw, 4.2rem);
-    line-height: 0.95;
+    font-size: clamp(2rem, 8vw, 2.8rem);
+    line-height: 1;
     margin: 0;
     letter-spacing: -0.03em;
-    text-wrap: balance;
     font-variation-settings: 'SOFT' 100;
 
     span {
@@ -43,31 +39,48 @@ header {
     }
   }
 
-  p {
-    margin: 14px 0 0;
-    color: var(--muted);
-    max-width: 48ch;
-    font-size: 1.05rem;
+  .compteur {
+    margin: 0;
+    background: var(--leaf-soft);
+    color: var(--leaf);
+    border-radius: 999px;
+    padding: 5px 13px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    white-space: nowrap;
   }
 }
 
-.onglets {
+// Barre de menu flottante en bas, à portée de pouce.
+.menu {
+  position: fixed;
+  z-index: 10;
+  left: 50%;
+  bottom: max(10px, env(safe-area-inset-bottom, 0px));
+  transform: translateX(-50%);
+  width: min(520px, calc(100% - 20px));
+  height: $hauteur-menu;
   display: grid;
-  grid-template-columns: repeat(4, auto);
+  grid-template-columns: repeat(4, 1fr);
   gap: 4px;
+  padding: 6px;
   background: var(--surface);
   border: 1px solid var(--line);
-  padding: 6px;
-  border-radius: 999px;
-  box-shadow: var(--shadow);
+  border-radius: 24px;
+  box-shadow:
+    0 2px 0 var(--line),
+    0 18px 36px -16px rgba(80, 40, 10, 0.45);
 
   a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1px;
+    border-radius: 18px;
+    font-size: 0.78rem;
     font-weight: 700;
-    text-align: center;
     text-decoration: none;
-    padding: 10px 6px;
-    border-radius: 999px;
-    white-space: nowrap;
     color: var(--muted);
     transition:
       background 0.2s,
@@ -78,38 +91,51 @@ header {
     }
 
     &.actif {
-      background: var(--accent);
-      color: var(--on-accent);
-    }
+      background: var(--accent-soft);
+      color: var(--accent);
 
-    .compte {
-      display: inline-block;
-      min-width: 1.4em;
-      padding: 0 5px;
-      margin-left: 2px;
-      border-radius: 999px;
-      background: var(--mustard);
-      color: #2b1d14;
-      font-size: 0.75rem;
-      line-height: 1.4em;
-
-      &.urgent {
-        background: var(--berry);
-        color: #fff;
+      .icone {
+        transform: translateY(-1px) scale(1.1);
       }
     }
   }
 
-  // Quatre onglets sur un petit écran : on resserre.
-  @media (max-width: 480px) {
-    gap: 2px;
-    padding: 4px;
+  .icone {
+    position: relative;
+    font-size: 1.35rem;
+    line-height: 1;
+    transition: transform 0.2s;
+  }
 
-    a {
-      font-size: 0.86rem;
-      padding: 9px 4px;
+  .compte {
+    position: absolute;
+    top: -6px;
+    right: -14px;
+    min-width: 18px;
+    padding: 0 5px;
+    border-radius: 999px;
+    background: var(--mustard);
+    color: #2b1d14;
+    font-family: var(--f-body);
+    font-size: 0.7rem;
+    line-height: 18px;
+    text-align: center;
+    box-shadow: 0 0 0 2px var(--surface);
+
+    &.urgent {
+      background: var(--berry);
+      color: #fff;
     }
   }
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
 footer {

@@ -11,7 +11,7 @@ import {
 import { RouterLink } from '@angular/router';
 import { CarteRecette } from '../../components/carte-recette/carte-recette';
 import { GROUPES_INGREDIENTS, INDISPENSABLES } from '../../data/ingredients';
-import { TypeRecette } from '../../models/recette';
+import { Ingredient, TypeRecette } from '../../models/recette';
 import { Frigo, RESTES_FRIGO } from '../../services/frigo';
 import { SelectionRestes } from '../../services/selection-restes';
 import { normaliser } from '../../utils/texte';
@@ -33,6 +33,30 @@ export class MesRestes {
   private readonly frigo = inject(Frigo);
 
   protected readonly recherche = signal('');
+
+  /** Familles dépliées ; au départ, celles où quelque chose est coché. */
+  protected readonly ouvertes = signal<ReadonlySet<string>>(
+    new Set(
+      GROUPES_INGREDIENTS.filter((g) =>
+        g.ingredients.some((i) => this.selection.estCoche(i.id)),
+      ).map((g) => g.titre),
+    ),
+  );
+  protected readonly toutOuvrir = computed(() => !!this.recherche().trim());
+
+  protected replier(famille: string, ouverte: boolean): void {
+    if (this.toutOuvrir()) return;
+    this.ouvertes.update((o) => {
+      const suivant = new Set(o);
+      if (ouverte) suivant.add(famille);
+      else suivant.delete(famille);
+      return suivant;
+    });
+  }
+
+  protected nombreCoches(ingredients: Ingredient[]): number {
+    return ingredients.filter((i) => this.selection.estCoche(i.id)).length;
+  }
 
   /** Restes cochés (hors placard) qui ne sont pas encore au frigo. */
   protected readonly aRanger = computed(() =>

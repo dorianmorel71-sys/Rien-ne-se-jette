@@ -51,16 +51,18 @@
 .groupes {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 10px;
 }
 
-h4 {
-  font-family: var(--f-display);
-  font-size: 1.15rem;
-  font-weight: 800;
-  color: var(--accent);
-  margin: 0 0 8px;
-  letter-spacing: -0.01em;
+.famille {
+  &[data-famille='Fruits'] {
+    --c: var(--berry);
+    --c-soft: var(--berry-soft);
+  }
+  &[data-famille='Herbes & aromates'] {
+    --c: var(--mustard);
+    --c-soft: var(--mustard-soft);
+  }
 }
 
 .chips {

@@ -28,9 +28,17 @@
 
 <div class="groupes">
   @for (groupe of groupes(); track groupe.titre) {
-    <div>
-      <h4>{{ groupe.titre }}</h4>
-      <div class="chips">
+    <details
+      class="famille"
+      [attr.data-famille]="groupe.titre"
+      [open]="toutOuvrir() || ouvertes().has(groupe.titre)"
+      (toggle)="replier(groupe.titre, $any($event.target).open)"
+    >
+      <summary>
+        <span class="titre">{{ groupe.titre }}</span>
+        <span class="nombre">{{ groupe.legumes.length }}</span>
+      </summary>
+      <div class="chips contenu">
         @for (l of groupe.legumes; track l.id) {
           <button
             class="chip"
@@ -47,7 +55,7 @@
           </button>
         }
       </div>
-    </div>
+    </details>
   } @empty {
     <p class="vide">
       @if (recherche()) {

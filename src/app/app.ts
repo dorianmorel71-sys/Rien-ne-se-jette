@@ -15,4 +15,11 @@ export class App {
   protected readonly favoris = inject(Favoris);
   protected readonly compteur = inject(Compteur);
   protected readonly frigo = inject(Frigo);
+
+  protected readonly liens = [
+    { chemin: '/legume', icone: '🥕', libelle: 'Légumes' },
+    { chemin: '/restes', icone: '🍲', libelle: 'Recettes' },
+    { chemin: '/frigo', icone: '🧊', libelle: 'Frigo' },
+    { chemin: '/favoris', icone: '🔖', libelle: 'Favoris' },
+  ];
 }

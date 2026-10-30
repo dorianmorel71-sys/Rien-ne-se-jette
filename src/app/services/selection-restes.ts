@@ -17,6 +17,8 @@ export class SelectionRestes {
   private readonly choix = signal<ReadonlySet<string>>(new Set(INGREDIENTS_EXEMPLE));
   /** Vrai tant que l'utilisateur n'a pas touché à la sélection d'exemple. */
   readonly estExemple = signal(true);
+  /** Demande à la page « Mes restes » de défiler jusqu'aux recettes à son ouverture. */
+  readonly defilerVersRecettes = signal(false);
 
   readonly nombre = computed(() => this.choix().size);
 
@@ -39,6 +41,12 @@ export class SelectionRestes {
       if (!suivant.delete(id)) suivant.add(id);
       return suivant;
     });
+  }
+
+  /** Coche ces restes en plus de la sélection (qui remplacent l'exemple s'il est encore là). */
+  ajouter(ids: readonly string[]): void {
+    this.choix.update((choix) => new Set([...(this.estExemple() ? [] : choix), ...ids]));
+    this.estExemple.set(false);
   }
 
   toutDecocher(): void {

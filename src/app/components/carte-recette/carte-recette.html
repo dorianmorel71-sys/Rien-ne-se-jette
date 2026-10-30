@@ -2,7 +2,15 @@
 
 <div class="entete">
   <h3>{{ r.nom }}</h3>
-  <span class="correspondance">{{ r.ingredients.length }} de tes ingrédients</span>
+  <div class="actions">
+    @if (!archivee()) {
+      <span class="correspondance">{{ r.ingredients.length }} de tes ingrédients</span>
+    }
+    <app-bouton-favori
+      [actif]="favoris.estRecetteFavorite(r.nom)"
+      (basculer)="favoris.basculerRecette(r)"
+    />
+  </div>
 </div>
 
 <p class="meta">{{ r.temps }}</p>

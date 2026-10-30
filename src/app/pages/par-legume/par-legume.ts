@@ -11,16 +11,10 @@ import {
 import { Router } from '@angular/router';
 import { FicheLegume } from '../../components/fiche-legume/fiche-legume';
 import { CATEGORIES_LEGUMES, LEGUMES } from '../../data/legumes';
+import { normaliser } from '../../utils/texte';
 
 /** Largeur sous laquelle on fait défiler jusqu'à la fiche après un choix. */
 const LARGEUR_MOBILE = 700;
-
-/** Sans accents ni majuscules, pour une recherche tolérante. */
-const normaliser = (texte: string) =>
-  texte
-    .toLowerCase()
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '');
 
 @Component({
   selector: 'app-par-legume',

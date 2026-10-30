@@ -53,4 +53,12 @@ describe('SelectionRestes', () => {
     selection.toutDecocher();
     expect(selection.recettes()).toEqual([]);
   });
+
+  it("remplace l'exemple par les restes ajoutés depuis une fiche", () => {
+    selection.ajouter(['fanes-radis']);
+    expect(selection.nombre()).toBe(1);
+    selection.ajouter(['vert-poireau']);
+    expect(selection.estCoche('fanes-radis')).toBe(true);
+    expect(selection.nombre()).toBe(2);
+  });
 });

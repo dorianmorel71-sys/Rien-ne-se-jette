@@ -2,7 +2,13 @@
 
 <div class="entete">
   <h2>{{ l.nom }}</h2>
-  <span class="score">{{ l.score }}</span>
+  <div class="actions">
+    <span class="score">{{ l.score }}</span>
+    <app-bouton-favori
+      [actif]="favoris.estLegumeFavori(l.id)"
+      (basculer)="favoris.basculerLegume(l.id)"
+    />
+  </div>
 </div>
 
 <p class="intro">{{ l.intro }}</p>
@@ -22,4 +28,10 @@
 
 @if (l.avertissement) {
   <app-alerte>{{ l.avertissement }}</app-alerte>
+}
+
+@if (l.restes?.length) {
+  <button class="voir-recettes" type="button" (click)="voirRecettes()">
+    Voir les recettes avec ces restes →
+  </button>
 }

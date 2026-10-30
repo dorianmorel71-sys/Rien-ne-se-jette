@@ -27,6 +27,12 @@ h3 {
   letter-spacing: -0.02em;
 }
 
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .correspondance {
   font-size: 0.8rem;
   font-weight: 700;

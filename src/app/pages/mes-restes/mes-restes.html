@@ -4,9 +4,19 @@
   </p>
 }
 
+<input
+  class="recherche"
+  type="search"
+  placeholder="Cherche un reste : chou, pain, banane…"
+  autocomplete="off"
+  aria-label="Rechercher un reste"
+  [value]="recherche()"
+  (input)="recherche.set($any($event.target).value)"
+/>
+
 <div class="groupes">
-  @for (groupe of groupes; track groupe.titre) {
-    <div>
+  @for (groupe of groupes(); track groupe.titre) {
+    <div [attr.data-groupe]="groupe.titre">
       <h4>{{ groupe.titre }}</h4>
       <div class="restes">
         @for (ingredient of groupe.ingredients; track ingredient.id) {
@@ -21,6 +31,8 @@
         }
       </div>
     </div>
+  } @empty {
+    <p class="vide">Rien ne correspond à « {{ recherche() }} ».</p>
   }
 </div>
 
@@ -46,7 +58,7 @@
   <button type="button" (click)="selection.toutDecocher()">Tout décocher</button>
 </div>
 
-<div class="recettes">
+<div class="recettes" #recettes>
   @if (nb === 0) {
     <p class="vide">Coche ce que tu as pour voir les recettes possibles.</p>
   } @else {

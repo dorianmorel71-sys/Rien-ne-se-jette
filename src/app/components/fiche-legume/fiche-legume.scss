@@ -47,6 +47,30 @@ h2 {
   font-variation-settings: 'SOFT' 100;
 }
 
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.voir-recettes {
+  align-self: flex-start;
+  font: inherit;
+  font-weight: 700;
+  padding: 11px 20px;
+  border-radius: 999px;
+  border: 0;
+  background: var(--accent);
+  color: var(--on-accent);
+  cursor: pointer;
+  box-shadow: 0 3px 0 rgba(120, 40, 20, 0.3);
+  transition: transform 0.15s;
+
+  &:hover {
+    transform: translateY(-1px);
+  }
+}
+
 .score {
   font-size: 0.85rem;
   font-weight: 700;

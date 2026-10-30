@@ -18,7 +18,7 @@
   gap: 12px;
 }
 
-// Chaque famille de restes a sa couleur.
+// Chaque famille de restes a sa couleur, même quand la recherche en masque.
 .groupes > div {
   --c: var(--leaf);
   --c-soft: var(--leaf-soft);
@@ -28,19 +28,19 @@
   border-radius: 16px;
   padding: 14px 14px 16px;
 
-  &:nth-child(2) {
+  &[data-groupe='Bouts de légumes'] {
     --c: var(--mustard);
     --c-soft: var(--mustard-soft);
   }
-  &:nth-child(3) {
+  &[data-groupe='Restes de repas'] {
     --c: var(--accent);
     --c-soft: var(--accent-soft);
   }
-  &:nth-child(4) {
+  &[data-groupe='Fruits'] {
     --c: var(--berry);
     --c-soft: var(--berry-soft);
   }
-  &:nth-child(5) {
+  &[data-groupe='Dans mon placard'] {
     --c: var(--muted);
     --c-soft: var(--line);
   }
@@ -71,7 +71,9 @@ h4 {
   background: var(--bg);
   color: var(--fg);
   cursor: pointer;
-  transition: border-color 0.2s, background 0.2s;
+  transition:
+    border-color 0.2s,
+    background 0.2s;
 
   &:hover {
     border-color: var(--c);

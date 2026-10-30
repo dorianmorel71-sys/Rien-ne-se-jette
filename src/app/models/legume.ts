@@ -12,6 +12,8 @@ export interface Legume {
   id: string;
   nom: string;
   categorie: CategorieLegume;
+  /** Ingrédients de « Mes restes » qui viennent de ce légume. */
+  restes?: string[];
   /** Couleur de la pastille dans la liste. */
   couleur: string;
   score: string;

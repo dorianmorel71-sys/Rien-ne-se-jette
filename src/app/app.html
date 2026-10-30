@@ -10,6 +10,12 @@
   <nav class="onglets" aria-label="Modes">
     <a routerLink="/legume" routerLinkActive="actif" ariaCurrentWhenActive="page">Par légume</a>
     <a routerLink="/restes" routerLinkActive="actif" ariaCurrentWhenActive="page">Mes restes</a>
+    <a routerLink="/favoris" routerLinkActive="actif" ariaCurrentWhenActive="page">
+      Favoris
+      @if (favoris.nombre()) {
+        <span class="compte">{{ favoris.nombre() }}</span>
+      }
+    </a>
   </nav>
 
   <main>

@@ -8,67 +8,108 @@
 } @else if (!compte.pret()) {
   <p class="vide">Chargement…</p>
 } @else if (compte.utilisateur(); as u) {
-  <div class="carte">
-    <div class="profil">
-      <span class="avatar" aria-hidden="true">{{
-        (u.nom || u.email || '?')[0].toUpperCase()
-      }}</span>
+  @let initiale = (u.nom || u.email || '?')[0].toUpperCase();
+  <div class="duo">
+    <!-- Sur ordinateur : le profil et la sauvegarde, à côté de l'espace. -->
+    <aside class="presentation">
+      <span class="avatar-pc" aria-hidden="true">{{ initiale }}</span>
       <div>
-        <p class="grand">Bonjour{{ u.nom ? ' ' + u.nom : '' }} !</p>
-        <p class="email">{{ u.email }}</p>
+        <p class="accroche">Bonjour{{ u.nom ? ' ' + u.nom : '' }} !</p>
+        <p class="email-pc">{{ u.email }}</p>
+        @if (membreDepuis(u.creeLe); as depuis) {
+          <p class="depuis">Membre depuis {{ depuis }}</p>
+        }
       </div>
-    </div>
-
-    <p class="synchro" [attr.data-etat]="compte.synchro()">
-      @switch (compte.synchro()) {
-        @case ('a-jour') {
-          ✓ Tout est sauvegardé dans ton compte
-        }
-        @case ('en-cours') {
-          Sauvegarde en cours…
-        }
-        @case ('erreur') {
-          La sauvegarde n'a pas marché. Vérifie ta connexion internet.
-        }
-      }
-    </p>
-
-    <ul class="resume">
-      <li>
-        <strong>{{ favoris.nombre() }}</strong> {{ favoris.nombre() > 1 ? 'favoris' : 'favori' }}
-      </li>
-      <li>
-        <strong>{{ frigo.nombre() }}</strong>
-        {{ frigo.nombre() > 1 ? 'restes au frigo' : 'reste au frigo' }}
-      </li>
-      <li>
-        <strong>{{ compteur.restes() }}</strong>
-        {{ compteur.restes() > 1 ? 'restes sauvés' : 'reste sauvé' }}
-      </li>
-    </ul>
-    <p class="note">
-      Connecte-toi avec le même compte sur ton téléphone et ton ordinateur pour tout retrouver.
-    </p>
-
-    <div class="actions">
-      <button class="secondaire" type="button" [disabled]="occupe()" (click)="deconnecter()">
-        Se déconnecter
-      </button>
-      <button class="danger" type="button" [disabled]="occupe()" (click)="supprimer()">
-        {{ confirmerSuppression() ? 'Confirmer la suppression' : 'Supprimer mon compte' }}
-      </button>
-    </div>
-    @if (confirmerSuppression()) {
-      <p class="note">
-        Ton compte et ses données seront effacés. Cet appareil garde ses favoris et son frigo.
+      <p class="synchro-pc" [attr.data-etat]="compte.synchro()">
+        <ng-container *ngTemplateOutlet="etatSynchro" />
       </p>
-    }
-    @if (erreur()) {
-      <p class="erreur" role="alert">{{ erreur() }}</p>
-    }
+      <p>
+        Connecte-toi avec ce compte sur ton téléphone : favoris, frigo et compteur y seront aussi.
+      </p>
+    </aside>
+
+    <div class="carte">
+      <div class="profil">
+        <span class="avatar" aria-hidden="true">{{ initiale }}</span>
+        <div>
+          <p class="grand">Bonjour{{ u.nom ? ' ' + u.nom : '' }} !</p>
+          <p class="email">{{ u.email }}</p>
+        </div>
+      </div>
+
+      <p class="synchro" [attr.data-etat]="compte.synchro()">
+        <ng-container *ngTemplateOutlet="etatSynchro" />
+      </p>
+
+      <p class="grand titre-espace">Ton espace</p>
+      <ul class="resume">
+        <li>
+          <a routerLink="/favoris">
+            <span class="icone" aria-hidden="true">🔖</span>
+            <strong>{{ favoris.nombre() }}</strong>
+            {{ favoris.nombre() > 1 ? 'favoris' : 'favori' }}
+          </a>
+        </li>
+        <li>
+          <a routerLink="/frigo">
+            <span class="icone" aria-hidden="true">🧊</span>
+            <strong>{{ frigo.nombre() }}</strong>
+            {{ frigo.nombre() > 1 ? 'restes au frigo' : 'reste au frigo' }}
+          </a>
+        </li>
+        <li>
+          <a routerLink="/restes">
+            <span class="icone" aria-hidden="true">🌱</span>
+            <strong>{{ compteur.restes() }}</strong>
+            {{ compteur.restes() > 1 ? 'restes sauvés' : 'reste sauvé' }}
+          </a>
+        </li>
+      </ul>
+      @if (frigo.urgents()) {
+        <a class="rappel" routerLink="/frigo">
+          ⏰ {{ frigo.urgents() }}
+          {{ frigo.urgents() > 1 ? 'restes sont à finir' : 'reste est à finir' }} vite : voir le
+          frigo
+        </a>
+      }
+      <p class="note astuce-appareils">
+        Connecte-toi avec le même compte sur ton téléphone et ton ordinateur pour tout retrouver.
+      </p>
+
+      <div class="actions">
+        <button class="secondaire" type="button" [disabled]="occupe()" (click)="deconnecter()">
+          Se déconnecter
+        </button>
+        <button class="danger" type="button" [disabled]="occupe()" (click)="supprimer()">
+          {{ confirmerSuppression() ? 'Confirmer la suppression' : 'Supprimer mon compte' }}
+        </button>
+      </div>
+      @if (confirmerSuppression()) {
+        <p class="note">
+          Ton compte et ses données seront effacés. Cet appareil garde ses favoris et son frigo.
+        </p>
+      }
+      @if (erreur()) {
+        <p class="erreur" role="alert">{{ erreur() }}</p>
+      }
+    </div>
   </div>
+
+  <ng-template #etatSynchro>
+    @switch (compte.synchro()) {
+      @case ('a-jour') {
+        ✓ Tout est sauvegardé dans ton compte
+      }
+      @case ('en-cours') {
+        Sauvegarde en cours…
+      }
+      @case ('erreur') {
+        La sauvegarde n'a pas marché. Vérifie ta connexion internet.
+      }
+    }
+  </ng-template>
 } @else {
-  <div class="connexion">
+  <div class="duo">
     <!-- Sur ordinateur seulement : ce que le compte apporte, à côté du formulaire. -->
     <aside class="presentation">
       <img src="icons/icone.svg" alt="" width="88" height="88" />

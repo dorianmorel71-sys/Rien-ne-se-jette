@@ -11,6 +11,8 @@ export interface Utilisateur {
   uid: string;
   nom: string | null;
   email: string | null;
+  /** Date de création du compte, telle que Firebase la donne. */
+  creeLe?: string;
 }
 
 export type EtatSynchro = 'a-jour' | 'en-cours' | 'erreur';
@@ -109,7 +111,11 @@ export class Compte {
       this.arreterEcoute?.();
       this.recu.set(false);
       this.dernierEnvoi = '';
-      this.utilisateur.set(u ? { uid: u.uid, nom: u.displayName, email: u.email } : null);
+      this.utilisateur.set(
+        u
+          ? { uid: u.uid, nom: u.displayName, email: u.email, creeLe: u.metadata.creationTime }
+          : null,
+      );
       this.pret.set(true);
       if (u) this.ecouter(u.uid);
     });
@@ -173,7 +179,12 @@ export class Compte {
     const { user } = await auth.createUserWithEmailAndPassword(instanceAuth, email, motDePasse);
     if (nom) {
       await auth.updateProfile(user, { displayName: nom });
-      this.utilisateur.set({ uid: user.uid, nom, email: user.email });
+      this.utilisateur.set({
+        uid: user.uid,
+        nom,
+        email: user.email,
+        creeLe: user.metadata.creationTime,
+      });
     }
   }
 

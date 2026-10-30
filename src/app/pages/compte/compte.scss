@@ -81,14 +81,28 @@
   grid-template-columns: repeat(3, 1fr);
   gap: 8px;
 
-  li {
+  a {
+    display: block;
+    height: 100%;
     background: var(--bg);
+    border: 1.5px solid transparent;
     border-radius: 12px;
     padding: 10px;
     text-align: center;
     font-size: 0.82rem;
     color: var(--muted);
     line-height: 1.3;
+    text-decoration: none;
+    transition: border-color 0.2s;
+
+    &:hover {
+      border-color: var(--mustard);
+    }
+  }
+
+  // Les icônes ne s'affichent que sur ordinateur, où les cases sont plus grandes.
+  .icone {
+    display: none;
   }
 
   strong {
@@ -255,6 +269,21 @@ button {
   }
 }
 
+.rappel {
+  font-weight: 700;
+  font-size: 0.92rem;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  text-decoration: none;
+}
+
+// Seulement sur ordinateur.
+.titre-espace {
+  display: none;
+}
+
 .actions {
   display: flex;
   flex-wrap: wrap;
@@ -283,12 +312,7 @@ button {
     max-width: 960px;
   }
 
-  // Connecté : la carte garde une largeur confortable.
-  :host > .carte {
-    max-width: 560px;
-  }
-
-  .connexion {
+  .duo {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     border-radius: var(--radius);
@@ -334,6 +358,85 @@ button {
       font-size: 2.1rem;
       line-height: 1.05;
       letter-spacing: -0.02em;
+    }
+
+    .email-pc,
+    .depuis {
+      opacity: 0.85;
+      font-size: 0.95rem;
+    }
+  }
+
+  .avatar-pc {
+    display: grid;
+    place-items: center;
+    width: 88px;
+    height: 88px;
+    border-radius: 50%;
+    background: #fbf3e4;
+    color: #d9482b;
+    font-family: var(--f-display);
+    font-weight: 800;
+    font-size: 2.6rem;
+    box-shadow: 0 10px 24px -10px rgba(60, 20, 5, 0.6);
+  }
+
+  .synchro-pc {
+    align-self: flex-start;
+    font-weight: 700;
+    font-size: 0.92rem;
+    padding: 7px 14px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.18);
+
+    &[data-etat='erreur'] {
+      background: #fbf3e4;
+      color: var(--berry);
+    }
+  }
+
+  // Le profil et la sauvegarde sont dans le panneau : on ne les répète pas.
+  .profil,
+  .synchro,
+  .astuce-appareils {
+    display: none;
+  }
+
+  .titre-espace {
+    display: block;
+  }
+
+  .actions {
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  // Sur ordinateur, la suppression devient un lien discret.
+  .danger {
+    border: 0;
+    padding: 4px 0;
+    font-size: 0.88rem;
+    font-weight: 500;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .resume {
+    gap: 12px;
+
+    a {
+      padding: 18px 10px;
+      font-size: 0.9rem;
+    }
+
+    .icone {
+      display: block;
+      font-size: 1.4rem;
+      margin-bottom: 4px;
+    }
+
+    strong {
+      font-size: 2rem;
     }
   }
 

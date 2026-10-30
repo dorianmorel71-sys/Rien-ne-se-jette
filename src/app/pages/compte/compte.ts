@@ -1,4 +1,6 @@
+import { NgTemplateOutlet } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { Compte, messageErreur } from '../../services/compte';
 import { Compteur } from '../../services/compteur';
 import { Favoris } from '../../services/favoris';
@@ -8,6 +10,7 @@ type Mode = 'connexion' | 'creation' | 'oubli';
 
 @Component({
   selector: 'app-compte',
+  imports: [NgTemplateOutlet, RouterLink],
   templateUrl: './compte.html',
   styleUrl: './compte.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -38,6 +41,13 @@ export class PageCompte {
         oubli: 'Mot de passe oublié',
       })[this.mode()],
   );
+
+  /** « octobre 2026 ». */
+  protected membreDepuis(creeLe?: string): string {
+    const date = creeLe ? new Date(creeLe) : null;
+    if (!date || isNaN(date.getTime())) return '';
+    return date.toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' });
+  }
 
   protected changerMode(mode: Mode): void {
     this.mode.set(mode);

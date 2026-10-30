@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { PageCompte } from './pages/compte/compte';
 import { PageFavoris } from './pages/favoris/favoris';
 import { PageFrigo } from './pages/frigo/frigo';
 import { MesRestes } from './pages/mes-restes/mes-restes';
@@ -9,5 +10,6 @@ export const routes: Routes = [
   { path: 'restes', component: MesRestes, title: 'Mes restes · Rien ne se jette' },
   { path: 'frigo', component: PageFrigo, title: 'Mon frigo · Rien ne se jette' },
   { path: 'favoris', component: PageFavoris, title: 'Favoris · Rien ne se jette' },
+  { path: 'compte', component: PageCompte, title: 'Mon compte · Rien ne se jette' },
   { path: '**', redirectTo: 'legume/carotte' },
 ];

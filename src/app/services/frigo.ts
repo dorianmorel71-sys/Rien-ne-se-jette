@@ -9,7 +9,7 @@ import { ecrire, lire } from '../utils/stockage';
 const CLE = 'rien-ne-se-jette.frigo';
 
 /** Un reste mis au frigo et le jour où il y est entré. */
-interface Rangement {
+export interface Rangement {
   id: string;
   /** « 2026-10-30 » */
   depuis: string;
@@ -50,6 +50,9 @@ export class Frigo {
   /** Jour de référence, remis à jour quand on revient sur l'appli. */
   readonly jour = signal(aujourdhui());
 
+  /** Tout l'état, pour la sauvegarde dans le compte. */
+  readonly etat = this.rangements.asReadonly();
+
   /** Les plus urgents d'abord. */
   readonly restes = computed<ResteAuFrigo[]>(() =>
     this.rangements()
@@ -88,6 +91,10 @@ export class Frigo {
 
   retirer(ids: readonly string[]): void {
     this.rangements.update((r) => r.filter((x) => !ids.includes(x.id)));
+  }
+
+  remplacer(rangements: Rangement[]): void {
+    this.rangements.set(rangements);
   }
 
   vider(): void {

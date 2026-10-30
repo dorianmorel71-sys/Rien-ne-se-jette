@@ -42,7 +42,7 @@ header {
   }
 
   .compteur {
-    margin: 0;
+    margin: 0 0 0 auto;
     background: var(--leaf-soft);
     color: var(--leaf);
     border-radius: 999px;
@@ -50,6 +50,39 @@ header {
     font-size: 0.9rem;
     font-weight: 500;
     white-space: nowrap;
+  }
+}
+
+// Accès au compte, en haut à droite sur téléphone.
+.bouton-compte {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  color: var(--fg);
+  font-weight: 700;
+  font-size: 0.9rem;
+
+  .pastille {
+    display: grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: var(--mustard-soft);
+    border: 2px solid var(--mustard);
+    font-family: var(--f-display);
+    font-weight: 800;
+    font-size: 1.05rem;
+  }
+
+  // Sur téléphone, la pastille suffit.
+  .libelle {
+    display: none;
+  }
+
+  &.actif .pastille {
+    background: var(--mustard);
   }
 }
 
@@ -184,6 +217,10 @@ footer {
     flex-direction: column;
     align-items: flex-start;
 
+    .compteur {
+      margin: 0;
+    }
+
     h1 {
       font-size: 2.6rem;
     }
@@ -215,6 +252,20 @@ footer {
 
     .compte {
       right: -10px;
+    }
+  }
+
+  .bouton-compte {
+    padding: 4px 12px 4px 4px;
+    border-radius: 999px;
+
+    &:hover,
+    &.actif {
+      background: var(--surface);
+    }
+
+    .libelle {
+      display: inline;
     }
   }
 

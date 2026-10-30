@@ -4,7 +4,7 @@ import { ecrire, lire } from '../utils/stockage';
 
 const CLE = 'rien-ne-se-jette.favoris';
 
-interface DonneesFavoris {
+export interface DonneesFavoris {
   legumes: string[];
   /** La recette telle qu'elle était affichée, avec les restes cochés à ce moment-là. */
   recettes: RecetteGeneree[];
@@ -17,12 +17,18 @@ export class Favoris {
     lire<DonneesFavoris>(CLE, { legumes: [], recettes: [] }),
   );
 
+  /** Tout l'état, pour la sauvegarde dans le compte. */
+  readonly etat = this.donnees.asReadonly();
   readonly legumes = computed(() => this.donnees().legumes);
   readonly recettes = computed(() => this.donnees().recettes);
   readonly nombre = computed(() => this.legumes().length + this.recettes().length);
 
   constructor() {
     effect(() => ecrire(CLE, this.donnees()));
+  }
+
+  remplacer(donnees: DonneesFavoris): void {
+    this.donnees.set(donnees);
   }
 
   estLegumeFavori(id: string): boolean {

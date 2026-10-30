@@ -36,3 +36,12 @@ src/
 ```
 
 Pour ajouter un légume ou une recette, il suffit de compléter `src/app/data/legumes.ts` ou `src/app/data/recettes.ts` (les ingrédients à cocher sont dans `src/app/data/ingredients.ts`, et leur durée au frigo dans `src/app/data/frigo.ts`).
+
+## Comptes (Firebase)
+
+Les comptes sont facultatifs : ils sauvegardent favoris, frigo et compteur pour les retrouver sur tous ses appareils. Tant que `src/app/firebase.config.ts` est vide, ils sont désactivés.
+
+1. Sur [console.firebase.google.com](https://console.firebase.google.com), crée un projet, puis ajoute une **application Web** et copie sa configuration dans `src/app/firebase.config.ts`.
+2. **Authentication › Méthodes de connexion** : active « Adresse e-mail/Mot de passe » et « Google ».
+3. **Authentication › Paramètres › Domaines autorisés** : ajoute le domaine GitHub Pages (`<utilisateur>.github.io`).
+4. **Firestore Database** : crée la base, puis colle le contenu de `firestore.rules` dans l'onglet **Règles** et publie.

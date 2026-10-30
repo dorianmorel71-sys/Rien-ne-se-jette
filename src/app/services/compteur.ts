@@ -10,7 +10,7 @@ const PLACARD = new Set(
   GROUPES_INGREDIENTS.find((g) => g.titre === 'Dans mon placard')?.ingredients.map((i) => i.id),
 );
 
-interface DonneesCompteur {
+export interface DonneesCompteur {
   restes: number;
   recettes: number;
   /** Nombre de fois où chaque recette a été cuisinée. */
@@ -27,11 +27,17 @@ export class Compteur {
     ...lire<Partial<DonneesCompteur>>(CLE, {}),
   });
 
+  /** Tout l'état, pour la sauvegarde dans le compte. */
+  readonly etat = this.donnees.asReadonly();
   readonly restes = computed(() => this.donnees().restes);
   readonly recettes = computed(() => this.donnees().recettes);
 
   constructor() {
     effect(() => ecrire(CLE, this.donnees()));
+  }
+
+  remplacer(donnees: DonneesCompteur): void {
+    this.donnees.set(donnees);
   }
 
   fois(nom: string): number {

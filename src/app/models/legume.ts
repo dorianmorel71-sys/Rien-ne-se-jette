@@ -5,9 +5,13 @@ export interface PartieLegume {
   usages: string[];
 }
 
+/** Famille sous laquelle le légume est rangé dans la liste. */
+export type CategorieLegume = 'Légumes' | 'Fruits' | 'Herbes & aromates';
+
 export interface Legume {
   id: string;
   nom: string;
+  categorie: CategorieLegume;
   /** Couleur de la pastille dans la liste. */
   couleur: string;
   score: string;

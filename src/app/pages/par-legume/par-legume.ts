@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { FicheLegume } from '../../components/fiche-legume/fiche-legume';
-import { LEGUMES } from '../../data/legumes';
+import { CATEGORIES_LEGUMES, LEGUMES } from '../../data/legumes';
 
 /** Largeur sous laquelle on fait défiler jusqu'à la fiche après un choix. */
 const LARGEUR_MOBILE = 700;
@@ -43,6 +43,16 @@ export class ParLegume {
       (l) => !filtre || normaliser(l.nom).includes(filtre) || normaliser(l.id).includes(filtre),
     );
   });
+
+  /** Légumes filtrés, rangés par famille puis par ordre alphabétique. */
+  readonly groupes = computed(() =>
+    CATEGORIES_LEGUMES.map((titre) => ({
+      titre,
+      legumes: this.legumesFiltres()
+        .filter((l) => l.categorie === titre)
+        .sort((a, b) => a.nom.localeCompare(b.nom, 'fr')),
+    })).filter((g) => g.legumes.length > 0),
+  );
 
   readonly legume = computed(() => LEGUMES.find((l) => l.id === this.id()) ?? LEGUMES[0]);
 

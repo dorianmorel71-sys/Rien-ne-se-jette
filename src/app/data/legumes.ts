@@ -1,9 +1,12 @@
-import { Legume } from '../models/legume';
+import { CategorieLegume, Legume } from '../models/legume';
+
+export const CATEGORIES_LEGUMES: CategorieLegume[] = ['Légumes', 'Fruits', 'Herbes & aromates'];
 
 export const LEGUMES: Legume[] = [
   {
     id: 'carotte',
     nom: 'Carotte',
+    categorie: 'Légumes',
     couleur: '#e07a1f',
     score: '3 parties sur 3',
     intro: 'Presque tout se mange dans la carotte, y compris les fanes.',
@@ -29,6 +32,7 @@ export const LEGUMES: Legume[] = [
   {
     id: 'poireau',
     nom: 'Poireau',
+    categorie: 'Légumes',
     couleur: '#5c9a3c',
     score: '3 parties sur 3',
     intro: 'Le vert du poireau a plus de goût que le blanc, il faut juste le cuire plus longtemps.',
@@ -51,6 +55,7 @@ export const LEGUMES: Legume[] = [
   {
     id: 'brocoli',
     nom: 'Brocoli',
+    categorie: 'Légumes',
     couleur: '#2f7d4f',
     score: '3 parties sur 3',
     intro: "Le tronc est souvent jeté alors qu'il est tendre une fois épluché.",
@@ -70,6 +75,7 @@ export const LEGUMES: Legume[] = [
   {
     id: 'chou-fleur',
     nom: 'Chou-fleur',
+    categorie: 'Légumes',
     couleur: '#c9b98a',
     score: '3 parties sur 3',
     intro: 'Les feuilles vertes rôties au four ont un goût proche des chips de chou kale.',
@@ -91,6 +97,7 @@ export const LEGUMES: Legume[] = [
   {
     id: 'courgette',
     nom: 'Courgette',
+    categorie: 'Légumes',
     couleur: '#4f8a2a',
     score: '2 parties sur 2',
     intro: "La peau se mange déjà, mais si la recette demande de l'éplucher, garde-la.",
@@ -112,6 +119,7 @@ export const LEGUMES: Legume[] = [
   {
     id: 'courge',
     nom: 'Courge / potimarron',
+    categorie: 'Légumes',
     couleur: '#d9631e',
     score: '3 parties sur 3',
     intro: "Les graines grillées font un snack parfait pour l'apéro.",
@@ -137,6 +145,7 @@ export const LEGUMES: Legume[] = [
   {
     id: 'pomme-de-terre',
     nom: 'Pomme de terre',
+    categorie: 'Légumes',
     couleur: '#b58a4c',
     score: '1 partie',
     intro: 'Les épluchures font de vraies chips, à condition de bien les choisir.',
@@ -157,7 +166,8 @@ export const LEGUMES: Legume[] = [
   },
   {
     id: 'oignon',
-    nom: 'Oignon & ail',
+    nom: 'Oignon & échalote',
+    categorie: 'Herbes & aromates',
     couleur: '#a8743f',
     score: '2 parties',
     intro: 'Les pelures donnent du goût et une belle couleur dorée aux bouillons.',
@@ -171,13 +181,14 @@ export const LEGUMES: Legume[] = [
       },
       {
         nom: 'Tiges vertes',
-        usages: ["Si l'oignon ou l'ail a germé : les pousses se mangent comme de la ciboulette"],
+        usages: ["Si l'oignon a germé : les pousses se mangent comme de la ciboulette"],
       },
     ],
   },
   {
     id: 'betterave',
     nom: 'Betterave',
+    categorie: 'Légumes',
     couleur: '#8e1f45',
     score: '3 parties sur 3',
     intro: 'Les feuilles de betterave se cuisinent comme des blettes.',
@@ -196,6 +207,7 @@ export const LEGUMES: Legume[] = [
   {
     id: 'radis',
     nom: 'Radis',
+    categorie: 'Légumes',
     couleur: '#d0315a',
     score: '2 parties sur 2',
     intro: 'Les fanes de radis font une soupe vraiment bonne.',
@@ -219,6 +231,7 @@ export const LEGUMES: Legume[] = [
   {
     id: 'celeri',
     nom: 'Céleri',
+    categorie: 'Légumes',
     couleur: '#7fae4d',
     score: '3 parties',
     intro: "Les feuilles de céleri s'utilisent comme une herbe aromatique.",
@@ -237,6 +250,7 @@ export const LEGUMES: Legume[] = [
   {
     id: 'fenouil',
     nom: 'Fenouil',
+    categorie: 'Légumes',
     couleur: '#9cc26a',
     score: '2 parties',
     intro: 'Les petites feuilles vertes ont un goût anisé très fin.',
@@ -251,6 +265,7 @@ export const LEGUMES: Legume[] = [
   {
     id: 'petits-pois',
     nom: 'Petits pois',
+    categorie: 'Légumes',
     couleur: '#6fae3a',
     score: '1 partie',
     intro: 'Les cosses donnent un velouté doux et bien vert.',
@@ -268,6 +283,7 @@ export const LEGUMES: Legume[] = [
   {
     id: 'asperge',
     nom: 'Asperge',
+    categorie: 'Légumes',
     couleur: '#8aa04a',
     score: '2 parties',
     intro: 'Les bouts durs et les épluchures parfument une soupe.',
@@ -282,6 +298,7 @@ export const LEGUMES: Legume[] = [
   {
     id: 'herbes',
     nom: 'Herbes fraîches',
+    categorie: 'Herbes & aromates',
     couleur: '#3b8f5a',
     score: '2 parties',
     intro: 'Persil, coriandre, basilic : les tiges ont autant de goût que les feuilles.',
@@ -299,6 +316,7 @@ export const LEGUMES: Legume[] = [
   {
     id: 'pomme',
     nom: 'Pomme',
+    categorie: 'Fruits',
     couleur: '#c33b2d',
     score: '2 parties',
     intro: 'Les épluchures et les trognons font une gelée sans acheter de fruits en plus.',
@@ -323,6 +341,7 @@ export const LEGUMES: Legume[] = [
   {
     id: 'agrumes',
     nom: 'Citron & orange',
+    categorie: 'Fruits',
     couleur: '#e3a417',
     score: '2 parties',
     intro: 'Le zeste est la partie la plus parfumée du fruit.',
@@ -341,6 +360,7 @@ export const LEGUMES: Legume[] = [
   {
     id: 'tomate',
     nom: 'Tomate',
+    categorie: 'Légumes',
     couleur: '#d8402c',
     score: '2 parties',
     intro: 'Les peaux et les graines retirées pour une sauce peuvent encore servir.',
@@ -352,5 +372,717 @@ export const LEGUMES: Legume[] = [
       { nom: 'Graines et jus', usages: ['Dans une vinaigrette ou un gaspacho'] },
     ],
     avertissement: 'Les feuilles et les tiges du plant de tomate ne se mangent pas.',
+  },
+  {
+    id: 'navet',
+    nom: 'Navet',
+    categorie: 'Légumes',
+    couleur: '#a77bc0',
+    score: '2 parties',
+    intro: 'Les fanes de navet se cuisinent comme des épinards, avec un petit goût de moutarde.',
+    parties: [
+      {
+        nom: 'Fanes',
+        usages: [
+          "<b>Poêlées</b> à l'ail et à l'huile d'olive, comme des épinards",
+          'Dans une soupe ou une quiche',
+          'Jeunes et tendres, hachées crues en salade',
+        ],
+      },
+      {
+        nom: 'Épluchures',
+        usages: [
+          '<b>Chips</b> au four : huile, sel, 15 min à 180 °C',
+          'Dans un bouillon ou un pot-au-feu',
+        ],
+      },
+    ],
+  },
+  {
+    id: 'panais',
+    nom: 'Panais',
+    categorie: 'Légumes',
+    couleur: '#d9c48f',
+    score: '2 parties',
+    intro: 'Les épluchures de panais sont sucrées et deviennent très croustillantes au four.',
+    parties: [
+      {
+        nom: 'Épluchures',
+        usages: [
+          '<b>Chips</b> au four : huile, sel, 12–15 min à 180 °C',
+          'Dans un bouillon de légumes',
+        ],
+      },
+      {
+        nom: 'Bouts et petites racines',
+        usages: ['Rôtis au four avec les autres légumes', 'Mixés dans un velouté'],
+      },
+    ],
+  },
+  {
+    id: 'patate-douce',
+    nom: 'Patate douce',
+    categorie: 'Légumes',
+    couleur: '#d9733b',
+    score: '2 parties',
+    intro: 'La peau se mange : il suffit de bien la brosser.',
+    parties: [
+      {
+        nom: 'Peau',
+        usages: [
+          'Garde-la pour des <b>frites ou des quartiers rôtis</b> : ils sont plus croustillants',
+          'Épluchures en chips au four',
+        ],
+      },
+      {
+        nom: 'Restes cuits',
+        usages: [
+          'Écrasés dans une pâte à pancakes ou à gâteau',
+          'En velouté avec du lait de coco et du curry',
+        ],
+      },
+    ],
+  },
+  {
+    id: 'topinambour',
+    nom: 'Topinambour',
+    categorie: 'Légumes',
+    couleur: '#b8865a',
+    score: '2 parties',
+    intro: "Sa peau est fine : pas besoin de l'éplucher, un bon brossage suffit.",
+    parties: [
+      {
+        nom: 'Peau',
+        usages: ['Garde-la et cuis le topinambour entier', 'Épluchures en <b>chips</b> au four'],
+      },
+      {
+        nom: 'Topinambours ridés',
+        usages: ["En <b>velouté</b> : son goût d'artichaut ressort très bien"],
+      },
+    ],
+  },
+  {
+    id: 'chou',
+    nom: 'Chou',
+    categorie: 'Légumes',
+    couleur: '#6f9e5a',
+    score: '3 parties',
+    intro: 'Chou vert, blanc ou rouge : les grosses feuilles et le trognon se cuisinent aussi.',
+    parties: [
+      {
+        nom: 'Grosses feuilles',
+        usages: [
+          "<b>Chou farci</b> : feuilles blanchies 3 min puis roulées autour d'une farce",
+          'Émincées dans une soupe ou une potée',
+        ],
+      },
+      {
+        nom: 'Trognon',
+        usages: ['Râpé cru dans un <b>coleslaw</b>', 'Émincé finement et sauté au wok'],
+      },
+      {
+        nom: 'Chou un peu flétri',
+        usages: ['Émincé et lactofermenté avec 2 % de sel : <b>choucroute maison</b>'],
+      },
+    ],
+  },
+  {
+    id: 'chou-bruxelles',
+    nom: 'Chou de Bruxelles',
+    categorie: 'Légumes',
+    couleur: '#4f8a3c',
+    score: '2 parties',
+    intro: 'Les petites feuilles qui tombent font des chips en quelques minutes.',
+    parties: [
+      {
+        nom: 'Feuilles extérieures',
+        usages: [
+          '<b>Chips</b> au four : huile, sel, 8 min à 200 °C',
+          'Sautées à la poêle avec des lardons',
+        ],
+      },
+      {
+        nom: 'Choux un peu jaunis',
+        usages: ['Retire les feuilles abîmées, le cœur est encore bon : rôtis au four'],
+      },
+    ],
+  },
+  {
+    id: 'chou-rave',
+    nom: 'Chou-rave',
+    categorie: 'Légumes',
+    couleur: '#a7c46b',
+    score: '2 parties',
+    intro: 'Ses feuilles se cuisinent comme celles du chou.',
+    parties: [
+      {
+        nom: 'Feuilles',
+        usages: ['<b>Poêlées</b> comme des épinards', 'Émincées dans une soupe'],
+      },
+      { nom: 'Épluchures', usages: ['Dans un bouillon de légumes'] },
+    ],
+  },
+  {
+    id: 'kale',
+    nom: 'Chou kale',
+    categorie: 'Légumes',
+    couleur: '#2f6b3a',
+    score: '2 parties',
+    intro: 'Les tiges du kale sont dures crues mais très bonnes cuites.',
+    parties: [
+      {
+        nom: 'Tiges',
+        usages: [
+          'Émincées fin et sautées avant les feuilles',
+          'Mixées dans un pesto ou un smoothie',
+        ],
+      },
+      {
+        nom: 'Feuilles fanées',
+        usages: ['<b>Chips de kale</b> : huile, sel, 12 min à 150 °C'],
+      },
+    ],
+  },
+  {
+    id: 'blettes',
+    nom: 'Blettes',
+    categorie: 'Légumes',
+    couleur: '#8fb54a',
+    score: '2 parties',
+    intro: 'Tout se mange dans la blette : les côtes et les feuilles se cuisent juste à part.',
+    parties: [
+      {
+        nom: 'Côtes',
+        usages: [
+          '<b>Gratin de côtes de blettes</b> à la béchamel',
+          "Coupées et poêlées à l'ail",
+          'En pickles au vinaigre',
+        ],
+      },
+      {
+        nom: 'Feuilles',
+        usages: ['Comme des épinards, dans une tarte ou une omelette'],
+      },
+    ],
+  },
+  {
+    id: 'epinards',
+    nom: 'Épinards',
+    categorie: 'Légumes',
+    couleur: '#2e7a3a',
+    score: '2 parties',
+    intro:
+      'Des épinards fanés sont parfaits à cuire : une fois fondus, on ne voit plus la différence.',
+    parties: [
+      {
+        nom: 'Tiges',
+        usages: [
+          'Garde-les : elles cuisent presque aussi vite que les feuilles',
+          'Mixées dans une soupe verte',
+        ],
+      },
+      {
+        nom: 'Épinards fanés',
+        usages: [
+          '<b>Fondus</b> au beurre ou à la crème',
+          'En quiche, en pesto ou dans un smoothie',
+        ],
+      },
+    ],
+  },
+  {
+    id: 'salade',
+    nom: 'Salade',
+    categorie: 'Légumes',
+    couleur: '#8cc152',
+    score: '2 parties',
+    intro: 'Une salade fanée ne se jette pas : elle se cuit.',
+    parties: [
+      {
+        nom: 'Feuilles fanées',
+        usages: [
+          '<b>Velouté de laitue</b> avec une pomme de terre et un oignon',
+          "Revigorées 20 min dans de l'eau glacée",
+          'Braisées au beurre avec des petits pois',
+        ],
+      },
+      {
+        nom: 'Cœur et trognon',
+        usages: ['Le cœur, croquant, cru en salade', 'Le trognon dans un bouillon'],
+      },
+    ],
+  },
+  {
+    id: 'endive',
+    nom: 'Endive',
+    categorie: 'Légumes',
+    couleur: '#e3cf5a',
+    score: '2 parties',
+    intro: 'Une endive un peu molle est idéale pour la cuisson.',
+    parties: [
+      {
+        nom: 'Feuilles abîmées',
+        usages: ['Retire juste la partie brune : le reste se cuit très bien'],
+      },
+      {
+        nom: 'Endives ramollies',
+        usages: [
+          '<b>Caramélisées</b> à la poêle avec un peu de sucre',
+          'Roulées dans du jambon et gratinées',
+        ],
+      },
+    ],
+  },
+  {
+    id: 'concombre',
+    nom: 'Concombre',
+    categorie: 'Légumes',
+    couleur: '#5a9a4a',
+    score: '2 parties',
+    intro: 'Sa peau se mange : il suffit de bien la laver.',
+    parties: [
+      {
+        nom: 'Peau et bouts',
+        usages: [
+          'Garde-la et coupe le concombre avec',
+          "Épluchures dans une carafe d'<b>eau aromatisée</b> ou un gaspacho",
+          'Bouts râpés dans un tzatziki',
+        ],
+      },
+      {
+        nom: 'Concombre ramolli',
+        usages: [
+          'En <b>soupe froide</b> mixée avec yaourt et menthe',
+          'En pickles rapides au vinaigre',
+        ],
+      },
+    ],
+  },
+  {
+    id: 'poivron',
+    nom: 'Poivron',
+    categorie: 'Légumes',
+    couleur: '#d63a2a',
+    score: '2 parties',
+    intro: 'Un poivron ridé est encore meilleur une fois rôti.',
+    parties: [
+      {
+        nom: 'Chair autour du pédoncule',
+        usages: ['Récupérée au couteau pour une <b>piperade</b> ou une omelette'],
+      },
+      {
+        nom: 'Poivron ridé',
+        usages: ['<b>Rôti</b> au four puis pelé', 'Mixé en coulis ou en houmous de poivron'],
+      },
+    ],
+  },
+  {
+    id: 'aubergine',
+    nom: 'Aubergine',
+    categorie: 'Légumes',
+    couleur: '#5b2a6e',
+    score: '2 parties',
+    intro: "Après un caviar d'aubergine, la peau peut encore servir.",
+    parties: [
+      {
+        nom: 'Peau',
+        usages: [
+          '<b>Frite ou rôtie</b> au four : elle devient croustillante',
+          'Hachée dans une farce',
+        ],
+      },
+      {
+        nom: 'Aubergine ramollie',
+        usages: ["Rôtie entière au four : <b>caviar d'aubergine</b> ou baba ganoush"],
+      },
+    ],
+    avertissement: "L'aubergine se mange cuite, pas crue.",
+  },
+  {
+    id: 'haricots-verts',
+    nom: 'Haricots verts',
+    categorie: 'Légumes',
+    couleur: '#4c9a3a',
+    score: '2 parties',
+    intro: 'Les bouts et les haricots trop gros ont encore plein de goût.',
+    parties: [
+      { nom: 'Bouts équeutés', usages: ['Dans un bouillon de légumes'] },
+      {
+        nom: 'Haricots trop gros',
+        usages: ['En <b>velouté</b> mixé', 'En salade tiède avec une vinaigrette à la moutarde'],
+      },
+    ],
+  },
+  {
+    id: 'feves',
+    nom: 'Fèves',
+    categorie: 'Légumes',
+    couleur: '#8bbf5a',
+    score: '2 parties',
+    intro: 'Les cosses des jeunes fèves se mangent.',
+    parties: [
+      {
+        nom: 'Cosses',
+        usages: [
+          'Jeunes et tendres : <b>purée ou soupe de cosses</b> (retire les fils)',
+          'Poêlées en lanières',
+        ],
+      },
+      { nom: 'Peau des fèves', usages: ['Sur les jeunes fèves, garde-la : elle est tendre'] },
+    ],
+    avertissement:
+      'Les personnes atteintes de favisme (déficit en G6PD) ne doivent pas manger de fèves.',
+  },
+  {
+    id: 'champignons',
+    nom: 'Champignons',
+    categorie: 'Légumes',
+    couleur: '#a88c6a',
+    score: '2 parties',
+    intro: 'Coupe seulement le bout terreux du pied : le reste se cuisine.',
+    parties: [
+      {
+        nom: 'Pieds',
+        usages: [
+          'Hachés en <b>duxelles</b> avec échalote et beurre',
+          'Dans un bouillon ou une sauce',
+        ],
+      },
+      {
+        nom: 'Champignons ramollis',
+        usages: [
+          'Poêlés à feu vif, ils retrouvent du goût',
+          'Séchés au four doux puis mixés en poudre',
+        ],
+      },
+    ],
+  },
+  {
+    id: 'artichaut',
+    nom: 'Artichaut',
+    categorie: 'Légumes',
+    couleur: '#6b8f5a',
+    score: '2 parties',
+    intro: "La tige de l'artichaut est presque aussi tendre que le cœur.",
+    parties: [
+      { nom: 'Tige', usages: ["<b>Épluchée</b> et cuite avec l'artichaut"] },
+      {
+        nom: 'Feuilles cuites',
+        usages: ['Gratte la chair des feuilles pour une <b>tartinade</b> ou une soupe'],
+      },
+    ],
+  },
+  {
+    id: 'mais',
+    nom: 'Maïs',
+    categorie: 'Légumes',
+    couleur: '#e3b92a',
+    score: '3 parties',
+    intro: 'Les épis égrenés ont encore beaucoup de goût.',
+    parties: [
+      {
+        nom: 'Épis égrenés',
+        usages: ['<b>Bouillon de maïs</b> : mijotés 30 min, parfait pour un velouté ou un risotto'],
+      },
+      { nom: 'Barbes', usages: ['Séchées en <b>infusion</b>'] },
+      { nom: 'Feuilles', usages: ['Pour emballer des papillotes au four ou au barbecue'] },
+    ],
+  },
+  {
+    id: 'legumineuses',
+    nom: 'Pois chiches & haricots secs',
+    categorie: 'Légumes',
+    couleur: '#d1ab5f',
+    score: '2 parties',
+    intro: "Le jus des pois chiches se monte en neige comme des blancs d'œufs.",
+    parties: [
+      {
+        nom: 'Jus (aquafaba)',
+        usages: [
+          '<b>Aquafaba</b> : monté en neige pour une meringue ou une mousse au chocolat',
+          'Pour lier une sauce ou une soupe',
+        ],
+      },
+      {
+        nom: 'Restes cuits',
+        usages: [
+          'Écrasés en <b>houmous</b>',
+          'Rôtis au four avec des épices : grignotage croustillant',
+        ],
+      },
+    ],
+    avertissement:
+      "Utilise le jus des conserves ou de la cuisson, jamais l'eau de trempage des légumes secs.",
+  },
+  {
+    id: 'ail',
+    nom: 'Ail',
+    categorie: 'Herbes & aromates',
+    couleur: '#cfc3a8',
+    score: '2 parties',
+    intro: "Même germé, l'ail se cuisine.",
+    parties: [
+      {
+        nom: 'Germe vert',
+        usages: [
+          "Retire-le si tu trouves l'ail piquant, sinon garde-le",
+          'Les pousses vertes hachées comme de la ciboulette',
+        ],
+      },
+      { nom: 'Peaux', usages: ['Dans un bouillon, puis retirées'] },
+    ],
+  },
+  {
+    id: 'gingembre',
+    nom: 'Gingembre',
+    categorie: 'Herbes & aromates',
+    couleur: '#d8b26a',
+    score: '2 parties',
+    intro: 'Gratte la peau du gingembre avec une cuillère : elle a beaucoup de goût.',
+    parties: [
+      {
+        nom: 'Épluchures',
+        usages: ['En <b>infusion</b> avec du citron et du miel', 'Dans un bouillon ou un sirop'],
+      },
+      {
+        nom: 'Gingembre ridé',
+        usages: ['Râpé et <b>congelé</b> en petites portions', 'Confit au sucre'],
+      },
+    ],
+  },
+  {
+    id: 'avocat',
+    nom: 'Avocat',
+    categorie: 'Fruits',
+    couleur: '#5e8a3a',
+    score: '2 parties',
+    intro: 'Un avocat trop mûr est parfait pour tout ce qui se mixe.',
+    parties: [
+      {
+        nom: 'Avocat trop mûr',
+        usages: [
+          "En <b>guacamole</b> si la chair n'est pas noire",
+          'En mousse au chocolat : avocat, cacao et miel',
+          'Mixé en vinaigrette crémeuse',
+        ],
+      },
+      {
+        nom: 'Noyau',
+        usages: ["Piqué de 3 cure-dents au-dessus d'un verre d'eau, il germe"],
+      },
+    ],
+    avertissement: "Le noyau et la peau de l'avocat ne se mangent pas.",
+  },
+  {
+    id: 'banane',
+    nom: 'Banane',
+    categorie: 'Fruits',
+    couleur: '#e8c22e',
+    score: '2 parties',
+    intro: 'Plus la banane est noire, meilleur est le gâteau.',
+    parties: [
+      {
+        nom: 'Bananes trop mûres',
+        usages: [
+          '<b>Banana bread</b> ou pancakes',
+          'Coupées et congelées, puis mixées : glace minute',
+        ],
+      },
+      {
+        nom: 'Peau',
+        usages: [
+          'Cuite, effilochée et poêlée avec des épices : <b>effiloché</b> façon pulled pork',
+          'En chutney avec oignon et épices',
+        ],
+      },
+    ],
+    avertissement: 'Pour manger la peau, prends des bananes bio et lave-les bien.',
+  },
+  {
+    id: 'poire',
+    nom: 'Poire',
+    categorie: 'Fruits',
+    couleur: '#b6b84a',
+    score: '2 parties',
+    intro: 'Comme la pomme, ses épluchures et trognons font un bon sirop.',
+    parties: [
+      {
+        nom: 'Épluchures et trognons',
+        usages: ['<b>Sirop ou gelée</b> de poire', 'Infusion avec cannelle et gingembre'],
+      },
+      {
+        nom: 'Poires trop mûres',
+        usages: ['Compote, smoothie, clafoutis ou crumble'],
+      },
+    ],
+    avertissement: 'Retire les pépins avant de mixer.',
+  },
+  {
+    id: 'fraise',
+    nom: 'Fraise',
+    categorie: 'Fruits',
+    couleur: '#e0384a',
+    score: '2 parties',
+    intro: "Les feuilles des fraises parfument très bien l'eau.",
+    parties: [
+      {
+        nom: 'Queues et feuilles',
+        usages: ["Dans une carafe d'<b>eau aromatisée</b>", 'Mixées dans un smoothie'],
+      },
+      {
+        nom: 'Fraises abîmées',
+        usages: ['En <b>coulis</b>, en confiture express ou en smoothie'],
+      },
+    ],
+    avertissement: 'Une fraise moisie se jette entière, pas seulement la partie moisie.',
+  },
+  {
+    id: 'kiwi',
+    nom: 'Kiwi',
+    categorie: 'Fruits',
+    couleur: '#8a9a3a',
+    score: '2 parties',
+    intro: 'La peau du kiwi se mange : elle est riche en fibres.',
+    parties: [
+      {
+        nom: 'Peau',
+        usages: ['Bien lavée : coupe le kiwi en rondelles avec', 'Mixée dans un <b>smoothie</b>'],
+      },
+      { nom: 'Kiwis trop mûrs', usages: ['En coulis, en sorbet ou dans une vinaigrette'] },
+    ],
+  },
+  {
+    id: 'ananas',
+    nom: 'Ananas',
+    categorie: 'Fruits',
+    couleur: '#e8b830',
+    score: '3 parties',
+    intro: "L'écorce de l'ananas fait une boisson pétillante maison.",
+    parties: [
+      {
+        nom: 'Écorce',
+        usages: [
+          '<b>Tepache</b> : écorce, sucre et eau, fermentés 2 à 3 jours',
+          'Infusion ou sirop avec du gingembre',
+        ],
+      },
+      { nom: 'Cœur', usages: ['Mixé dans un smoothie', 'Cuit en compote ou en sirop'] },
+      {
+        nom: 'Couronne de feuilles',
+        usages: ["Posée dans l'eau, elle fait des racines et se plante"],
+      },
+    ],
+  },
+  {
+    id: 'mangue',
+    nom: 'Mangue',
+    categorie: 'Fruits',
+    couleur: '#f0a030',
+    score: '2 parties',
+    intro: 'Il reste toujours de la chair autour du noyau.',
+    parties: [
+      {
+        nom: 'Chair autour du noyau',
+        usages: ['Grattée à la cuillère pour un <b>lassi</b> ou un smoothie'],
+      },
+      { nom: 'Mangue trop mûre', usages: ['En chutney, en sorbet ou en salsa'] },
+    ],
+    avertissement: 'La peau de mangue peut irriter la bouche : évite de la manger.',
+  },
+  {
+    id: 'peche-abricot',
+    nom: 'Pêche, abricot & prune',
+    categorie: 'Fruits',
+    couleur: '#ef8a4a',
+    score: '2 parties',
+    intro: 'Les fruits abîmés font les meilleures compotes.',
+    parties: [
+      { nom: 'Peaux', usages: ['Cuites dans un <b>sirop</b> parfumé'] },
+      {
+        nom: 'Fruits abîmés',
+        usages: ['Compote, clafoutis ou confiture', 'Rôtis au four avec du miel'],
+      },
+    ],
+    avertissement: "Ne mange pas l'amande des noyaux : elle peut être toxique.",
+  },
+  {
+    id: 'cerise',
+    nom: 'Cerise',
+    categorie: 'Fruits',
+    couleur: '#a61e3a',
+    score: '2 parties',
+    intro: 'Les queues de cerise font une tisane traditionnelle.',
+    parties: [
+      { nom: 'Queues', usages: ['Séchées en <b>infusion</b>'] },
+      { nom: 'Cerises abîmées', usages: ['Clafoutis, compote ou coulis'] },
+    ],
+    avertissement: 'Ne croque pas les noyaux.',
+  },
+  {
+    id: 'raisin',
+    nom: 'Raisin',
+    categorie: 'Fruits',
+    couleur: '#7a3a7a',
+    score: '1 partie',
+    intro: 'Des raisins un peu ridés sont encore plus sucrés.',
+    parties: [
+      {
+        nom: 'Grains ridés',
+        usages: [
+          '<b>Rôtis</b> au four, avec du fromage',
+          'Congelés : ils se mangent comme des bonbons glacés',
+          'Dans une sauce pour volaille',
+        ],
+      },
+    ],
+  },
+  {
+    id: 'pasteque',
+    nom: 'Pastèque',
+    categorie: 'Fruits',
+    couleur: '#e04a5a',
+    score: '2 parties',
+    intro: "La partie blanche de l'écorce se cuisine comme un concombre.",
+    parties: [
+      {
+        nom: 'Écorce blanche',
+        usages: ['En <b>pickles</b> au vinaigre', 'Dans un gaspacho ou sautée comme une courgette'],
+      },
+      { nom: 'Graines', usages: ['Grillées et salées à la poêle'] },
+    ],
+  },
+  {
+    id: 'melon',
+    nom: 'Melon',
+    categorie: 'Fruits',
+    couleur: '#f0a050',
+    score: '2 parties',
+    intro: 'Les graines et les filaments sont pleins de jus.',
+    parties: [
+      {
+        nom: 'Graines et filaments',
+        usages: ['Mixés puis filtrés : <b>jus de melon</b> ou base de smoothie'],
+      },
+      {
+        nom: 'Melon trop mûr',
+        usages: ['En soupe froide ou en sorbet', 'En smoothie avec de la menthe'],
+      },
+    ],
+  },
+  {
+    id: 'rhubarbe',
+    nom: 'Rhubarbe',
+    categorie: 'Fruits',
+    couleur: '#c94d6a',
+    score: '2 parties',
+    intro: 'Les fils et épluchures de rhubarbe donnent un sirop rose.',
+    parties: [
+      {
+        nom: 'Épluchures et fils',
+        usages: ['<b>Sirop de rhubarbe</b> : cuits avec sucre et eau, puis filtrés'],
+      },
+      { nom: 'Tiges abîmées', usages: ['En compote ou en crumble'] },
+    ],
+    avertissement: 'Les feuilles de rhubarbe sont toxiques : ne les mange jamais.',
   },
 ];

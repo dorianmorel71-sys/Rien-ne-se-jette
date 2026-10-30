@@ -9,16 +9,23 @@
   (keydown.enter)="validerRecherche()"
 />
 
-<div class="chips">
-  @for (l of legumesFiltres(); track l.id) {
-    <button
-      class="chip"
-      type="button"
-      [attr.aria-pressed]="l.id === legume().id"
-      (click)="choisir(l.id, true)"
-    >
-      <i [style.background]="l.couleur"></i>{{ l.nom }}
-    </button>
+<div class="groupes">
+  @for (groupe of groupes(); track groupe.titre) {
+    <div>
+      <h4>{{ groupe.titre }}</h4>
+      <div class="chips">
+        @for (l of groupe.legumes; track l.id) {
+          <button
+            class="chip"
+            type="button"
+            [attr.aria-pressed]="l.id === legume().id"
+            (click)="choisir(l.id, true)"
+          >
+            <i [style.background]="l.couleur"></i>{{ l.nom }}
+          </button>
+        }
+      </div>
+    </div>
   } @empty {
     <p class="vide">Pas encore de fiche pour « {{ recherche() }} ». Essaie un autre légume.</p>
   }

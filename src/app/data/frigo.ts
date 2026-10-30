@@ -3,6 +3,11 @@ import { GROUPES_INGREDIENTS } from './ingredients';
 /** Le placard ne va pas au frigo. */
 export const GROUPE_PLACARD = 'Dans mon placard';
 
+/** Au congélateur : on conseille de consommer dans les 3 mois. */
+export const JOURS_CONGELATEUR = 90;
+/** Une fois décongelé, un reste se mange dans les 24 h. */
+export const JOURS_DECONGELE = 1;
+
 /** Nombre de jours au frigo, par défaut pour chaque famille de restes. */
 const JOURS_PAR_GROUPE: Record<string, number> = {
   'Épluchures et fanes': 3,

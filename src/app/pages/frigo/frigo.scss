@@ -22,6 +22,64 @@
   gap: 10px;
 }
 
+.reglages {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+}
+
+.reglage {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+
+  .etiquette {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--muted);
+    margin-right: 2px;
+  }
+
+  button,
+  .calendrier {
+    font: inherit;
+    font-size: 0.88rem;
+    font-weight: 700;
+    padding: 5px 12px;
+    border-radius: 999px;
+    border: 1.5px solid var(--line);
+    background: var(--surface);
+    color: var(--fg);
+    cursor: pointer;
+
+    &[aria-pressed='true'],
+    &.choisie {
+      background: var(--mustard-soft);
+      border-color: var(--mustard);
+    }
+
+    &.glace[aria-pressed='true'] {
+      background: var(--ice-soft);
+      border-color: var(--ice);
+      color: var(--ice);
+    }
+  }
+
+  // Le vrai champ date est invisible par-dessus l'icône : un clic ouvre le calendrier.
+  .calendrier {
+    position: relative;
+    overflow: hidden;
+
+    input {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+    }
+  }
+}
+
 .suggestions {
   display: flex;
   flex-wrap: wrap;
@@ -39,9 +97,45 @@
     cursor: pointer;
   }
 
+  .libre {
+    border-style: dashed;
+    border-color: var(--mustard);
+    background: var(--mustard-soft);
+  }
+
   .vide {
     margin: 0;
     color: var(--muted);
+  }
+}
+
+section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+h4 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  font-family: var(--f-display);
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--accent);
+
+  &.glace {
+    color: var(--ice);
+  }
+
+  .nombre {
+    font-family: var(--f-body);
+    font-size: 0.8rem;
+    color: var(--muted);
+    background: var(--surface);
+    border-radius: 999px;
+    padding: 1px 9px;
   }
 }
 
@@ -101,6 +195,42 @@
     --c: var(--berry);
     --c-soft: var(--berry-soft);
   }
+  &[data-etat='congele'] {
+    --c: var(--ice);
+    --c-soft: var(--ice-soft);
+  }
+}
+
+.note-reste {
+  margin: 1px 0 0;
+  font-size: 0.9rem;
+  font-style: italic;
+}
+
+.modification {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+
+  label {
+    flex: 1 1 160px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--muted);
+  }
+
+  input {
+    font: inherit;
+    font-size: 0.95rem;
+    padding: 7px 10px;
+    border-radius: 10px;
+    border: 1.5px solid var(--line);
+    background: var(--bg);
+    color: var(--fg);
+  }
 }
 
 .ligne {
@@ -152,8 +282,13 @@ details {
   }
 }
 
-.retirer {
-  align-self: flex-start;
+.boutons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.boutons button {
   font: inherit;
   font-size: 0.85rem;
   font-weight: 700;

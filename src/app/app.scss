@@ -164,15 +164,6 @@ header {
   }
 }
 
-.visually-hidden {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip-path: inset(50%);
-  white-space: nowrap;
-}
-
 // Bandeau au-dessus du menu quand une nouvelle version est prête.
 .mise-a-jour {
   position: fixed;

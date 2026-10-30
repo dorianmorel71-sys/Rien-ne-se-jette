@@ -1,0 +1,29 @@
+<div class="wrap">
+  <header>
+    <h1>Rien ne se <span>jette</span></h1>
+    <p>
+      Choisis un légume ou un fruit : on te dit quoi faire des épluchures, des fanes, du trognon et
+      des graines.
+    </p>
+  </header>
+
+  <nav class="onglets" aria-label="Modes">
+    <a routerLink="/legume" routerLinkActive="actif" ariaCurrentWhenActive="page">Par légume</a>
+    <a routerLink="/restes" routerLinkActive="actif" ariaCurrentWhenActive="page">Mes restes</a>
+  </nav>
+
+  <main>
+    <router-outlet />
+  </main>
+
+  <footer>
+    <p>
+      Avant de cuisiner une peau ou des fanes, lave-les bien à l'eau. Privilégie le bio pour les
+      épluchures, car les traitements se concentrent en surface.
+    </p>
+    <p>
+      Ces idées sont des conseils de cuisine courants. En cas de doute sur une partie d'une plante,
+      ne la mange pas.
+    </p>
+  </footer>
+</div>

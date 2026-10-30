@@ -1,0 +1,43 @@
+// Couleurs et polices de l'appli, exposées en variables CSS.
+
+@mixin theme-sombre {
+  --bg: #141a16;
+  --surface: #1c241e;
+  --fg: #e8eee6;
+  --muted: #9caa9f;
+  --line: #2c372f;
+  --accent: #e2668f;
+  --accent-soft: #3a1f2a;
+  --leaf: #8cc785;
+  --leaf-soft: #20321f;
+  --warn: #f0b860;
+  --warn-soft: #33270f;
+  color-scheme: dark;
+}
+
+:root {
+  --bg: #f3f5ef;
+  --surface: #ffffff;
+  --fg: #1f2a22;
+  --muted: #5d6b60;
+  --line: #dde3d8;
+  --accent: #a3264f; // betterave
+  --accent-soft: #f6e3ea;
+  --leaf: #3f7a3a;
+  --leaf-soft: #e3efdf;
+  --warn: #9a5a00;
+  --warn-soft: #fbf0dc;
+  --f-display: 'Bricolage Grotesque', 'Avenir Next', system-ui, sans-serif;
+  --f-body: 'Figtree', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    @include theme-sombre;
+  }
+}
+
+:root[data-theme='dark'] {
+  @include theme-sombre;
+}

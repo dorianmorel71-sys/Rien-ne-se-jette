@@ -1,0 +1,83 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.note-exemple {
+  margin: 0;
+  background: var(--accent-soft);
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-size: 0.9rem;
+}
+
+.groupes {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+h4 {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--muted);
+  margin: 0 0 8px;
+  font-weight: 600;
+}
+
+.restes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.reste {
+  font: inherit;
+  font-size: 0.93rem;
+  font-weight: 500;
+  padding: 7px 12px;
+  border-radius: 10px;
+  border: 1.5px solid var(--line);
+  background: var(--surface);
+  color: var(--fg);
+  cursor: pointer;
+
+  &[aria-pressed='true'] {
+    background: var(--leaf-soft);
+    border-color: var(--leaf);
+    font-weight: 600;
+
+    &::before {
+      content: '✓ ';
+      color: var(--leaf);
+    }
+  }
+}
+
+.barre {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  font-size: 0.93rem;
+  color: var(--muted);
+
+  button {
+    font: inherit;
+    font-weight: 600;
+    background: none;
+    border: 0;
+    color: var(--accent);
+    cursor: pointer;
+    padding: 4px 0;
+  }
+}
+
+.recettes {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}

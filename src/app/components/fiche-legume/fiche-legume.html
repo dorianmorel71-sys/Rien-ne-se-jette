@@ -1,0 +1,25 @@
+@let l = legume();
+
+<div class="entete">
+  <h2>{{ l.nom }}</h2>
+  <span class="score">{{ l.score }}</span>
+</div>
+
+<p class="intro">{{ l.intro }}</p>
+
+<div class="parties">
+  @for (partie of l.parties; track partie.nom) {
+    <div class="partie">
+      <h3>{{ partie.nom }}</h3>
+      <ul>
+        @for (usage of partie.usages; track usage) {
+          <li [innerHTML]="usage"></li>
+        }
+      </ul>
+    </div>
+  }
+</div>
+
+@if (l.avertissement) {
+  <app-alerte>{{ l.avertissement }}</app-alerte>
+}

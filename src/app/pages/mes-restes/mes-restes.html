@@ -1,0 +1,59 @@
+@if (selection.estExemple()) {
+  <p class="note-exemple">
+    Exemple : quelques restes sont déjà cochés. Coche ce qu'il te reste vraiment.
+  </p>
+}
+
+<div class="groupes">
+  @for (groupe of groupes; track groupe.titre) {
+    <div>
+      <h4>{{ groupe.titre }}</h4>
+      <div class="restes">
+        @for (reste of groupe.restes; track reste.id) {
+          <button
+            class="reste"
+            type="button"
+            [attr.aria-pressed]="selection.estCoche(reste.id)"
+            (click)="selection.basculer(reste.id)"
+          >
+            {{ reste.nom }}
+          </button>
+        }
+      </div>
+    </div>
+  }
+</div>
+
+@let nb = selection.nombre();
+<div class="barre">
+  <span>
+    @switch (nb) {
+      @case (0) {
+        Aucun reste coché
+      }
+      @case (1) {
+        1 reste coché
+      }
+      @default {
+        {{ nb }} restes cochés
+      }
+    }
+  </span>
+  <button type="button" (click)="selection.toutDecocher()">Tout décocher</button>
+</div>
+
+<div class="recettes">
+  @if (nb === 0) {
+    <p class="vide">Coche au moins un reste pour voir les recettes possibles.</p>
+  } @else {
+    @for (
+      proposition of selection.propositions();
+      track proposition.recette.nom;
+      let premiere = $first
+    ) {
+      <app-carte-recette [proposition]="proposition" [ouverte]="premiere" />
+    } @empty {
+      <p class="vide">Pas encore de recette avec ces restes.</p>
+    }
+  }
+</div>

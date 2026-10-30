@@ -1,0 +1,115 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 22px 18px;
+  scroll-margin-top: 16px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  :host {
+    animation: apparition 0.25s ease-out;
+  }
+
+  @keyframes apparition {
+    from {
+      transform: translateY(6px);
+    }
+    to {
+      transform: none;
+    }
+  }
+}
+
+.entete {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+h2 {
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: 2rem;
+  margin: 0;
+  line-height: 1.05;
+}
+
+.score {
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--leaf);
+  background: var(--leaf-soft);
+  padding: 5px 10px;
+  border-radius: 999px;
+  font-variant-numeric: tabular-nums;
+}
+
+.intro {
+  margin: -8px 0 0;
+  color: var(--muted);
+}
+
+.partie {
+  display: grid;
+  grid-template-columns: 112px 1fr;
+  gap: 14px;
+  padding: 14px 0;
+  border-top: 1px dashed var(--line);
+
+  &:first-child {
+    border-top: 0;
+    padding-top: 0;
+  }
+
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+}
+
+h3 {
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: 1.05rem;
+  margin: 0;
+  color: var(--accent);
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+li {
+  padding-left: 16px;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.62em;
+    width: 7px;
+    height: 7px;
+    border-radius: 2px;
+    background: var(--leaf);
+  }
+
+  // Le <b> vient de [innerHTML] : il faut sortir de l'encapsulation pour le styler.
+  ::ng-deep b {
+    font-weight: 600;
+  }
+}

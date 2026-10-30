@@ -1,0 +1,29 @@
+@let p = proposition();
+
+<div class="entete">
+  <h3>{{ p.recette.nom }}</h3>
+  <span class="correspondance">{{ p.restesUtilises.length }} de tes restes</span>
+</div>
+
+<p class="meta">{{ p.recette.temps }} · Il te faut aussi : {{ p.recette.base }}</p>
+
+<div class="tags">
+  @for (reste of p.restesUtilises; track reste.id) {
+    <span class="tag ok">{{ reste.nom }}</span>
+  }
+  @for (reste of p.restesManquants; track reste.id) {
+    <span class="tag">+ {{ reste.nom }}</span>
+  }
+</div>
+
+<details [open]="ouverte()">
+  <summary>Voir la recette</summary>
+  <ol>
+    @for (etape of p.recette.etapes; track $index) {
+      <li>{{ etape }}</li>
+    }
+  </ol>
+  @if (p.recette.avertissement) {
+    <app-alerte>{{ p.recette.avertissement }}</app-alerte>
+  }
+</details>

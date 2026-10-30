@@ -1,0 +1,31 @@
+<input
+  class="recherche"
+  type="search"
+  placeholder="Tape un légume : carotte, poireau, courge…"
+  autocomplete="off"
+  aria-label="Rechercher un légume ou un fruit"
+  [value]="recherche()"
+  (input)="rechercher($any($event.target).value)"
+  (keydown.enter)="validerRecherche()"
+/>
+
+<div class="chips">
+  @for (l of legumesFiltres(); track l.id) {
+    <button
+      class="chip"
+      type="button"
+      [attr.aria-pressed]="l.id === legume().id"
+      (click)="choisir(l.id, true)"
+    >
+      <i [style.background]="l.couleur"></i>{{ l.nom }}
+    </button>
+  } @empty {
+    <p class="vide">Pas encore de fiche pour « {{ recherche() }} ». Essaie un autre légume.</p>
+  }
+</div>
+
+<app-fiche-legume [legume]="legume()" aria-live="polite" />
+
+<div>
+  <button class="hasard" type="button" (click)="auHasard()">Un légume au hasard</button>
+</div>

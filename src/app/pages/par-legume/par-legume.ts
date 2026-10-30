@@ -16,7 +16,11 @@ import { LEGUMES } from '../../data/legumes';
 const LARGEUR_MOBILE = 700;
 
 /** Sans accents ni majuscules, pour une recherche tolérante. */
-const normaliser = (texte: string) => texte.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+const normaliser = (texte: string) =>
+  texte
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '');
 
 @Component({
   selector: 'app-par-legume',

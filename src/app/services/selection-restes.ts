@@ -1,44 +1,31 @@
 import { computed, Injectable, signal } from '@angular/core';
-import { GROUPES_RESTES, RECETTES, RESTES_EXEMPLE } from '../data/restes';
-import { RecetteProposee, Reste } from '../models/recette';
-
-/** Nombre de restes manquants affichés sous chaque recette. */
-const MAX_MANQUANTS = 3;
+import { GROUPES_INGREDIENTS, INGREDIENTS_EXEMPLE } from '../data/ingredients';
+import { MODELES_RECETTES } from '../data/recettes';
+import { Ingredient, RecetteGeneree } from '../models/recette';
+import { genererRecette } from './generer-recette';
 
 /**
- * Garde les restes cochés pendant toute la session,
+ * Garde les ingrédients cochés pendant toute la session,
  * pour ne pas perdre la sélection quand on change d'onglet.
  */
 @Injectable({ providedIn: 'root' })
 export class SelectionRestes {
-  private readonly restesParId = new Map<string, Reste>(
-    GROUPES_RESTES.flatMap((g) => g.restes).map((r) => [r.id, r]),
+  private readonly ingredientsParId = new Map<string, Ingredient>(
+    GROUPES_INGREDIENTS.flatMap((g) => g.ingredients).map((i) => [i.id, i]),
   );
 
-  private readonly choix = signal(new Set(RESTES_EXEMPLE));
+  private readonly choix = signal<ReadonlySet<string>>(new Set(INGREDIENTS_EXEMPLE));
   /** Vrai tant que l'utilisateur n'a pas touché à la sélection d'exemple. */
   readonly estExemple = signal(true);
 
   readonly nombre = computed(() => this.choix().size);
 
-  readonly propositions = computed<RecetteProposee[]>(() => {
+  /** Recettes réalisables avec uniquement ce qui est coché, celles qui en utilisent le plus d'abord. */
+  readonly recettes = computed<RecetteGeneree[]>(() => {
     const choix = this.choix();
-    return RECETTES.map((recette) => {
-      const utilises = recette.ingredients.filter((id) => choix.has(id));
-      const manquants = recette.ingredients.filter((id) => !choix.has(id));
-      return {
-        recette,
-        restesUtilises: utilises.map((id) => this.reste(id)),
-        restesManquants: manquants.slice(0, MAX_MANQUANTS).map((id) => this.reste(id)),
-      };
-    })
-      .filter((p) => p.restesUtilises.length > 0)
-      .sort(
-        (a, b) =>
-          b.restesUtilises.length - a.restesUtilises.length ||
-          b.restesUtilises.length / b.recette.ingredients.length -
-            a.restesUtilises.length / a.recette.ingredients.length,
-      );
+    return MODELES_RECETTES.map((m) => genererRecette(m, choix, this.ingredientsParId))
+      .filter((r): r is RecetteGeneree => r !== null)
+      .sort((a, b) => b.ingredients.length - a.ingredients.length);
   });
 
   estCoche(id: string): boolean {
@@ -57,9 +44,5 @@ export class SelectionRestes {
   toutDecocher(): void {
     this.estExemple.set(false);
     this.choix.set(new Set());
-  }
-
-  private reste(id: string): Reste {
-    return this.restesParId.get(id) ?? { id, nom: id };
   }
 }

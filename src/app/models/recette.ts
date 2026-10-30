@@ -1,27 +1,45 @@
-export interface Reste {
+/** Un reste ou un produit du placard que l'on peut cocher. */
+export interface Ingredient {
   id: string;
   nom: string;
+  /** Nom avec son article (« le vert de poireau »), pour l'insérer dans les étapes. */
+  avecArticle: string;
 }
 
-export interface GroupeRestes {
+export interface GroupeIngredients {
   titre: string;
-  restes: Reste[];
+  ingredients: Ingredient[];
 }
 
-export interface Recette {
+/**
+ * Étape d'un modèle de recette. Une chaîne simple s'affiche toujours.
+ * `si` : affichée seulement si cet ingrédient est coché ; `sauf` : seulement s'il ne l'est pas.
+ * Le texte peut contenir `{restes}`, remplacé par les restes cochés ; l'étape est
+ * alors masquée quand aucun n'est coché.
+ */
+export type Etape = string | { texte: string; si?: string; sauf?: string };
+
+/** Modèle à partir duquel on génère une recette avec uniquement ce qui est coché. */
+export interface ModeleRecette {
   nom: string;
   temps: string;
-  /** Identifiants des restes utilisables dans la recette. */
-  ingredients: string[];
-  /** Ingrédients de base à avoir en plus des restes. */
-  base: string;
-  etapes: string[];
-  avertissement?: string;
+  /** Tous doivent être cochés pour proposer la recette. */
+  requis: string[];
+  /** Restes interchangeables, insérés à la place de `{restes}` dans les étapes. */
+  restes: string[];
+  /** Nombre minimum de `restes` cochés (1 par défaut). */
+  minRestes?: number;
+  /** Utilisés seulement s'ils sont cochés. */
+  optionnels: string[];
+  etapes: Etape[];
+  avertissement?: { texte: string; si?: string };
 }
 
-/** Une recette proposée, avec les restes cochés qu'elle utilise et ceux qui manquent. */
-export interface RecetteProposee {
-  recette: Recette;
-  restesUtilises: Reste[];
-  restesManquants: Reste[];
+/** Recette générée : uniquement les ingrédients cochés et les étapes qui les concernent. */
+export interface RecetteGeneree {
+  nom: string;
+  temps: string;
+  ingredients: Ingredient[];
+  etapes: string[];
+  avertissement?: string;
 }

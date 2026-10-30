@@ -23,7 +23,7 @@ src/
     ├── app.routes.ts        #/legume/:id et #/restes
     ├── models/              interfaces Legume, Recette…
     ├── data/                fiches légumes, restes et recettes
-    ├── services/            SelectionRestes (restes cochés + recettes proposées)
+    ├── services/            SelectionRestes (ingrédients cochés) + génération des recettes
     ├── pages/
     │   ├── par-legume/      recherche + fiche d'un légume
     │   └── mes-restes/      restes à cocher + recettes
@@ -33,4 +33,4 @@ src/
         └── alerte/          encadré « Attention »
 ```
 
-Pour ajouter un légume ou une recette, il suffit de compléter `src/app/data/legumes.ts` ou `src/app/data/restes.ts`.
+Pour ajouter un légume ou une recette, il suffit de compléter `src/app/data/legumes.ts` ou `src/app/data/recettes.ts` (les ingrédients à cocher sont dans `src/app/data/ingredients.ts`).

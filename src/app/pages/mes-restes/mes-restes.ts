@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CarteRecette } from '../../components/carte-recette/carte-recette';
-import { GROUPES_RESTES } from '../../data/restes';
+import { GROUPES_INGREDIENTS, INDISPENSABLES } from '../../data/ingredients';
 import { SelectionRestes } from '../../services/selection-restes';
 
 @Component({
@@ -12,5 +12,6 @@ import { SelectionRestes } from '../../services/selection-restes';
 })
 export class MesRestes {
   protected readonly selection = inject(SelectionRestes);
-  protected readonly groupes = GROUPES_RESTES;
+  protected readonly groupes = GROUPES_INGREDIENTS;
+  protected readonly indispensables = INDISPENSABLES;
 }

@@ -1,6 +1,6 @@
 @if (selection.estExemple()) {
   <p class="note-exemple">
-    Exemple : quelques restes sont déjà cochés. Coche ce qu'il te reste vraiment.
+    Exemple : quelques restes sont déjà cochés. Coche ce que tu as vraiment, placard compris.
   </p>
 }
 
@@ -9,14 +9,14 @@
     <div>
       <h4>{{ groupe.titre }}</h4>
       <div class="restes">
-        @for (reste of groupe.restes; track reste.id) {
+        @for (ingredient of groupe.ingredients; track ingredient.id) {
           <button
             class="reste"
             type="button"
-            [attr.aria-pressed]="selection.estCoche(reste.id)"
-            (click)="selection.basculer(reste.id)"
+            [attr.aria-pressed]="selection.estCoche(ingredient.id)"
+            (click)="selection.basculer(ingredient.id)"
           >
-            {{ reste.nom }}
+            {{ ingredient.nom }}
           </button>
         }
       </div>
@@ -24,18 +24,22 @@
   }
 </div>
 
+<p class="indispensables">
+  Les recettes n'utilisent que ce que tu as coché, plus {{ indispensables }}.
+</p>
+
 @let nb = selection.nombre();
 <div class="barre">
   <span>
     @switch (nb) {
       @case (0) {
-        Aucun reste coché
+        Rien de coché
       }
       @case (1) {
-        1 reste coché
+        1 ingrédient coché
       }
       @default {
-        {{ nb }} restes cochés
+        {{ nb }} ingrédients cochés
       }
     }
   </span>
@@ -44,16 +48,15 @@
 
 <div class="recettes">
   @if (nb === 0) {
-    <p class="vide">Coche au moins un reste pour voir les recettes possibles.</p>
+    <p class="vide">Coche ce que tu as pour voir les recettes possibles.</p>
   } @else {
-    @for (
-      proposition of selection.propositions();
-      track proposition.recette.nom;
-      let premiere = $first
-    ) {
-      <app-carte-recette [proposition]="proposition" [ouverte]="premiere" />
+    @for (recette of selection.recettes(); track recette.nom; let premiere = $first) {
+      <app-carte-recette [recette]="recette" [ouverte]="premiere" />
     } @empty {
-      <p class="vide">Pas encore de recette avec ces restes.</p>
+      <p class="vide">
+        Pas de recette avec seulement ces ingrédients. Coche ce que tu as dans ton placard (œufs,
+        lait, oignon…) pour en débloquer.
+      </p>
     }
   }
 </div>

@@ -6,7 +6,6 @@
   gap: 20px;
 }
 
-.intro,
 .note {
   margin: 0;
   color: var(--muted);
@@ -288,24 +287,46 @@ details {
 
 .boutons {
   display: flex;
-  flex-wrap: wrap;
   gap: 6px;
+
+  button {
+    font: inherit;
+    font-size: 0.85rem;
+    font-weight: 700;
+    border-radius: 999px;
+    cursor: pointer;
+    padding: 5px 14px;
+  }
+
+  .utilise {
+    border: 1.5px solid var(--c);
+    background: var(--c-soft);
+    color: var(--fg);
+  }
+
+  .plus {
+    min-width: 44px;
+    border: 1.5px solid var(--line);
+    background: none;
+    color: var(--muted);
+  }
 }
 
-.boutons button {
-  font: inherit;
-  font-size: 0.85rem;
-  font-weight: 700;
-  background: none;
-  border: 1.5px solid var(--line);
-  border-radius: 999px;
-  color: var(--muted);
-  cursor: pointer;
-  padding: 4px 12px;
+.actions-reste {
+  flex-basis: 100%;
+  display: flex;
+  gap: 6px;
 
-  &:hover {
-    border-color: var(--c);
-    color: var(--fg);
+  button {
+    font: inherit;
+    font-size: 0.85rem;
+    font-weight: 700;
+    border-radius: 999px;
+    border: 1.5px solid var(--ice);
+    background: var(--ice-soft);
+    color: var(--ice);
+    cursor: pointer;
+    padding: 5px 14px;
   }
 }
 

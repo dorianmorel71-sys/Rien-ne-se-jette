@@ -1,18 +1,21 @@
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CarteRecette } from '../../components/carte-recette/carte-recette';
+import { TitrePage } from '../../components/titre-page/titre-page';
+import { PAGES } from '../../pages-noms';
 import { LEGUMES } from '../../data/legumes';
 import { Legume } from '../../models/legume';
 import { Favoris } from '../../services/favoris';
 
 @Component({
   selector: 'app-page-favoris',
-  imports: [CarteRecette, RouterLink],
+  imports: [CarteRecette, RouterLink, TitrePage],
   templateUrl: './favoris.html',
   styleUrl: './favoris.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PageFavoris {
+  protected readonly page = PAGES.favoris;
   protected readonly favoris = inject(Favoris);
 
   protected readonly legumes = computed(() =>

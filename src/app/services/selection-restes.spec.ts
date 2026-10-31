@@ -1,10 +1,12 @@
 import { TestBed } from '@angular/core/testing';
+import { Frigo } from './frigo';
 import { SelectionRestes } from './selection-restes';
 
 describe('SelectionRestes', () => {
   let selection: SelectionRestes;
 
   beforeEach(() => {
+    TestBed.inject(Frigo).vider();
     selection = TestBed.inject(SelectionRestes);
   });
 
@@ -60,5 +62,38 @@ describe('SelectionRestes', () => {
     selection.ajouter(['vert-poireau']);
     expect(selection.estCoche('fanes-radis')).toBe(true);
     expect(selection.nombre()).toBe(2);
+  });
+});
+
+describe('SelectionRestes et le frigo', () => {
+  let selection: SelectionRestes;
+  let frigo: Frigo;
+
+  beforeEach(() => {
+    frigo = TestBed.inject(Frigo);
+    frigo.vider();
+    selection = TestBed.inject(SelectionRestes);
+    selection.repartirDuFrigo();
+  });
+
+  it('part du contenu du frigo, sans le congélateur', () => {
+    frigo.ranger(['riz-cuit', 'jambon']);
+    frigo.ranger(['pain-rassis'], { congele: true });
+    expect(selection.origine()).toBe('frigo');
+    expect(selection.estCoche('riz-cuit')).toBe(true);
+    expect(selection.estCoche('pain-rassis')).toBe(false);
+  });
+
+  it('garde le placard quand on change de restes', () => {
+    frigo.ranger(['riz-cuit']);
+    selection.basculer('oeufs');
+    expect(selection.origine()).toBe('frigo');
+    selection.basculer('jambon');
+    expect(selection.origine()).toBe('manuel');
+    expect(selection.estCoche('oeufs')).toBe(true);
+
+    selection.repartirDuFrigo();
+    expect(selection.estCoche('jambon')).toBe(false);
+    expect(selection.estCoche('oeufs')).toBe(true);
   });
 });

@@ -2,11 +2,14 @@ import { LowerCasePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { CarteRecette } from '../../components/carte-recette/carte-recette';
+import { TitrePage } from '../../components/titre-page/titre-page';
 import { Compte } from '../../services/compte';
 import { Foyer } from '../../services/foyer';
 import { Frigo as ServiceFrigo, RESTES_FRIGO, ResteAuFrigo } from '../../services/frigo';
 import { enumerer } from '../../services/generer-recette';
+import { Messages } from '../../services/messages';
 import { SelectionRestes } from '../../services/selection-restes';
+import { PAGES } from '../../pages-noms';
 import { suggererRecettes } from '../../services/suggestions';
 import { ajouterJours, aujourdhui, libelleDate } from '../../utils/date';
 import { normaliser } from '../../utils/texte';
@@ -21,7 +24,7 @@ const IDEES_MAX = 10;
 
 @Component({
   selector: 'app-frigo',
-  imports: [CarteRecette, LowerCasePipe, RouterLink],
+  imports: [CarteRecette, LowerCasePipe, RouterLink, TitrePage],
   templateUrl: './frigo.html',
   styleUrl: './frigo.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -31,6 +34,8 @@ export class PageFrigo {
   protected readonly compte = inject(Compte);
   protected readonly foyer = inject(Foyer);
   private readonly selection = inject(SelectionRestes);
+  private readonly messages = inject(Messages);
+  protected readonly page = PAGES.frigo;
 
   /** « Léa », « Léa et Sam ». */
   protected readonly partageAvec = computed(() => enumerer(this.foyer.autres().map((m) => m.nom)));
@@ -66,8 +71,6 @@ export class PageFrigo {
     ];
   });
 
-  /** Deuxième clic nécessaire pour tout vider. */
-  protected readonly confirmerVidage = signal(false);
   /** Reste dont on modifie la date ou la note. */
   protected readonly enModification = signal<string | null>(null);
 
@@ -135,12 +138,23 @@ export class PageFrigo {
 
   protected ranger(id: string): void {
     this.frigo.ranger([id], this.options);
-    this.recherche.set('');
+    this.annoncerAjout(id);
   }
 
   protected rangerLibre(): void {
+    const avant = new Set(this.frigo.etat().map((r) => r.id));
     this.frigo.rangerLibre(this.recherche(), this.options);
+    const nouveau = this.frigo.etat().find((r) => !avant.has(r.id));
+    if (nouveau) this.annoncerAjout(nouveau.id);
+  }
+
+  private annoncerAjout(id: string): void {
+    const nom = this.frigo.restes().find((r) => r.id === id)?.ingredient.nom ?? 'Reste';
     this.recherche.set('');
+    this.messages.afficher(
+      `✓ ${nom} : ${this.versCongelateur() ? 'au congélateur' : 'au frigo'}`,
+      () => this.frigo.retirer([id]),
+    );
   }
 
   /** Date tapée dans le calendrier : jamais dans le futur. */
@@ -151,8 +165,32 @@ export class PageFrigo {
   }
 
   protected vider(): void {
-    if (this.confirmerVidage()) this.frigo.vider();
-    this.confirmerVidage.update((c) => !c);
+    const avant = this.frigo.vider();
+    this.messages.afficher('Frigo vidé', () => this.frigo.remettre(avant));
+  }
+
+  protected utilise(r: ResteAuFrigo): void {
+    const retires = this.frigo.retirer([r.id]);
+    this.enModification.set(null);
+    this.messages.afficher(`✓ ${r.ingredient.nom} : retiré`, () => this.frigo.remettre(retires));
+  }
+
+  protected congeler(r: ResteAuFrigo): void {
+    const avant = this.frigo.rangement(r.id);
+    this.frigo.congeler(r.id);
+    this.enModification.set(null);
+    this.messages.afficher(`❄️ ${r.ingredient.nom} : au congélateur`, () =>
+      avant ? this.frigo.remettre([avant]) : undefined,
+    );
+  }
+
+  protected decongeler(r: ResteAuFrigo): void {
+    const avant = this.frigo.rangement(r.id);
+    this.frigo.decongeler(r.id);
+    this.enModification.set(null);
+    this.messages.afficher(`${r.ingredient.nom} : à finir dans les 24 h`, () =>
+      avant ? this.frigo.remettre([avant]) : undefined,
+    );
   }
 
   protected basculerModification(id: string): void {

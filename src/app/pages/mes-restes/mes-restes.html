@@ -1,4 +1,6 @@
 <div class="colonne-restes">
+  <app-titre-page [icone]="page.icone" [titre]="page.nom" [sousTitre]="page.phrase" />
+
   @let nb = selection.nombre();
   <div class="barre">
     <span>
@@ -17,17 +19,30 @@
     <div class="boutons">
       @if (aRanger().length) {
         <button class="frigo" type="button" (click)="mettreAuFrigo()">🧊 Mettre au frigo</button>
-      } @else if (rangesAuFrigo()) {
-        <a class="frigo" routerLink="/frigo">✓ Au frigo</a>
       }
       <button type="button" (click)="selection.toutDecocher()">Tout décocher</button>
     </div>
   </div>
 
-  @if (selection.estExemple()) {
-    <p class="note-exemple">
-      Exemple : quelques restes sont déjà cochés. Coche ce que tu as vraiment, placard compris.
-    </p>
+  @switch (selection.origine()) {
+    @case ('exemple') {
+      <p class="note-exemple">
+        Exemple : quelques restes sont déjà cochés. Coche ce que tu as vraiment, placard compris.
+      </p>
+    }
+    @case ('frigo') {
+      <p class="note-exemple">
+        🧊 Les restes de ton frigo sont déjà cochés. Ajoute ce qui manque, placard compris : il
+        restera coché la prochaine fois.
+      </p>
+    }
+    @default {
+      @if (selection.frigoDisponible()) {
+        <button class="repartir" type="button" (click)="selection.repartirDuFrigo()">
+          ↺ Repartir de mon frigo
+        </button>
+      }
+    }
   }
 
   <input
@@ -139,3 +154,10 @@
     }
   </div>
 </div>
+
+@let nombreRecettes = recettesFiltrees().length;
+@if (nb > 0 && nombreRecettes && !recettesEnVue()) {
+  <button class="aller-recettes" type="button" (click)="allerAuxRecettes()">
+    Voir {{ nombreRecettes > 1 ? 'les ' + nombreRecettes + ' recettes' : 'la recette' }} ↓
+  </button>
+}

@@ -3,6 +3,7 @@ import { RecetteGeneree } from '../../models/recette';
 import { Compteur } from '../../services/compteur';
 import { Favoris } from '../../services/favoris';
 import { Frigo } from '../../services/frigo';
+import { Messages } from '../../services/messages';
 import { Alerte } from '../alerte/alerte';
 import { BoutonFavori } from '../bouton-favori/bouton-favori';
 import { ModeCuisine } from '../mode-cuisine/mode-cuisine';
@@ -19,6 +20,7 @@ export class CarteRecette {
   protected readonly favoris = inject(Favoris);
   protected readonly compteur = inject(Compteur);
   private readonly frigo = inject(Frigo);
+  private readonly messages = inject(Messages);
 
   readonly recette = input.required<RecetteGeneree>();
   /** Affiche les étapes dépliées (utilisé pour la meilleure recette). */
@@ -30,7 +32,19 @@ export class CarteRecette {
 
   /** Compte la recette et sort ses restes du frigo. */
   protected cuisiner(): void {
-    this.compteur.cuisiner(this.recette());
-    this.frigo.retirer(this.recette().ingredients.map((i) => i.id));
+    const recette = this.recette();
+    const restesAvant = this.compteur.restes();
+    this.compteur.cuisiner(recette);
+    const sortis = this.frigo.retirer(recette.ingredients.map((i) => i.id));
+    const sauves = this.compteur.restes() - restesAvant;
+    this.messages.afficher(
+      sauves > 0
+        ? `🌱 Bravo, ${sauves} ${sauves > 1 ? 'restes sauvés' : 'reste sauvé'} !`
+        : '✓ Recette notée',
+      () => {
+        this.compteur.annuler(recette);
+        this.frigo.remettre(sortis);
+      },
+    );
   }
 }

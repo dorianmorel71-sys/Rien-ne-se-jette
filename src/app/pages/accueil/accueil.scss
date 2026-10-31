@@ -160,10 +160,11 @@
     line-height: 1.45;
   }
 
-  .action {
-    margin-top: 4px;
+  .nom-page {
+    font-size: 0.78rem;
     font-weight: 700;
-    font-size: 0.9rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
     color: var(--c);
   }
 }

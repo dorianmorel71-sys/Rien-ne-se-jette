@@ -1,7 +1,4 @@
-<p class="intro">
-  Note ce que tu mets de côté : on te dit quoi finir en premier, et on trouve les recettes qui vont
-  avec.
-</p>
+<app-titre-page [icone]="page.icone" [titre]="page.nom" [sousTitre]="page.phrase" />
 
 @if (foyer.id()) {
   <a class="partage" routerLink="/compte">
@@ -235,6 +232,13 @@
                       (change)="frigo.modifier(r.id, { note: $any($event.target).value.trim() })"
                     />
                   </label>
+                  <div class="actions-reste">
+                    @if (r.congele) {
+                      <button type="button" (click)="decongeler(r)">Sortir du congélateur</button>
+                    } @else {
+                      <button type="button" (click)="congeler(r)">❄️ Congeler</button>
+                    }
+                  </div>
                 </div>
               }
 
@@ -250,21 +254,16 @@
               }
 
               <div class="boutons">
+                <button class="utilise" type="button" (click)="utilise(r)">✓ Utilisé</button>
                 <button
+                  class="plus"
                   type="button"
                   [attr.aria-expanded]="enModification() === r.id"
+                  [attr.aria-label]="'Autres actions pour ' + r.ingredient.nom"
                   (click)="basculerModification(r.id)"
                 >
-                  {{ enModification() === r.id ? 'OK' : '✏️ Date ou note' }}
+                  {{ enModification() === r.id ? 'Fermer' : '⋯' }}
                 </button>
-                @if (r.congele) {
-                  <button type="button" (click)="frigo.decongeler(r.id)">
-                    Sortir du congélateur
-                  </button>
-                } @else {
-                  <button type="button" (click)="frigo.congeler(r.id)">❄️ Congeler</button>
-                }
-                <button type="button" (click)="frigo.retirer([r.id])">Utilisé ou jeté</button>
               </div>
             </li>
           }
@@ -279,9 +278,7 @@
         Voir les recettes avec mon frigo
       </button>
     }
-    <button class="secondaire" type="button" (click)="vider()">
-      {{ confirmerVidage() ? 'Oui, tout vider' : 'Tout vider' }}
-    </button>
+    <button class="secondaire" type="button" (click)="vider()">Tout vider</button>
   </div>
   <p class="note">
     Les durées sont indicatives, pour des restes bien emballés. Au congélateur, on conseille de les

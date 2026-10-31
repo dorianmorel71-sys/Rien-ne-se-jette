@@ -1,3 +1,5 @@
+<app-titre-page [icone]="page.icone" [titre]="page.nom" [sousTitre]="page.phrase" />
+
 @if (!compte.actif) {
   <div class="carte">
     <p class="grand">Les comptes arrivent bientôt</p>
@@ -333,3 +335,5 @@
     </div>
   </div>
 }
+
+<app-invitation-installation />

@@ -1,18 +1,10 @@
 <div class="choix">
-  <aside class="astuce">
-    <span class="ampoule" aria-hidden="true">💡</span>
-    <div>
-      <strong>Astuce du jour</strong>
-      <p>{{ astuce }}</p>
-    </div>
-  </aside>
-
-  <app-invitation-installation />
+  <app-titre-page [icone]="page.icone" [titre]="page.nom" [sousTitre]="page.phrase" />
 
   <input
     class="recherche"
     type="search"
-    placeholder="Tape un légume : carotte, poireau, courge…"
+    placeholder="Cherche : carotte, poireau, poulet, saumon…"
     autocomplete="off"
     aria-label="Rechercher un légume ou un fruit"
     [value]="recherche()"
@@ -75,6 +67,25 @@
   <app-fiche-legume [legume]="legume()" [style.--c]="legume().couleur" aria-live="polite" />
 
   <div>
-    <button class="hasard" type="button" (click)="auHasard()">Un légume au hasard</button>
+    <button class="hasard" type="button" (click)="auHasard()">Une fiche au hasard</button>
   </div>
+
+  <aside class="astuce">
+    <span class="ampoule" aria-hidden="true">💡</span>
+    <div>
+      <strong>Astuce du jour</strong>
+      <p>{{ astuce }}</p>
+    </div>
+  </aside>
+
+  <aside class="prudence">
+    <p>
+      Avant de cuisiner une peau ou des fanes, lave-les bien à l'eau. Privilégie le bio pour les
+      épluchures, car les traitements se concentrent en surface.
+    </p>
+    <p>
+      Ces idées sont des conseils de cuisine courants. En cas de doute sur une partie d'une plante,
+      ne la mange pas.
+    </p>
+  </aside>
 </div>

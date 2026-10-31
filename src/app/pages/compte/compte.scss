@@ -1,7 +1,9 @@
 @use '../../../styles/ecran';
 
 :host {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
   max-width: 460px;
 }
 

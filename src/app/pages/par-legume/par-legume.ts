@@ -3,26 +3,30 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
+  effect,
   ElementRef,
   inject,
   input,
   signal,
   viewChild,
 } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { FicheLegume } from '../../components/fiche-legume/fiche-legume';
-import { InvitationInstallation } from '../../components/invitation-installation/invitation-installation';
+import { TitrePage } from '../../components/titre-page/titre-page';
 import { CATEGORIES_LEGUMES, LEGUMES } from '../../data/legumes';
 import { astuceDuJour } from '../../data/astuces';
 import { nomMois } from '../../utils/saison';
+import { PAGES, titreOnglet } from '../../pages-noms';
 import { normaliser } from '../../utils/texte';
+import { retenirFiche } from '../accueil/premiere-visite';
 
 /** Largeur sous laquelle on fait défiler jusqu'à la fiche après un choix. */
 const LARGEUR_MOBILE = 700;
 
 @Component({
   selector: 'app-par-legume',
-  imports: [FicheLegume, InvitationInstallation],
+  imports: [FicheLegume, TitrePage],
   templateUrl: './par-legume.html',
   styleUrl: './par-legume.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -62,6 +66,9 @@ export class ParLegume {
 
   readonly legume = computed(() => LEGUMES.find((l) => l.id === this.id()) ?? LEGUMES[0]);
 
+  protected readonly page = PAGES.aliments;
+  private readonly titre = inject(Title);
+
   /** Familles dépliées ; au départ, celle du légume affiché. */
   protected readonly ouvertes = signal<ReadonlySet<string>>(new Set());
   /** Pendant une recherche ou un filtre, on montre tout ce qui correspond. */
@@ -69,6 +76,12 @@ export class ParLegume {
 
   constructor() {
     afterNextRender(() => this.ouvertes.set(new Set([this.legume().categorie])));
+    // La fiche affichée donne son nom à l'onglet, et on y reviendra à la prochaine visite.
+    effect(() => {
+      const legume = this.legume();
+      this.titre.setTitle(titreOnglet(legume.nom));
+      retenirFiche(legume.id);
+    });
   }
 
   protected replier(famille: string, ouverte: boolean): void {

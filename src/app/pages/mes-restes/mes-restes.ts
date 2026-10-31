@@ -3,17 +3,20 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
+  DestroyRef,
   ElementRef,
   inject,
   signal,
   viewChild,
 } from '@angular/core';
-import { RouterLink } from '@angular/router';
 import { CarteRecette } from '../../components/carte-recette/carte-recette';
+import { TitrePage } from '../../components/titre-page/titre-page';
 import { GROUPES_INGREDIENTS, INDISPENSABLES } from '../../data/ingredients';
 import { Ingredient, TypeRecette } from '../../models/recette';
 import { Frigo, RESTES_FRIGO } from '../../services/frigo';
+import { Messages } from '../../services/messages';
 import { SelectionRestes } from '../../services/selection-restes';
+import { PAGES } from '../../pages-noms';
 import { normaliser } from '../../utils/texte';
 
 /** Durée maximale, attente comprise, pour le filtre « rapide ». */
@@ -21,13 +24,16 @@ const MINUTES_RAPIDE = 20;
 
 @Component({
   selector: 'app-mes-restes',
-  imports: [CarteRecette, RouterLink],
+  imports: [CarteRecette, TitrePage],
   templateUrl: './mes-restes.html',
   styleUrl: './mes-restes.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MesRestes {
   protected readonly selection = inject(SelectionRestes);
+  protected readonly page = PAGES.recettes;
+  private readonly messages = inject(Messages);
+  private readonly destruction = inject(DestroyRef);
   protected readonly indispensables = INDISPENSABLES;
 
   private readonly frigo = inject(Frigo);
@@ -64,12 +70,20 @@ export class MesRestes {
       ? []
       : RESTES_FRIGO.filter((i) => this.selection.estCoche(i.id) && !this.frigo.contient(i.id)),
   );
-  /** Vrai juste après avoir rangé, pour proposer d'aller voir le frigo. */
-  protected readonly rangesAuFrigo = signal(false);
-
   protected mettreAuFrigo(): void {
-    this.frigo.ranger(this.aRanger().map((i) => i.id));
-    this.rangesAuFrigo.set(true);
+    const ids = this.aRanger().map((i) => i.id);
+    this.frigo.ranger(ids);
+    this.messages.afficher(
+      `🧊 ${ids.length > 1 ? `${ids.length} restes mis` : 'Mis'} au frigo`,
+      () => this.frigo.retirer(ids),
+    );
+  }
+
+  /** Vrai quand la liste des recettes est à l'écran : le bouton pour y aller est alors inutile. */
+  protected readonly recettesEnVue = signal(false);
+
+  protected allerAuxRecettes(): void {
+    this.recettes().nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
   /** Groupes réduits aux ingrédients qui correspondent à la recherche. */
@@ -113,6 +127,15 @@ export class MesRestes {
       if (!this.selection.defilerVersRecettes()) return;
       this.selection.defilerVersRecettes.set(false);
       this.recettes().nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+    afterNextRender(() => {
+      // Vieux navigateurs : le bouton reste simplement visible.
+      if (typeof IntersectionObserver === 'undefined') return;
+      const observateur = new IntersectionObserver(([entree]) =>
+        this.recettesEnVue.set(entree.isIntersecting),
+      );
+      observateur.observe(this.recettes().nativeElement);
+      this.destruction.onDestroy(() => observateur.disconnect());
     });
   }
 }

@@ -12,7 +12,7 @@
     </p>
   }
   <div class="actions">
-    <a class="principal" routerLink="/legume/carotte">C'est parti</a>
+    <a class="principal" routerLink="/legume">C'est parti</a>
     @if (compte.actif && !compte.utilisateur()) {
       <a class="secondaire" routerLink="/compte">Se connecter</a>
     }
@@ -21,17 +21,18 @@
 
 <section class="etapes" aria-label="Ce que tu peux faire">
   @for (e of etapes; track e.titre; let i = $index) {
-    <a class="etape" [attr.data-couleur]="e.couleur" [routerLink]="e.lien">
-      <span class="emoji" aria-hidden="true">{{ e.emoji }}</span>
+    <a class="etape" [attr.data-couleur]="e.couleur" [routerLink]="e.page.chemin">
+      <span class="emoji" aria-hidden="true">{{ e.page.icone }}</span>
       <span class="numero" aria-hidden="true">{{ i + 1 }}</span>
+      <span class="nom-page">{{ e.page.nom }}</span>
       <strong>{{ e.titre }}</strong>
       <span class="texte">{{ e.texte }}</span>
-      <span class="action">{{ e.action }} →</span>
     </a>
   }
 </section>
 
+<app-invitation-installation />
+
 <p class="astuces">
-  💡 Installe l'appli sur ton écran d'accueil : elle marche même sans réseau. Un compte (gratuit,
-  facultatif) garde tes favoris et ton frigo sur tous tes appareils.
+  🔒 Un compte (gratuit, facultatif) garde tes favoris et ton frigo sur tous tes appareils.
 </p>

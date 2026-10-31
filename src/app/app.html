@@ -40,7 +40,7 @@
               }
             }
           </span>
-          <span class="libelle">{{ lien.libelle }}</span>
+          <span class="libelle">{{ lien.nom }}</span>
           @if (lien.chemin === '/frigo' && frigo.urgents()) {
             <span class="visually-hidden">, {{ frigo.urgents() }} à finir vite</span>
           }
@@ -54,15 +54,7 @@
   </main>
 
   <footer>
-    <p class="lien-accueil"><a routerLink="/accueil">❓ Comment ça marche ?</a></p>
-    <p>
-      Avant de cuisiner une peau ou des fanes, lave-les bien à l'eau. Privilégie le bio pour les
-      épluchures, car les traitements se concentrent en surface.
-    </p>
-    <p>
-      Ces idées sont des conseils de cuisine courants. En cas de doute sur une partie d'une plante,
-      ne la mange pas.
-    </p>
+    <a routerLink="/accueil">❓ Comment ça marche ?</a>
   </footer>
 </div>
 
@@ -74,3 +66,4 @@
 }
 
 <app-rappel-minuteur />
+<app-message />

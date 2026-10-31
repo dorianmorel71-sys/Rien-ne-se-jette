@@ -19,7 +19,6 @@ export function fusionner(local: DonneesCompte, compte: DonneesCompte): DonneesC
     if (!recettes.some((x) => x.nom === r.nom)) recettes.push(r);
   }
 
-
   // Le même compteur a pu avancer sur les deux appareils : on garde le plus grand.
   const fois = { ...compte.compteur.fois };
   for (const [nom, n] of Object.entries(local.compteur.fois)) {

@@ -1,6 +1,9 @@
 import { NgTemplateOutlet } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { InvitationInstallation } from '../../components/invitation-installation/invitation-installation';
+import { TitrePage } from '../../components/titre-page/titre-page';
+import { PAGES } from '../../pages-noms';
 import { Compte, messageErreur } from '../../services/compte';
 import { Compteur } from '../../services/compteur';
 import { Favoris } from '../../services/favoris';
@@ -11,12 +14,13 @@ type Mode = 'connexion' | 'creation' | 'oubli';
 
 @Component({
   selector: 'app-compte',
-  imports: [NgTemplateOutlet, RouterLink],
+  imports: [NgTemplateOutlet, RouterLink, TitrePage, InvitationInstallation],
   templateUrl: './compte.html',
   styleUrl: './compte.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PageCompte {
+  protected readonly page = PAGES.compte;
   protected readonly compte = inject(Compte);
   protected readonly favoris = inject(Favoris);
   protected readonly frigo = inject(Frigo);

@@ -193,3 +193,39 @@
     border-color: var(--mustard);
   }
 }
+
+.repartir {
+  align-self: flex-start;
+  font: inherit;
+  font-weight: 700;
+  font-size: 0.9rem;
+  padding: 7px 16px;
+  border-radius: 999px;
+  border: 1.5px solid var(--ice);
+  background: var(--ice-soft);
+  color: var(--ice);
+  cursor: pointer;
+}
+
+// Sur téléphone, les recettes sont loin sous les restes : un bouton fixe y mène.
+.aller-recettes {
+  position: fixed;
+  z-index: 9;
+  left: 50%;
+  bottom: calc(64px + 20px + env(safe-area-inset-bottom, 0px));
+  transform: translateX(-50%);
+  font: inherit;
+  font-weight: 700;
+  padding: 12px 22px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--on-accent);
+  box-shadow: var(--shadow);
+  white-space: nowrap;
+  cursor: pointer;
+
+  @include ecran.ordi {
+    display: none;
+  }
+}

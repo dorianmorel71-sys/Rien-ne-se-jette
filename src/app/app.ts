@@ -1,6 +1,8 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { MessageAction } from './components/message/message';
 import { RappelMinuteur } from './components/rappel-minuteur/rappel-minuteur';
+import { PAGES } from './pages-noms';
 import { Compte } from './services/compte';
 import { Compteur } from './services/compteur';
 import { Favoris } from './services/favoris';
@@ -10,7 +12,7 @@ import { Installation } from './services/installation';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, RouterLink, RouterLinkActive, RappelMinuteur],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive, RappelMinuteur, MessageAction],
   templateUrl: './app.html',
   styleUrl: './app.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -25,10 +27,5 @@ export class App {
   // Démarré dès l'ouverture pour ne pas rater la proposition d'installation du navigateur.
   protected readonly installation = inject(Installation);
 
-  protected readonly liens = [
-    { chemin: '/legume', icone: '🥕', libelle: 'Légumes' },
-    { chemin: '/restes', icone: '🍲', libelle: 'Recettes' },
-    { chemin: '/frigo', icone: '🧊', libelle: 'Frigo' },
-    { chemin: '/favoris', icone: '🔖', libelle: 'Favoris' },
-  ];
+  protected readonly liens = [PAGES.aliments, PAGES.recettes, PAGES.frigo, PAGES.favoris];
 }

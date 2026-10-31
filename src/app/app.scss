@@ -25,7 +25,8 @@ header {
   h1 {
     font-family: var(--f-display);
     font-weight: 800;
-    font-size: clamp(2rem, 8vw, 2.8rem);
+    // Discret sur téléphone : chaque page a son propre titre juste en dessous.
+    font-size: clamp(1.5rem, 6vw, 2rem);
     line-height: 1;
     margin: 0;
     letter-spacing: -0.03em;
@@ -200,25 +201,12 @@ header {
 }
 
 footer {
-  .lien-accueil a {
+  text-align: center;
+  font-size: 0.9rem;
+
+  a {
     font-weight: 700;
-    color: var(--fg);
-  }
-
-  color: var(--muted);
-  font-size: 0.86rem;
-  background: var(--mustard-soft);
-  border-radius: var(--radius);
-  padding: 16px 18px;
-  margin-top: 8px;
-
-  p {
-    margin: 0 0 6px;
-    max-width: 65ch;
-
-    &:last-child {
-      margin-bottom: 0;
-    }
+    color: var(--muted);
   }
 }
 

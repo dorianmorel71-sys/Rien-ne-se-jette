@@ -156,16 +156,33 @@ export class Frigo {
     this.mettreAJour(id, { depuis: this.jour(), congele: false, decongele: true });
   }
 
-  retirer(ids: readonly string[]): void {
-    this.rangements.update((r) => r.filter((x) => !ids.includes(x.id)));
+  /** Retire ces restes et renvoie ce qui a été retiré, pour pouvoir annuler. */
+  retirer(ids: readonly string[]): Rangement[] {
+    const retires = this.rangements().filter((x) => ids.includes(x.id));
+    if (retires.length) this.rangements.update((r) => r.filter((x) => !ids.includes(x.id)));
+    return retires;
+  }
+
+  /** Remet des restes retirés (annulation) ; ceux qui y sont déjà sont remplacés. */
+  remettre(rangements: readonly Rangement[]): void {
+    const ids = new Set(rangements.map((r) => r.id));
+    this.rangements.update((r) => [...r.filter((x) => !ids.has(x.id)), ...rangements]);
   }
 
   remplacer(rangements: Rangement[]): void {
     this.rangements.set(rangements);
   }
 
-  vider(): void {
+  /** Vide tout et renvoie ce qu'il y avait, pour pouvoir annuler. */
+  vider(): Rangement[] {
+    const avant = this.rangements();
     this.rangements.set([]);
+    return avant;
+  }
+
+  /** L'état d'un reste, pour l'annulation d'une modification. */
+  rangement(id: string): Rangement | undefined {
+    return this.rangements().find((r) => r.id === id);
   }
 
   private nouveau(id: string, { depuis, congele }: OptionsRangement): Rangement {

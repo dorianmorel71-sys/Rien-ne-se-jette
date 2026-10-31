@@ -79,6 +79,13 @@ export class Compte {
   /** Vrai une fois qu'on sait si quelqu'un est connecté. */
   readonly pret = signal(!this.actif);
   readonly synchro = signal<EtatSynchro>('a-jour');
+  /** Prénom, ou début de l'e-mail : pour le menu et le titre du compte. */
+  readonly nomAffiche = computed(() => {
+    const u = this.utilisateur();
+    return u ? u.nom || u.email?.split('@')[0] || 'Mon compte' : null;
+  });
+  readonly initiale = computed(() => this.nomAffiche()?.[0]?.toUpperCase() ?? null);
+
   /** Foyer dont on partage le frigo, lu dans le document du compte. */
   readonly foyerId = signal<string | null>(null);
 

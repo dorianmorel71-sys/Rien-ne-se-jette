@@ -14,7 +14,13 @@
       @for (lien of liens; track lien.chemin) {
         <a [routerLink]="lien.chemin" routerLinkActive="actif" ariaCurrentWhenActive="page">
           <span class="icone" aria-hidden="true">
-            {{ lien.icone }}
+            @if (lien.chemin === '/compte' && compte.initiale()) {
+              <span class="avatar">{{ compte.initiale() }}</span>
+              <!-- État de la sauvegarde : vert à jour, jaune en cours, rouge en erreur. -->
+              <span class="synchro" [attr.data-etat]="compte.synchro()"></span>
+            } @else {
+              {{ lien.icone }}
+            }
             @switch (lien.chemin) {
               @case ('/frigo') {
                 @if (frigo.urgents()) {
@@ -23,7 +29,7 @@
               }
             }
           </span>
-          <span class="libelle">{{ lien.nom }}</span>
+          <span class="libelle">{{ lien.chemin === '/compte' ? nomCompte() : lien.nom }}</span>
           @if (lien.chemin === '/frigo' && frigo.urgents()) {
             <span class="visually-hidden">, {{ frigo.urgents() }} à finir vite</span>
           }

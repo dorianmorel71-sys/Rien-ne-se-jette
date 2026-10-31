@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { MessageAction } from './components/message/message';
 import { RappelMinuteur } from './components/rappel-minuteur/rappel-minuteur';
@@ -26,4 +26,8 @@ export class App {
   protected readonly installation = inject(Installation);
 
   protected readonly liens = [PAGES.aliments, PAGES.recettes, PAGES.frigo, PAGES.compte];
+  /** Le prénom une fois connecté, « Se connecter » sinon (ou « Compte » si les comptes sont coupés). */
+  protected readonly nomCompte = computed(() =>
+    !this.compte.actif ? PAGES.compte.nom : (this.compte.nomAffiche() ?? 'Se connecter'),
+  );
 }

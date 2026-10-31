@@ -5,8 +5,12 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
   selector: 'app-titre-page',
   template: `
     <h2>
-      <span class="icone" aria-hidden="true">{{ icone() }}</span
-      >{{ titre() }}
+      @if (avatar(); as initiale) {
+        <span class="avatar" aria-hidden="true">{{ initiale }}</span>
+      } @else {
+        <span class="icone" aria-hidden="true">{{ icone() }}</span>
+      }
+      {{ titre() }}
     </h2>
     @if (sousTitre()) {
       <p>{{ sousTitre() }}</p>
@@ -33,6 +37,18 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
       font-size: 0.85em;
     }
 
+    .avatar {
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+      width: 1.5em;
+      height: 1.5em;
+      border-radius: 50%;
+      background: var(--mustard);
+      color: #2b1d14;
+      font-size: 0.85em;
+    }
+
     p {
       margin: 4px 0 0;
       color: var(--muted);
@@ -45,4 +61,6 @@ export class TitrePage {
   readonly icone = input.required<string>();
   readonly titre = input.required<string>();
   readonly sousTitre = input<string>();
+  /** Initiale de la personne connectée : affichée dans un rond à la place de l'icône. */
+  readonly avatar = input<string | null>();
 }

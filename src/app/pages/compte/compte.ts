@@ -1,9 +1,17 @@
 import { NgTemplateOutlet } from '@angular/common';
-import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  effect,
+  inject,
+  signal,
+} from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { RouterLink } from '@angular/router';
 import { InvitationInstallation } from '../../components/invitation-installation/invitation-installation';
 import { TitrePage } from '../../components/titre-page/titre-page';
-import { PAGES } from '../../pages-noms';
+import { PAGES, titreOnglet } from '../../pages-noms';
 import { Compte, messageErreur } from '../../services/compte';
 import { Compteur } from '../../services/compteur';
 import { Favoris } from '../../services/favoris';
@@ -21,6 +29,12 @@ type Mode = 'connexion' | 'creation' | 'oubli';
 })
 export class PageCompte {
   protected readonly page = PAGES.compte;
+
+  constructor() {
+    // L'onglet du navigateur porte le même nom que le titre et le menu.
+    const titre = inject(Title);
+    effect(() => titre.setTitle(titreOnglet(this.compte.nomAffiche() ?? 'Se connecter')));
+  }
   protected readonly compte = inject(Compte);
   protected readonly favoris = inject(Favoris);
   protected readonly frigo = inject(Frigo);

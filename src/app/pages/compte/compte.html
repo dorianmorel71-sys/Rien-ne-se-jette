@@ -1,4 +1,17 @@
-<app-titre-page [icone]="page.icone" [titre]="page.nom" [sousTitre]="page.phrase" />
+@if (compte.utilisateur(); as u) {
+  <app-titre-page
+    [icone]="page.icone"
+    [avatar]="compte.initiale()"
+    [titre]="compte.nomAffiche() ?? page.nom"
+    [sousTitre]="u.email ?? page.phrase"
+  />
+} @else {
+  <app-titre-page
+    icone="👤"
+    [titre]="titre()"
+    sousTitre="Facultatif : pour retrouver tes favoris et ton frigo sur tous tes appareils."
+  />
+}
 
 @if (!compte.actif) {
   <div class="carte">
@@ -10,14 +23,11 @@
 } @else if (!compte.pret()) {
   <p class="vide">Chargement…</p>
 } @else if (compte.utilisateur(); as u) {
-  @let initiale = (u.nom || u.email || '?')[0].toUpperCase();
   <div class="duo">
     <!-- Sur ordinateur : le profil et la sauvegarde, à côté de l'espace. -->
     <aside class="presentation">
-      <span class="avatar-pc" aria-hidden="true">{{ initiale }}</span>
       <div>
-        <p class="accroche">Bonjour{{ u.nom ? ' ' + u.nom : '' }} !</p>
-        <p class="email-pc">{{ u.email }}</p>
+        <p class="accroche">Content de te revoir !</p>
         @if (membreDepuis(u.creeLe); as depuis) {
           <p class="depuis">Membre depuis {{ depuis }}</p>
         }
@@ -31,14 +41,6 @@
     </aside>
 
     <div class="carte">
-      <div class="profil">
-        <span class="avatar" aria-hidden="true">{{ initiale }}</span>
-        <div>
-          <p class="grand">Bonjour{{ u.nom ? ' ' + u.nom : '' }} !</p>
-          <p class="email">{{ u.email }}</p>
-        </div>
-      </div>
-
       <p class="synchro" [attr.data-etat]="compte.synchro()">
         <ng-container *ngTemplateOutlet="etatSynchro" />
       </p>
@@ -210,12 +212,6 @@
     </aside>
 
     <div class="carte">
-      <p class="grand">{{ titre() }}</p>
-      <p class="note">
-        Le compte est facultatif : il sert à sauvegarder tes favoris, ton frigo et ton compteur, et
-        à les retrouver sur tous tes appareils.
-      </p>
-
       @if (mode() !== 'oubli') {
         <button class="google" type="button" [disabled]="occupe()" (click)="google()">
           <svg viewBox="0 0 48 48" width="20" height="20" aria-hidden="true">

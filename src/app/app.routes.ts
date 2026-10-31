@@ -1,4 +1,6 @@
+import { inject } from '@angular/core';
 import { Routes } from '@angular/router';
+import { Compte } from './services/compte';
 import { PAGES, titreOnglet } from './pages-noms';
 import { PageAccueil } from './pages/accueil/accueil';
 import { pageDeDepart } from './pages/accueil/premiere-visite';
@@ -17,7 +19,11 @@ export const routes: Routes = [
   // Les favoris sont maintenant rangés dans Recettes et Aliments.
   { path: 'favoris', redirectTo: 'restes' },
   { path: 'foyer/:id', component: PageInvitation, title: titreOnglet(PAGES.invitation.nom) },
-  { path: 'compte', component: PageCompte, title: titreOnglet(PAGES.compte.nom) },
+  {
+    path: 'compte',
+    component: PageCompte,
+    title: () => titreOnglet(inject(Compte).nomAffiche() ?? 'Se connecter'),
+  },
   // Première visite : l'accueil qui explique l'appli ; ensuite, directement les légumes.
   { path: '**', redirectTo: () => pageDeDepart() },
 ];

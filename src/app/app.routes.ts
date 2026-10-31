@@ -3,7 +3,6 @@ import { PAGES, titreOnglet } from './pages-noms';
 import { PageAccueil } from './pages/accueil/accueil';
 import { pageDeDepart } from './pages/accueil/premiere-visite';
 import { PageCompte } from './pages/compte/compte';
-import { PageFavoris } from './pages/favoris/favoris';
 import { PageFrigo } from './pages/frigo/frigo';
 import { PageInvitation } from './pages/invitation/invitation';
 import { MesRestes } from './pages/mes-restes/mes-restes';
@@ -15,7 +14,8 @@ export const routes: Routes = [
   { path: 'legume/:id', component: ParLegume, title: titreOnglet(PAGES.aliments.nom) },
   { path: 'restes', component: MesRestes, title: titreOnglet(PAGES.recettes.nom) },
   { path: 'frigo', component: PageFrigo, title: titreOnglet(PAGES.frigo.nom) },
-  { path: 'favoris', component: PageFavoris, title: titreOnglet(PAGES.favoris.nom) },
+  // Les favoris sont maintenant rangés dans Recettes et Aliments.
+  { path: 'favoris', redirectTo: 'restes' },
   { path: 'foyer/:id', component: PageInvitation, title: titreOnglet(PAGES.invitation.nom) },
   { path: 'compte', component: PageCompte, title: titreOnglet(PAGES.compte.nom) },
   // Première visite : l'accueil qui explique l'appli ; ensuite, directement les légumes.

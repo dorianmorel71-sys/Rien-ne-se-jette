@@ -4,7 +4,7 @@ import { Compteur } from '../../services/compteur';
 import { Favoris } from '../../services/favoris';
 import { Frigo } from '../../services/frigo';
 import { Messages } from '../../services/messages';
-import { estUrgent } from '../../utils/urgence';
+import { libelleDelai, niveauDelai } from '../../utils/urgence';
 import { Alerte } from '../alerte/alerte';
 import { BoutonFavori } from '../bouton-favori/bouton-favori';
 import { ModeCuisine } from '../mode-cuisine/mode-cuisine';
@@ -31,16 +31,12 @@ export class CarteRecette {
 
   protected readonly enCuisine = signal(false);
 
-  /** Restes du frigo à finir vite : mis en avant sur la carte. */
-  protected readonly urgents = computed(
-    () =>
-      new Set(
-        this.frigo
-          .auFrigo()
-          .filter((r) => estUrgent(r.joursRestants))
-          .map((r) => r.id),
-      ),
+  /** Restes du frigo, pour afficher le temps qu'il leur reste avant leur date. */
+  protected readonly auFrigo = computed(
+    () => new Map(this.frigo.auFrigo().map((r) => [r.id, r] as const)),
   );
+  protected readonly delai = libelleDelai;
+  protected readonly niveau = niveauDelai;
 
   /** Compte la recette et sort ses restes du frigo. */
   protected cuisiner(): void {

@@ -242,3 +242,58 @@
     border-color: var(--mustard);
   }
 }
+
+// Temps avant la date, sur les restes qui viennent du frigo.
+.reste .delai {
+  margin-left: 4px;
+  padding: 0 7px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--leaf);
+  background: var(--leaf-soft);
+
+  &[data-niveau='urgent'] {
+    color: var(--accent);
+    background: var(--accent-soft);
+  }
+  &[data-niveau='bientot'] {
+    color: var(--warn);
+    background: var(--mustard-soft);
+  }
+}
+
+.gardees {
+  background: var(--mustard-soft);
+  border-radius: var(--radius);
+  padding: 12px 16px;
+
+  > summary {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+  }
+
+  .titre-gardees {
+    font-family: var(--f-display);
+    font-weight: 800;
+    font-size: 1.1rem;
+  }
+
+  .nombre {
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 1px 9px;
+    border-radius: 999px;
+    background: var(--surface);
+    color: var(--muted);
+  }
+}
+
+.liste-gardees {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 12px;
+}

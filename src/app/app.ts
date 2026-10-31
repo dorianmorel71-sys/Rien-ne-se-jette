@@ -5,7 +5,6 @@ import { RappelMinuteur } from './components/rappel-minuteur/rappel-minuteur';
 import { PAGES } from './pages-noms';
 import { Compte } from './services/compte';
 import { Compteur } from './services/compteur';
-import { Favoris } from './services/favoris';
 import { Foyer } from './services/foyer';
 import { Frigo } from './services/frigo';
 import { Installation } from './services/installation';
@@ -18,7 +17,6 @@ import { Installation } from './services/installation';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class App {
-  protected readonly favoris = inject(Favoris);
   protected readonly compteur = inject(Compteur);
   protected readonly frigo = inject(Frigo);
   protected readonly compte = inject(Compte);
@@ -27,5 +25,5 @@ export class App {
   // Démarré dès l'ouverture pour ne pas rater la proposition d'installation du navigateur.
   protected readonly installation = inject(Installation);
 
-  protected readonly liens = [PAGES.aliments, PAGES.recettes, PAGES.frigo, PAGES.favoris];
+  protected readonly liens = [PAGES.aliments, PAGES.recettes, PAGES.frigo, PAGES.compte];
 }

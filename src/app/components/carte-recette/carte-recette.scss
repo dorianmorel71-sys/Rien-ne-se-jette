@@ -80,10 +80,18 @@ h3 {
   background: var(--leaf-soft);
   font-weight: 700;
 
-  // Reste du frigo à finir aujourd'hui ou demain.
-  &.urgent {
+  .delai {
+    font-weight: 500;
+  }
+
+  // Reste du frigo : la couleur dit le temps qu'il lui reste.
+  &[data-niveau='urgent'] {
     color: var(--accent);
     background: var(--accent-soft);
+  }
+  &[data-niveau='bientot'] {
+    color: var(--warn);
+    background: var(--mustard-soft);
   }
 }
 

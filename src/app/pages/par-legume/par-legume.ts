@@ -15,6 +15,8 @@ import { Router } from '@angular/router';
 import { FicheLegume } from '../../components/fiche-legume/fiche-legume';
 import { TitrePage } from '../../components/titre-page/titre-page';
 import { CATEGORIES_LEGUMES, LEGUMES } from '../../data/legumes';
+import { Legume } from '../../models/legume';
+import { Favoris } from '../../services/favoris';
 import { astuceDuJour } from '../../data/astuces';
 import { nomMois } from '../../utils/saison';
 import { PAGES, titreOnglet } from '../../pages-noms';
@@ -23,6 +25,9 @@ import { retenirFiche } from '../accueil/premiere-visite';
 
 /** Largeur sous laquelle on fait défiler jusqu'à la fiche après un choix. */
 const LARGEUR_MOBILE = 700;
+
+/** Famille des fiches gardées, en tête de liste. */
+const FAMILLE_GARDEES = '🔖 Gardées';
 
 @Component({
   selector: 'app-par-legume',
@@ -33,6 +38,7 @@ const LARGEUR_MOBILE = 700;
 })
 export class ParLegume {
   private readonly router = inject(Router);
+  private readonly favoris = inject(Favoris);
 
   /** Identifiant du légume, lu dans l'URL (#/legume/:id). */
   readonly id = input<string>();
@@ -55,14 +61,23 @@ export class ParLegume {
   });
 
   /** Légumes filtrés, rangés par famille puis par ordre alphabétique. */
-  readonly groupes = computed(() =>
-    CATEGORIES_LEGUMES.map((titre) => ({
-      titre,
-      legumes: this.legumesFiltres()
-        .filter((l) => l.categorie === titre)
-        .sort((a, b) => a.nom.localeCompare(b.nom, 'fr')),
-    })).filter((g) => g.legumes.length > 0),
-  );
+  readonly groupes = computed(() => {
+    const filtres = this.legumesFiltres();
+    // Les fiches gardées (« Garder » sur une fiche), en tête de liste.
+    const gardees = this.favoris
+      .legumes()
+      .map((id) => filtres.find((l) => l.id === id))
+      .filter((l): l is Legume => !!l);
+    return [
+      { titre: FAMILLE_GARDEES, legumes: gardees },
+      ...CATEGORIES_LEGUMES.map((titre) => ({
+        titre,
+        legumes: filtres
+          .filter((l) => l.categorie === titre)
+          .sort((a, b) => a.nom.localeCompare(b.nom, 'fr')),
+      })),
+    ].filter((g) => g.legumes.length > 0);
+  });
 
   readonly legume = computed(() => LEGUMES.find((l) => l.id === this.id()) ?? LEGUMES[0]);
 
@@ -75,7 +90,7 @@ export class ParLegume {
   protected readonly toutOuvrir = computed(() => !!this.recherche().trim() || this.deSaison());
 
   constructor() {
-    afterNextRender(() => this.ouvertes.set(new Set([this.legume().categorie])));
+    afterNextRender(() => this.ouvertes.set(new Set([FAMILLE_GARDEES, this.legume().categorie])));
     // La fiche affichée donne son nom à l'onglet, et on y reviendra à la prochaine visite.
     effect(() => {
       const legume = this.legume();

@@ -30,11 +30,12 @@
 
 <div class="tags">
   @for (ingredient of r.ingredients; track ingredient.id) {
-    <span class="tag" [class.urgent]="urgents().has(ingredient.id)">
-      @if (urgents().has(ingredient.id)) {
-        ⏰
-      }
+    @let reste = auFrigo().get(ingredient.id);
+    <span class="tag" [attr.data-niveau]="reste ? niveau(reste.joursRestants) : null">
       {{ ingredient.nom }}
+      @if (reste) {
+        <span class="delai">· {{ delai(reste.joursRestants) }}</span>
+      }
     </span>
   }
 </div>

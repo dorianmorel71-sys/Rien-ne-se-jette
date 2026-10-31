@@ -13,7 +13,9 @@ import { TitrePage } from '../../components/titre-page/titre-page';
 import { GROUPES_INGREDIENTS, INDISPENSABLES } from '../../data/ingredients';
 import { Ingredient, TypeRecette } from '../../models/recette';
 import { Frigo, RESTES_FRIGO } from '../../services/frigo';
+import { Favoris } from '../../services/favoris';
 import { Messages } from '../../services/messages';
+import { libelleDelai, niveauDelai } from '../../utils/urgence';
 import { SelectionRestes } from '../../services/selection-restes';
 import { PAGES } from '../../pages-noms';
 import { normaliser } from '../../utils/texte';
@@ -31,6 +33,13 @@ const MINUTES_RAPIDE = 20;
 export class MesRestes {
   protected readonly selection = inject(SelectionRestes);
   protected readonly page = PAGES.recettes;
+  protected readonly favoris = inject(Favoris);
+  /** Restes du frigo, pour afficher le temps qu'il leur reste à côté de leur nom. */
+  protected readonly auFrigo = computed(
+    () => new Map(this.frigo.auFrigo().map((r) => [r.id, r] as const)),
+  );
+  protected readonly delai = libelleDelai;
+  protected readonly niveau = niveauDelai;
   private readonly messages = inject(Messages);
   protected readonly indispensables = INDISPENSABLES;
 

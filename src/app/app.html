@@ -8,18 +8,6 @@
           {{ compteur.restes() > 1 ? 'restes sauvés' : 'reste sauvé' }}
         </p>
       }
-      @let u = compte.utilisateur();
-      <a
-        class="bouton-compte"
-        routerLink="/compte"
-        routerLinkActive="actif"
-        [attr.aria-label]="u ? 'Mon compte' : 'Se connecter'"
-      >
-        <span class="pastille" aria-hidden="true">
-          {{ u ? (u.nom || u.email || '?')[0].toUpperCase() : '👤' }}
-        </span>
-        <span class="libelle">{{ u ? u.nom || 'Mon compte' : 'Se connecter' }}</span>
-      </a>
     </header>
 
     <nav class="menu" aria-label="Menu">
@@ -31,11 +19,6 @@
               @case ('/frigo') {
                 @if (frigo.urgents()) {
                   <span class="compte urgent">{{ frigo.urgents() }}</span>
-                }
-              }
-              @case ('/favoris') {
-                @if (favoris.nombre()) {
-                  <span class="compte">{{ favoris.nombre() }}</span>
                 }
               }
             }

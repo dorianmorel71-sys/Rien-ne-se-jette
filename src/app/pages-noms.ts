@@ -21,12 +21,6 @@ export const PAGES = {
     nom: 'Frigo',
     phrase: 'Ce que tu as mis de côté, le plus urgent d’abord.',
   },
-  favoris: {
-    chemin: '/favoris',
-    icone: '🔖',
-    nom: 'Favoris',
-    phrase: 'Les fiches et les recettes que tu as gardées.',
-  },
   compte: {
     chemin: '/compte',
     icone: '👤',

@@ -90,6 +90,11 @@
                 (click)="selection.basculer(ingredient.id)"
               >
                 {{ ingredient.nom }}
+                @if (auFrigo().get(ingredient.id); as reste) {
+                  <span class="delai" [attr.data-niveau]="niveau(reste.joursRestants)">
+                    {{ delai(reste.joursRestants) }}
+                  </span>
+                }
               </button>
             }
           </div>
@@ -106,6 +111,20 @@
 </details>
 
 <div class="colonne-recettes">
+  @if (favoris.recettes().length) {
+    <details class="gardees">
+      <summary>
+        <span class="titre-gardees">🔖 Tes recettes gardées</span>
+        <span class="nombre">{{ favoris.recettes().length }}</span>
+      </summary>
+      <div class="liste-gardees">
+        @for (recette of favoris.recettes(); track recette.nom) {
+          <app-carte-recette [recette]="recette" [archivee]="true" />
+        }
+      </div>
+    </details>
+  }
+
   @if (nb > 0 && selection.recettes().length > 0) {
     <div class="filtres" role="group" aria-label="Filtrer les recettes">
       <div class="types">

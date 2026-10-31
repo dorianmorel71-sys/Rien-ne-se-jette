@@ -13,3 +13,17 @@ export function poidsUrgence(joursRestants: number): number {
 export function estUrgent(joursRestants: number): boolean {
   return joursRestants <= 1;
 }
+
+/** Temps qu'il reste avant la date d'un reste, en court : « aujourd'hui », « demain », « 3 j ». */
+export function libelleDelai(joursRestants: number): string {
+  if (joursRestants < 0) return 'date passée';
+  if (joursRestants === 0) return 'aujourd’hui';
+  if (joursRestants === 1) return 'demain';
+  return `${joursRestants} j`;
+}
+
+/** Couleur d'un délai : rouge si urgent, moutarde bientôt, vert sinon. */
+export function niveauDelai(joursRestants: number): 'urgent' | 'bientot' | 'ok' {
+  if (estUrgent(joursRestants)) return 'urgent';
+  return joursRestants <= 3 ? 'bientot' : 'ok';
+}

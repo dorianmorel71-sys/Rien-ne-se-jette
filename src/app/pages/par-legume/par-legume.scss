@@ -86,6 +86,10 @@
     --c: var(--mustard);
     --c-soft: var(--mustard-soft);
   }
+  &[data-famille='🔖 Gardées'] {
+    --c: var(--mustard);
+    --c-soft: var(--mustard-soft);
+  }
   &[data-famille='Viande & poisson'] {
     --c: var(--meat);
     --c-soft: var(--meat-soft);

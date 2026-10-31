@@ -97,3 +97,18 @@ describe('SelectionRestes et le frigo', () => {
     expect(selection.estCoche('oeufs')).toBe(true);
   });
 });
+
+describe('SelectionRestes : ordre des recettes', () => {
+  it('met en tête les recettes qui sauvent les restes urgents', () => {
+    const frigo = TestBed.inject(Frigo);
+    frigo.vider();
+    frigo.jour.set('2026-10-31');
+    // Le riz cuit est à finir aujourd'hui, la croûte de parmesan a un mois devant elle.
+    frigo.ranger(['riz-cuit'], { depuis: '2026-10-29' });
+    frigo.ranger(['croute-parmesan']);
+    const selection = TestBed.inject(SelectionRestes);
+    selection.repartirDuFrigo();
+    const [premiere] = selection.recettes();
+    expect(premiere.ingredients.map((i) => i.id)).toContain('riz-cuit');
+  });
+});

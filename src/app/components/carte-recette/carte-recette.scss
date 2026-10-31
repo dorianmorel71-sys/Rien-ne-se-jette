@@ -79,6 +79,12 @@ h3 {
   color: var(--leaf);
   background: var(--leaf-soft);
   font-weight: 700;
+
+  // Reste du frigo à finir aujourd'hui ou demain.
+  &.urgent {
+    color: var(--accent);
+    background: var(--accent-soft);
+  }
 }
 
 summary {

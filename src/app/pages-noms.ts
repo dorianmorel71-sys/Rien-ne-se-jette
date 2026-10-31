@@ -13,7 +13,7 @@ export const PAGES = {
     chemin: '/restes',
     icone: '🍲',
     nom: 'Recettes',
-    phrase: 'Coche ce que tu as : on te propose quoi cuisiner avec.',
+    phrase: 'Quoi cuisiner avec ce que tu as, en commençant par les restes à finir.',
   },
   frigo: {
     chemin: '/frigo',

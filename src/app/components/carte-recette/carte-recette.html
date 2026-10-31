@@ -30,7 +30,12 @@
 
 <div class="tags">
   @for (ingredient of r.ingredients; track ingredient.id) {
-    <span class="tag">{{ ingredient.nom }}</span>
+    <span class="tag" [class.urgent]="urgents().has(ingredient.id)">
+      @if (urgents().has(ingredient.id)) {
+        ⏰
+      }
+      {{ ingredient.nom }}
+    </span>
   }
 </div>
 

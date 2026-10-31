@@ -4,6 +4,7 @@ import { GROUPES_INGREDIENTS, INGREDIENTS_EXEMPLE } from '../data/ingredients';
 import { MODELES_RECETTES } from '../data/recettes';
 import { Ingredient, RecetteGeneree } from '../models/recette';
 import { ecrire, lire } from '../utils/stockage';
+import { poidsUrgence } from '../utils/urgence';
 import { Frigo } from './frigo';
 import { genererRecette } from './generer-recette';
 
@@ -60,12 +61,25 @@ export class SelectionRestes {
 
   readonly nombre = computed(() => this.choix().size);
 
-  /** Recettes réalisables avec uniquement ce qui est coché, celles qui en utilisent le plus d'abord. */
+  /**
+   * Recettes réalisables avec uniquement ce qui est coché. D'abord celles qui sauvent
+   * les restes du frigo les plus urgents, puis celles qui utilisent le plus d'ingrédients.
+   */
   readonly recettes = computed<RecetteGeneree[]>(() => {
     const choix = this.choix();
+    const urgence = new Map(
+      this.frigo.auFrigo().map((r) => [r.id, poidsUrgence(r.joursRestants)] as const),
+    );
+    const score = (r: RecetteGeneree) =>
+      r.ingredients.reduce((total, i) => total + (urgence.get(i.id) ?? 0), 0);
     return MODELES_RECETTES.map((m) => genererRecette(m, choix, this.ingredientsParId))
       .filter((r): r is RecetteGeneree => r !== null)
-      .sort((a, b) => b.ingredients.length - a.ingredients.length);
+      .sort(
+        (a, b) =>
+          score(b) - score(a) ||
+          b.ingredients.length - a.ingredients.length ||
+          a.minutes - b.minutes,
+      );
   });
 
   constructor() {

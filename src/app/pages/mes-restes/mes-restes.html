@@ -1,98 +1,109 @@
-<div class="colonne-restes">
-  <app-titre-page [icone]="page.icone" [titre]="page.nom" [sousTitre]="page.phrase" />
+<app-titre-page class="titre" [icone]="page.icone" [titre]="page.nom" [sousTitre]="page.phrase" />
 
-  @let nb = selection.nombre();
-  <div class="barre">
-    <span>
-      @switch (nb) {
-        @case (0) {
-          Rien de coché
+@let nb = selection.nombre();
+<!-- Ce que j'ai : replié sur téléphone, puisque le frigo et le placard sont déjà cochés. -->
+<details
+  class="ajuster"
+  [open]="ajusterOuvert()"
+  (toggle)="ajusterOuvert.set($any($event.target).open)"
+>
+  <summary>
+    <span class="titre-ajuster">🧺 Ce que j'ai</span>
+    <span class="resume">
+      @switch (selection.origine()) {
+        @case ('frigo') {
+          Ton frigo et ton placard
         }
-        @case (1) {
-          1 ingrédient coché
+        @case ('exemple') {
+          Un exemple pour commencer
         }
         @default {
-          {{ nb }} ingrédients cochés
+          Ta sélection
         }
       }
+      · {{ nb }} {{ nb > 1 ? 'cochés' : 'coché' }}
     </span>
-    <div class="boutons">
+    <span class="action-ajuster" aria-hidden="true">{{
+      ajusterOuvert() ? 'Fermer' : 'Ajuster'
+    }}</span>
+  </summary>
+
+  <div class="contenu-ajuster">
+    @switch (selection.origine()) {
+      @case ('exemple') {
+        <p class="note-exemple">
+          Exemple : quelques restes sont déjà cochés. Coche ce que tu as vraiment, placard compris.
+        </p>
+      }
+      @case ('frigo') {
+        <p class="note-exemple">
+          🧊 Les restes de ton frigo sont déjà cochés. Ajoute ce qui manque : le placard restera
+          coché la prochaine fois.
+        </p>
+      }
+    }
+
+    <div class="barre">
+      @if (selection.origine() === 'manuel' && selection.frigoDisponible()) {
+        <button class="repartir" type="button" (click)="selection.repartirDuFrigo()">
+          ↺ Repartir de mon frigo
+        </button>
+      }
       @if (aRanger().length) {
         <button class="frigo" type="button" (click)="mettreAuFrigo()">🧊 Mettre au frigo</button>
       }
       <button type="button" (click)="selection.toutDecocher()">Tout décocher</button>
     </div>
-  </div>
 
-  @switch (selection.origine()) {
-    @case ('exemple') {
-      <p class="note-exemple">
-        Exemple : quelques restes sont déjà cochés. Coche ce que tu as vraiment, placard compris.
-      </p>
-    }
-    @case ('frigo') {
-      <p class="note-exemple">
-        🧊 Les restes de ton frigo sont déjà cochés. Ajoute ce qui manque, placard compris : il
-        restera coché la prochaine fois.
-      </p>
-    }
-    @default {
-      @if (selection.frigoDisponible()) {
-        <button class="repartir" type="button" (click)="selection.repartirDuFrigo()">
-          ↺ Repartir de mon frigo
-        </button>
+    <input
+      class="recherche"
+      type="search"
+      placeholder="Cherche un reste : chou, pain, banane…"
+      autocomplete="off"
+      aria-label="Rechercher un reste"
+      [value]="recherche()"
+      (input)="recherche.set($any($event.target).value)"
+    />
+
+    <div class="groupes">
+      @for (groupe of groupes(); track groupe.titre) {
+        @let coches = nombreCoches(groupe.ingredients);
+        <details
+          class="famille"
+          [attr.data-groupe]="groupe.titre"
+          [open]="toutOuvrir() || ouvertes().has(groupe.titre)"
+          (toggle)="replier(groupe.titre, $any($event.target).open)"
+        >
+          <summary>
+            <span class="titre">{{ groupe.titre }}</span>
+            <span class="nombre">{{ groupe.ingredients.length }}</span>
+            @if (coches) {
+              <span class="coches">✓ {{ coches }}</span>
+            }
+          </summary>
+          <div class="restes contenu">
+            @for (ingredient of groupe.ingredients; track ingredient.id) {
+              <button
+                class="reste"
+                type="button"
+                [attr.aria-pressed]="selection.estCoche(ingredient.id)"
+                (click)="selection.basculer(ingredient.id)"
+              >
+                {{ ingredient.nom }}
+              </button>
+            }
+          </div>
+        </details>
+      } @empty {
+        <p class="vide">Rien ne correspond à « {{ recherche() }} ».</p>
       }
-    }
-  }
+    </div>
 
-  <input
-    class="recherche"
-    type="search"
-    placeholder="Cherche un reste : chou, pain, banane…"
-    autocomplete="off"
-    aria-label="Rechercher un reste"
-    [value]="recherche()"
-    (input)="recherche.set($any($event.target).value)"
-  />
-
-  <div class="groupes">
-    @for (groupe of groupes(); track groupe.titre) {
-      @let coches = nombreCoches(groupe.ingredients);
-      <details
-        class="famille"
-        [attr.data-groupe]="groupe.titre"
-        [open]="toutOuvrir() || ouvertes().has(groupe.titre)"
-        (toggle)="replier(groupe.titre, $any($event.target).open)"
-      >
-        <summary>
-          <span class="titre">{{ groupe.titre }}</span>
-          <span class="nombre">{{ groupe.ingredients.length }}</span>
-          @if (coches) {
-            <span class="coches">✓ {{ coches }}</span>
-          }
-        </summary>
-        <div class="restes contenu">
-          @for (ingredient of groupe.ingredients; track ingredient.id) {
-            <button
-              class="reste"
-              type="button"
-              [attr.aria-pressed]="selection.estCoche(ingredient.id)"
-              (click)="selection.basculer(ingredient.id)"
-            >
-              {{ ingredient.nom }}
-            </button>
-          }
-        </div>
-      </details>
-    } @empty {
-      <p class="vide">Rien ne correspond à « {{ recherche() }} ».</p>
-    }
+    <p class="indispensables">
+      Les recettes n'utilisent que ce que tu as coché, plus {{ indispensables }}.
+    </p>
   </div>
-
-  <p class="indispensables">
-    Les recettes n'utilisent que ce que tu as coché, plus {{ indispensables }}.
-  </p>
-</div>
+</details>
 
 <div class="colonne-recettes">
   @if (nb > 0 && selection.recettes().length > 0) {
@@ -137,7 +148,9 @@
 
   <div class="recettes" #recettes>
     @if (nb === 0) {
-      <p class="vide">Coche ce que tu as pour voir les recettes possibles.</p>
+      <p class="vide">
+        Ouvre « Ce que j'ai » et coche tes restes pour voir les recettes possibles.
+      </p>
     } @else {
       @for (recette of recettesFiltrees(); track recette.nom; let premiere = $first) {
         <app-carte-recette [recette]="recette" [ouverte]="premiere" />
@@ -146,18 +159,11 @@
           <p class="vide">Aucune recette avec ces filtres. Essaie d'en retirer un.</p>
         } @else {
           <p class="vide">
-            Pas de recette avec seulement ces ingrédients. Coche ce que tu as dans ton placard
-            (œufs, lait, oignon…) pour en débloquer.
+            Pas de recette avec seulement ces ingrédients. Ouvre « Ce que j'ai » et coche ce que tu
+            as dans ton placard (œufs, lait, oignon…) pour en débloquer.
           </p>
         }
       }
     }
   </div>
 </div>
-
-@let nombreRecettes = recettesFiltrees().length;
-@if (nb > 0 && nombreRecettes && !recettesEnVue()) {
-  <button class="aller-recettes" type="button" (click)="allerAuxRecettes()">
-    Voir {{ nombreRecettes > 1 ? 'les ' + nombreRecettes + ' recettes' : 'la recette' }} ↓
-  </button>
-}

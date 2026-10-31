@@ -86,60 +86,11 @@
   }
 </div>
 
-@if (suggestions().length) {
-  <details class="ce-soir">
-    <summary>
-      <span class="titre-ce-soir">🍳 Ce soir, je cuisine…</span>
-      <span class="apercu">{{ apercuSuggestions() }}</span>
-    </summary>
-    <p class="sous-titre">
-      Les recettes qui finissent le plus de restes, les plus urgents d'abord.
-    </p>
-    <ol class="idees">
-      @for (s of suggestionsVisibles(); track s.recette.nom) {
-        @let ouverte = suggestionOuverte() === s.recette.nom;
-        <li>
-          <button
-            class="idee"
-            type="button"
-            [attr.aria-expanded]="ouverte"
-            (click)="basculerSuggestion(s.recette.nom)"
-          >
-            <span class="emoji" aria-hidden="true">{{ s.recette.emoji }}</span>
-            <span class="texte">
-              <strong>{{ s.recette.nom }}</strong>
-              <span class="detail">
-                {{ s.recette.temps }} · sauve
-                @for (r of s.sauves; track r.id; let dernier = $last) {
-                  <span [class.urgent]="r.joursRestants <= 1">{{
-                    r.ingredient.nom | lowercase
-                  }}</span
-                  >{{ dernier ? '' : ', ' }}
-                }
-              </span>
-              @if (s.placard.length) {
-                <span class="detail">
-                  + dans le placard :
-                  @for (i of s.placard; track i.id; let dernier = $last) {
-                    {{ i.nom | lowercase }}{{ dernier ? '' : ', ' }}
-                  }
-                </span>
-              }
-            </span>
-            <span class="chevron" aria-hidden="true"></span>
-          </button>
-          @if (ouverte) {
-            <app-carte-recette [recette]="s.recette" [ouverte]="true" [archivee]="true" />
-          }
-        </li>
-      }
-    </ol>
-    @if (suggestions().length > suggestionsVisibles().length) {
-      <button class="plus-idees" type="button" (click)="toutesIdees.set(true)">
-        Voir {{ suggestions().length - suggestionsVisibles().length }} autres idées
-      </button>
-    }
-  </details>
+@if (peutChercherRecettes()) {
+  <button class="que-cuisiner" type="button" (click)="voirRecettes()">
+    🍳 Que cuisiner avec ?
+    <span>Les recettes qui finissent tes restes, les plus urgents d'abord</span>
+  </button>
 }
 
 @if (frigo.nombre() === 0) {
@@ -273,11 +224,6 @@
   }
 
   <div class="actions">
-    @if (peutChercherRecettes()) {
-      <button class="principal" type="button" (click)="voirRecettes()">
-        Voir les recettes avec mon frigo
-      </button>
-    }
     <button class="secondaire" type="button" (click)="vider()">Tout vider</button>
   </div>
   <p class="note">

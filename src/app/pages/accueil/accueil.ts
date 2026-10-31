@@ -31,14 +31,14 @@ export class PageAccueil {
       couleur: 'tomate',
       titre: 'Une recette avec ce que j’ai',
       texte:
-        'Ton frigo est déjà coché : ajoute ton placard, l’appli propose des recettes qui n’utilisent que ça.',
+        'À partir de ton frigo et de ton placard, les recettes qui finissent d’abord les restes urgents.',
     },
     {
       page: PAGES.frigo,
       couleur: 'glace',
       titre: 'Quoi finir en premier ?',
       texte:
-        'Note ce que tu mets de côté : on te dit quoi finir et quoi cuisiner ce soir. Partageable avec ton foyer.',
+        'Note ce que tu mets de côté : on te dit quoi finir en premier. Partageable avec ton foyer.',
     },
     {
       page: { ...PAGES.recettes, icone: '👩‍🍳', nom: 'Mode cuisine' },

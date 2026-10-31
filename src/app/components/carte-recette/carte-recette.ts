@@ -1,9 +1,10 @@
-import { ChangeDetectionStrategy, Component, inject, input, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input, signal } from '@angular/core';
 import { RecetteGeneree } from '../../models/recette';
 import { Compteur } from '../../services/compteur';
 import { Favoris } from '../../services/favoris';
 import { Frigo } from '../../services/frigo';
 import { Messages } from '../../services/messages';
+import { estUrgent } from '../../utils/urgence';
 import { Alerte } from '../alerte/alerte';
 import { BoutonFavori } from '../bouton-favori/bouton-favori';
 import { ModeCuisine } from '../mode-cuisine/mode-cuisine';
@@ -29,6 +30,17 @@ export class CarteRecette {
   readonly archivee = input(false);
 
   protected readonly enCuisine = signal(false);
+
+  /** Restes du frigo à finir vite : mis en avant sur la carte. */
+  protected readonly urgents = computed(
+    () =>
+      new Set(
+        this.frigo
+          .auFrigo()
+          .filter((r) => estUrgent(r.joursRestants))
+          .map((r) => r.id),
+      ),
+  );
 
   /** Compte la recette et sort ses restes du frigo. */
   protected cuisiner(): void {

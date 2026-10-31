@@ -3,7 +3,6 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
-  DestroyRef,
   ElementRef,
   inject,
   signal,
@@ -33,7 +32,6 @@ export class MesRestes {
   protected readonly selection = inject(SelectionRestes);
   protected readonly page = PAGES.recettes;
   private readonly messages = inject(Messages);
-  private readonly destruction = inject(DestroyRef);
   protected readonly indispensables = INDISPENSABLES;
 
   private readonly frigo = inject(Frigo);
@@ -79,12 +77,15 @@ export class MesRestes {
     );
   }
 
-  /** Vrai quand la liste des recettes est à l'écran : le bouton pour y aller est alors inutile. */
-  protected readonly recettesEnVue = signal(false);
-
-  protected allerAuxRecettes(): void {
-    this.recettes().nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
+  /**
+   * « Ce que j'ai » est déplié sur ordinateur (il y a la place à côté des recettes),
+   * et sur téléphone seulement quand il faut d'abord cocher quelque chose.
+   */
+  protected readonly ajusterOuvert = signal(
+    !!globalThis.matchMedia?.('(min-width: 1000px)').matches ||
+      this.selection.estExemple() ||
+      this.selection.nombre() === 0,
+  );
 
   /** Groupes réduits aux ingrédients qui correspondent à la recherche. */
   protected readonly groupes = computed(() => {
@@ -127,15 +128,6 @@ export class MesRestes {
       if (!this.selection.defilerVersRecettes()) return;
       this.selection.defilerVersRecettes.set(false);
       this.recettes().nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
-    afterNextRender(() => {
-      // Vieux navigateurs : le bouton reste simplement visible.
-      if (typeof IntersectionObserver === 'undefined') return;
-      const observateur = new IntersectionObserver(([entree]) =>
-        this.recettesEnVue.set(entree.isIntersecting),
-      );
-      observateur.observe(this.recettes().nativeElement);
-      this.destruction.onDestroy(() => observateur.disconnect());
     });
   }
 }

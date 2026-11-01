@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { FONCTIONNALITES } from '../../../environments/fonctionnalites';
 import { InvitationInstallation } from '../../components/invitation-installation/invitation-installation';
 import { PAGES } from '../../pages-noms';
 import { Compte } from '../../services/compte';
@@ -17,6 +18,7 @@ import { marquerAccueilVu } from './premiere-visite';
 export class PageAccueil {
   protected readonly compte = inject(Compte);
   protected readonly compteur = inject(Compteur);
+  protected readonly frigoActif = FONCTIONNALITES.frigo;
 
   protected readonly etapes = [
     {
@@ -30,8 +32,9 @@ export class PageAccueil {
       page: PAGES.recettes,
       couleur: 'tomate',
       titre: 'Une recette avec ce que j’ai',
-      texte:
-        'À partir de ton frigo et de ton placard, les recettes qui finissent d’abord les restes urgents.',
+      texte: FONCTIONNALITES.frigo
+        ? 'À partir de ton frigo et de ton placard, les recettes qui finissent d’abord les restes urgents.'
+        : 'Coche tes restes et ton placard : les recettes qui les utilisent, prêtes à cuisiner.',
     },
     {
       page: PAGES.frigo,
@@ -47,7 +50,7 @@ export class PageAccueil {
       texte:
         'Sur chaque recette : les étapes en grand, une par une, avec des minuteurs. L’écran reste allumé.',
     },
-  ];
+  ].filter((e) => FONCTIONNALITES.frigo || e.page !== PAGES.frigo);
 
   constructor() {
     // Vue une fois : on arrivera ensuite directement sur les légumes.

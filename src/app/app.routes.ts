@@ -1,5 +1,6 @@
 import { inject } from '@angular/core';
 import { Routes } from '@angular/router';
+import { FONCTIONNALITES } from '../environments/fonctionnalites';
 import { Compte } from './services/compte';
 import { PAGES, titreOnglet } from './pages-noms';
 import { PageAccueil } from './pages/accueil/accueil';
@@ -15,10 +16,15 @@ export const routes: Routes = [
   { path: 'legume', redirectTo: () => pageDeDepart(true) },
   { path: 'legume/:id', component: ParLegume, title: titreOnglet(PAGES.aliments.nom) },
   { path: 'restes', component: MesRestes, title: titreOnglet(PAGES.recettes.nom) },
-  { path: 'frigo', component: PageFrigo, title: titreOnglet(PAGES.frigo.nom) },
+  // Le frigo et ses invitations n'existent que dans la version de développement.
+  ...(FONCTIONNALITES.frigo
+    ? [
+        { path: 'frigo', component: PageFrigo, title: titreOnglet(PAGES.frigo.nom) },
+        { path: 'foyer/:id', component: PageInvitation, title: titreOnglet(PAGES.invitation.nom) },
+      ]
+    : []),
   // Les favoris sont maintenant rangés dans Recettes et Aliments.
   { path: 'favoris', redirectTo: 'restes' },
-  { path: 'foyer/:id', component: PageInvitation, title: titreOnglet(PAGES.invitation.nom) },
   {
     path: 'compte',
     component: PageCompte,

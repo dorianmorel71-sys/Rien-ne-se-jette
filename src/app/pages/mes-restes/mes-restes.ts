@@ -12,6 +12,7 @@ import { CarteRecette } from '../../components/carte-recette/carte-recette';
 import { TitrePage } from '../../components/titre-page/titre-page';
 import { GROUPES_INGREDIENTS, INDISPENSABLES } from '../../data/ingredients';
 import { Ingredient, TypeRecette } from '../../models/recette';
+import { FONCTIONNALITES } from '../../../environments/fonctionnalites';
 import { Frigo, RESTES_FRIGO } from '../../services/frigo';
 import { Favoris } from '../../services/favoris';
 import { Messages } from '../../services/messages';
@@ -73,7 +74,7 @@ export class MesRestes {
 
   /** Restes cochés (hors placard) qui ne sont pas encore au frigo. */
   protected readonly aRanger = computed(() =>
-    this.selection.estExemple()
+    !FONCTIONNALITES.frigo || this.selection.estExemple()
       ? []
       : RESTES_FRIGO.filter((i) => this.selection.estCoche(i.id) && !this.frigo.contient(i.id)),
   );

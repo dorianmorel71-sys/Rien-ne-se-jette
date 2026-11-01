@@ -5,6 +5,7 @@ import { MODELES_RECETTES } from '../data/recettes';
 import { Ingredient, RecetteGeneree } from '../models/recette';
 import { ecrire, lire } from '../utils/stockage';
 import { poidsUrgence } from '../utils/urgence';
+import { FONCTIONNALITES } from '../../environments/fonctionnalites';
 import { Frigo } from './frigo';
 import { genererRecette } from './generer-recette';
 
@@ -34,10 +35,7 @@ export class SelectionRestes {
   private readonly restesManuels = signal<ReadonlySet<string> | null>(null);
   /** Restes du frigo pour lesquels il existe des recettes (ni congelés, ni écrits à la main). */
   private readonly restesDuFrigo = computed(() =>
-    this.frigo
-      .auFrigo()
-      .filter((r) => !r.libre)
-      .map((r) => r.id),
+    (FONCTIONNALITES.frigo ? this.frigo.auFrigo() : []).filter((r) => !r.libre).map((r) => r.id),
   );
 
   readonly origine = computed<OrigineSelection>(() => {

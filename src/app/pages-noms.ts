@@ -1,3 +1,5 @@
+import { FONCTIONNALITES } from '../environments/fonctionnalites';
+
 /**
  * Nom, icône et phrase de chaque page : les mêmes dans le menu, en titre de page,
  * dans l'onglet du navigateur et sur l'accueil.
@@ -25,7 +27,9 @@ export const PAGES = {
     chemin: '/compte',
     icone: '👤',
     nom: 'Compte',
-    phrase: 'Tes données sur tous tes appareils, et ton frigo partagé.',
+    phrase: FONCTIONNALITES.frigo
+      ? 'Tes données sur tous tes appareils, et ton frigo partagé.'
+      : 'Tes favoris sur tous tes appareils.',
   },
   accueil: { chemin: '/accueil', icone: '❓', nom: 'Accueil', phrase: '' },
   invitation: { chemin: '/foyer', icone: '🏠', nom: 'Invitation', phrase: '' },

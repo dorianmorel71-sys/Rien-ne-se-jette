@@ -9,7 +9,11 @@
   <app-titre-page
     icone="👤"
     [titre]="titre()"
-    sousTitre="Facultatif : pour retrouver tes favoris et ton frigo sur tous tes appareils."
+    [sousTitre]="
+      'Facultatif : pour retrouver tes favoris' +
+      (frigoActif ? ' et ton frigo' : '') +
+      ' sur tous tes appareils.'
+    "
   />
 }
 
@@ -17,7 +21,8 @@
   <div class="carte">
     <p class="grand">Les comptes arrivent bientôt</p>
     <p>
-      En attendant, tout est gardé sur cet appareil : favoris, frigo et compteur de restes sauvés.
+      En attendant, tout est gardé sur cet appareil : favoris,{{ frigoActif ? ' frigo' : '' }} et
+      compteur de restes sauvés.
     </p>
   </div>
 } @else if (!compte.pret()) {
@@ -36,7 +41,8 @@
         <ng-container *ngTemplateOutlet="etatSynchro" />
       </p>
       <p>
-        Connecte-toi avec ce compte sur ton téléphone : favoris, frigo et compteur y seront aussi.
+        Connecte-toi avec ce compte sur ton téléphone : favoris,{{ frigoActif ? ' frigo' : '' }} et
+        compteur y seront aussi.
       </p>
     </aside>
 
@@ -54,13 +60,15 @@
             {{ favoris.nombre() > 1 ? 'gardés' : 'gardé' }}
           </a>
         </li>
-        <li>
-          <a routerLink="/frigo">
-            <span class="icone" aria-hidden="true">🧊</span>
-            <strong>{{ frigo.nombre() }}</strong>
-            {{ frigo.nombre() > 1 ? 'restes au frigo' : 'reste au frigo' }}
-          </a>
-        </li>
+        @if (frigoActif) {
+          <li>
+            <a routerLink="/frigo">
+              <span class="icone" aria-hidden="true">🧊</span>
+              <strong>{{ frigo.nombre() }}</strong>
+              {{ frigo.nombre() > 1 ? 'restes au frigo' : 'reste au frigo' }}
+            </a>
+          </li>
+        }
         <li>
           <a routerLink="/restes">
             <span class="icone" aria-hidden="true">🌱</span>
@@ -69,62 +77,69 @@
           </a>
         </li>
       </ul>
-      @if (frigo.urgents()) {
-        <a class="rappel" routerLink="/frigo">
-          ⏰ {{ frigo.urgents() }}
-          {{ frigo.urgents() > 1 ? 'restes sont à finir' : 'reste est à finir' }} vite : voir le
-          frigo
-        </a>
-      }
-      @if (foyer.invitation(); as invitation) {
-        @if (invitation !== foyer.id()) {
-          <a class="rappel invitation" [routerLink]="['/foyer', invitation]">
-            🏠 Tu as été invité à partager un frigo : voir l'invitation
+      @if (frigoActif) {
+        @if (frigo.urgents()) {
+          <a class="rappel" routerLink="/frigo">
+            ⏰ {{ frigo.urgents() }}
+            {{ frigo.urgents() > 1 ? 'restes sont à finir' : 'reste est à finir' }} vite : voir le
+            frigo
           </a>
         }
-      }
-
-      <section class="foyer">
-        <p class="sous-titre">🏠 Frigo partagé</p>
-        @if (foyer.id()) {
-          <ul class="membres">
-            @for (m of foyer.membres(); track m.uid) {
-              <li [class.moi]="m.moi">
-                <span class="pastille" aria-hidden="true">{{ m.nom[0].toUpperCase() }}</span>
-                {{ m.moi ? 'Toi' : m.nom }}
-              </li>
-            }
-          </ul>
-          <p class="note">
-            @if (foyer.autres().length) {
-              Tout le monde voit et remplit le même frigo.
-            } @else {
-              Envoie le lien à ceux qui partagent ta cuisine : ils verront le même frigo que toi.
-            }
-          </p>
-          <div class="actions">
-            <button class="principal" type="button" (click)="inviter()">
-              {{ lienCopie() ? '✓ Lien copié !' : 'Inviter quelqu’un' }}
-            </button>
-            <button class="secondaire" type="button" [disabled]="occupe()" (click)="quitterFoyer()">
-              {{ confirmerDepart() ? 'Oui, quitter' : 'Quitter le foyer' }}
-            </button>
-          </div>
-          @if (confirmerDepart()) {
-            <p class="note">Tu gardes une copie du frigo, qui redevient le tien.</p>
+        @if (foyer.invitation(); as invitation) {
+          @if (invitation !== foyer.id()) {
+            <a class="rappel invitation" [routerLink]="['/foyer', invitation]">
+              🏠 Tu as été invité à partager un frigo : voir l'invitation
+            </a>
           }
-        } @else {
-          <p class="note">
-            Tu cuisines à plusieurs ? Partage ton frigo avec ton foyer : chacun voit les restes à
-            finir et peut en ajouter.
-          </p>
-          <div class="actions">
-            <button class="principal" type="button" [disabled]="occupe()" (click)="creerFoyer()">
-              Partager mon frigo
-            </button>
-          </div>
         }
-      </section>
+
+        <section class="foyer">
+          <p class="sous-titre">🏠 Frigo partagé</p>
+          @if (foyer.id()) {
+            <ul class="membres">
+              @for (m of foyer.membres(); track m.uid) {
+                <li [class.moi]="m.moi">
+                  <span class="pastille" aria-hidden="true">{{ m.nom[0].toUpperCase() }}</span>
+                  {{ m.moi ? 'Toi' : m.nom }}
+                </li>
+              }
+            </ul>
+            <p class="note">
+              @if (foyer.autres().length) {
+                Tout le monde voit et remplit le même frigo.
+              } @else {
+                Envoie le lien à ceux qui partagent ta cuisine : ils verront le même frigo que toi.
+              }
+            </p>
+            <div class="actions">
+              <button class="principal" type="button" (click)="inviter()">
+                {{ lienCopie() ? '✓ Lien copié !' : 'Inviter quelqu’un' }}
+              </button>
+              <button
+                class="secondaire"
+                type="button"
+                [disabled]="occupe()"
+                (click)="quitterFoyer()"
+              >
+                {{ confirmerDepart() ? 'Oui, quitter' : 'Quitter le foyer' }}
+              </button>
+            </div>
+            @if (confirmerDepart()) {
+              <p class="note">Tu gardes une copie du frigo, qui redevient le tien.</p>
+            }
+          } @else {
+            <p class="note">
+              Tu cuisines à plusieurs ? Partage ton frigo avec ton foyer : chacun voit les restes à
+              finir et peut en ajouter.
+            </p>
+            <div class="actions">
+              <button class="principal" type="button" [disabled]="occupe()" (click)="creerFoyer()">
+                Partager mon frigo
+              </button>
+            </div>
+          }
+        </section>
+      }
 
       <p class="note astuce-appareils">
         Connecte-toi avec le même compte sur ton téléphone et ton ordinateur pour tout retrouver.
@@ -191,12 +206,14 @@
             <span aria-hidden="true">🔖</span>
             <div><strong>Tes favoris</strong> sur ton téléphone comme sur ton ordinateur</div>
           </li>
-          <li>
-            <span aria-hidden="true">🧊</span>
-            <div>
-              <strong>Ton frigo à jour</strong> partout : ce que tu ranges ici apparaît là-bas
-            </div>
-          </li>
+          @if (frigoActif) {
+            <li>
+              <span aria-hidden="true">🧊</span>
+              <div>
+                <strong>Ton frigo à jour</strong> partout : ce que tu ranges ici apparaît là-bas
+              </div>
+            </li>
+          }
           <li>
             <span aria-hidden="true">🌱</span>
             <div><strong>Ton compteur</strong> de restes sauvés, jamais perdu</div>

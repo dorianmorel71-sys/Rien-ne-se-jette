@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { RouterLink } from '@angular/router';
+import { FONCTIONNALITES } from '../../../environments/fonctionnalites';
 import { InvitationInstallation } from '../../components/invitation-installation/invitation-installation';
 import { TitrePage } from '../../components/titre-page/titre-page';
 import { PAGES, titreOnglet } from '../../pages-noms';
@@ -40,6 +41,7 @@ export class PageCompte {
   protected readonly frigo = inject(Frigo);
   protected readonly compteur = inject(Compteur);
   protected readonly foyer = inject(Foyer);
+  protected readonly frigoActif = FONCTIONNALITES.frigo;
 
   protected readonly mode = signal<Mode>('connexion');
   protected readonly nom = signal('');

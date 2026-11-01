@@ -1,9 +1,11 @@
-# Compile l'appli Angular et la publie sur GitHub Pages à chaque push sur main.
+# Compile l'appli Angular et la publie sur GitHub Pages à chaque push sur main ou dev :
+# - branche main → /Rien-ne-se-jette/      version des testeurs (sans le frigo)
+# - branche dev  → /Rien-ne-se-jette/dev/  version de développement (tout)
 name: Déploiement GitHub Pages
 
 on:
   push:
-    branches: [main]
+    branches: [main, dev]
   workflow_dispatch:
 
 permissions:
@@ -20,16 +22,37 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: main
+          path: main
+      - uses: actions/checkout@v4
+        with:
+          ref: dev
+          path: dev
       - uses: actions/setup-node@v4
         with:
           node-version: 24
           cache: npm
-      - run: npm ci
-      - run: npx ng build --base-href /Rien-ne-se-jette/
+          cache-dependency-path: '*/package-lock.json'
+      - name: Version des testeurs (main)
+        working-directory: main
+        run: |
+          npm ci
+          npx ng build --base-href /Rien-ne-se-jette/
+      - name: Version de développement (dev)
+        working-directory: dev
+        run: |
+          npm ci
+          npx ng build --configuration production,complet --base-href /Rien-ne-se-jette/dev/
+      - name: Réunit les deux versions
+        run: |
+          mkdir site
+          cp -r main/dist/rien-ne-se-jette/browser/. site/
+          cp -r dev/dist/rien-ne-se-jette/browser site/dev
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: dist/rien-ne-se-jette/browser
+          path: site
 
   deploy:
     needs: build

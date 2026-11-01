@@ -6,10 +6,19 @@ Appli anti-gaspillage : choisis un légume pour savoir quoi faire de ses épluch
 
 ```bash
 npm install
-npm start        # http://localhost:4200
+npm start                # http://localhost:4200, toutes les fonctionnalités
+npm run start:testeurs   # comme la version des testeurs (sans le frigo)
 npm test         # tests unitaires (Vitest)
 npm run build    # version de production dans dist/
 ```
+
+## Branches et versions en ligne
+
+- `main` : la version des testeurs, sur https://dorianmorel71-sys.github.io/Rien-ne-se-jette/
+- `dev` : le développement en cours, sur https://dorianmorel71-sys.github.io/Rien-ne-se-jette/dev/
+
+Les fonctionnalités pas encore ouvertes aux testeurs (le frigo) sont coupées par
+`src/environments/fonctionnalites.ts` ; la version `dev` utilise `fonctionnalites.complet.ts`.
 
 ## Organisation du code
 

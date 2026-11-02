@@ -100,7 +100,7 @@ export class ParLegume {
   protected readonly toutOuvrir = computed(() => !!this.recherche().trim() || this.deSaison());
 
   constructor() {
-    afterNextRender(() => this.ouvertes.set(new Set([FAMILLE_GARDEES, this.legume().categorie])));
+    afterNextRender(() => this.ouvertes.set(new Set([this.legume().categorie])));
     // La fiche affichée donne son nom à l'onglet, et on y reviendra à la prochaine visite.
     effect(() => {
       const legume = this.legume();
@@ -111,10 +111,11 @@ export class ParLegume {
 
   protected replier(famille: string, ouverte: boolean): void {
     if (this.toutOuvrir()) return;
+    // Une seule famille ouverte à la fois : en ouvrir une referme les autres.
     this.ouvertes.update((o) => {
+      if (ouverte) return new Set([famille]);
       const suivant = new Set(o);
-      if (ouverte) suivant.add(famille);
-      else suivant.delete(famille);
+      suivant.delete(famille);
       return suivant;
     });
   }

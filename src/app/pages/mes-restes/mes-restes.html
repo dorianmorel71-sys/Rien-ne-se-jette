@@ -190,7 +190,8 @@
   }
 
   <div class="recettes" #recettes>
-    @if (selection.placardADemander()) {
+    <!-- Seulement avec un compte : sans compte, le placard s'efface à la fermeture de la page. -->
+    @if (compte.utilisateur() && selection.placardADemander()) {
       <section class="placard" aria-labelledby="titre-placard">
         <h2 id="titre-placard">🧺 Qu'as-tu toujours chez toi ?</h2>
         <p class="aide">

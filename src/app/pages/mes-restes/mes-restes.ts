@@ -22,7 +22,7 @@ import { SelectionRestes } from '../../services/selection-restes';
 import { PAGES } from '../../pages-noms';
 import { normaliser } from '../../utils/texte';
 
-/** Emoji de l'aliment d'où vient chaque reste, le même que dans Aliments. */
+/** Emoji de l'aliment d'où vient chaque reste, le même que dans le Guide anti-gaspi. */
 const EMOJI_PAR_RESTE = new Map<string, string>();
 for (const l of LEGUMES_VISIBLES) {
   for (const id of l.restes ?? []) {

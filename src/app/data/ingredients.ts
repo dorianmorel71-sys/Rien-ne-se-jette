@@ -146,19 +146,9 @@ export const GROUPES_INGREDIENTS: GroupeIngredients[] = [
     ],
   },
   {
-    titre: 'Fruits',
+    titre: 'Fruits d’ici',
     ingredients: [
-      {
-        id: 'ecorce-ananas',
-        nom: "Écorce et cœur d'ananas",
-        avecArticle: "l'écorce et le cœur d'ananas",
-      },
-      { id: 'avocat-mur', nom: 'Avocat trop mûr', avecArticle: "l'avocat" },
-      { id: 'bananes-mures', nom: 'Bananes trop mûres', avecArticle: 'les bananes trop mûres' },
-      { id: 'peau-banane', nom: 'Peaux de banane bio', avecArticle: 'les peaux de banane' },
       { id: 'queues-cerises', nom: 'Queues de cerise', avecArticle: 'les queues de cerise' },
-      { id: 'chataignes-cuites', nom: 'Châtaignes cuites', avecArticle: 'les châtaignes' },
-      { id: 'zeste', nom: "Peau de citron ou d'orange", avecArticle: "la peau d'agrume" },
       {
         id: 'epl-coing',
         nom: 'Pelures et trognons de coing',
@@ -171,12 +161,6 @@ export const GROUPES_INGREDIENTS: GroupeIngredients[] = [
         avecArticle: 'les queues de fraise',
       },
       { id: 'fruits-rouges-abimes', nom: 'Fruits rouges abîmés', avecArticle: 'les fruits rouges' },
-      { id: 'kakis-murs', nom: 'Kakis très mûrs', avecArticle: 'les kakis' },
-      {
-        id: 'fruits-secs',
-        nom: 'Fond de sachet de noix ou noisettes',
-        avecArticle: 'les noix ou noisettes',
-      },
       { id: 'ecorce-pasteque', nom: 'Écorce de pastèque', avecArticle: "l'écorce de pastèque" },
       { id: 'fruits-abimes', nom: 'Fruits abîmés', avecArticle: 'les fruits abîmés' },
       {
@@ -189,6 +173,37 @@ export const GROUPES_INGREDIENTS: GroupeIngredients[] = [
         id: 'epl-rhubarbe',
         nom: 'Épluchures de rhubarbe',
         avecArticle: 'les épluchures de rhubarbe',
+      },
+    ],
+  },
+  {
+    titre: 'Agrumes & exotiques',
+    ingredients: [
+      {
+        id: 'fruits-exotiques-abimes',
+        nom: 'Fruits exotiques abîmés',
+        avecArticle: 'les fruits exotiques',
+      },
+      {
+        id: 'ecorce-ananas',
+        nom: "Écorce et cœur d'ananas",
+        avecArticle: "l'écorce et le cœur d'ananas",
+      },
+      { id: 'avocat-mur', nom: 'Avocat trop mûr', avecArticle: "l'avocat" },
+      { id: 'bananes-mures', nom: 'Bananes trop mûres', avecArticle: 'les bananes trop mûres' },
+      { id: 'peau-banane', nom: 'Peaux de banane bio', avecArticle: 'les peaux de banane' },
+      { id: 'zeste', nom: "Peau de citron ou d'orange", avecArticle: "la peau d'agrume" },
+      { id: 'kakis-murs', nom: 'Kakis très mûrs', avecArticle: 'les kakis' },
+    ],
+  },
+  {
+    titre: 'Fruits à coque',
+    ingredients: [
+      { id: 'chataignes-cuites', nom: 'Châtaignes cuites', avecArticle: 'les châtaignes' },
+      {
+        id: 'fruits-secs',
+        nom: 'Fond de sachet de noix ou noisettes',
+        avecArticle: 'les noix ou noisettes',
       },
     ],
   },

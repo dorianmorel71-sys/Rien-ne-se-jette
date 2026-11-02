@@ -91,10 +91,11 @@ export class MesRestes {
 
   protected replier(famille: string, ouverte: boolean): void {
     if (this.toutOuvrir()) return;
+    // Une seule famille ouverte à la fois : en ouvrir une referme les autres.
     this.ouvertes.update((o) => {
+      if (ouverte) return new Set([famille]);
       const suivant = new Set(o);
-      if (ouverte) suivant.add(famille);
-      else suivant.delete(famille);
+      suivant.delete(famille);
       return suivant;
     });
   }

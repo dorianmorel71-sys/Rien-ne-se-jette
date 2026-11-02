@@ -5,7 +5,7 @@ export const INDISPENSABLES = "de l'eau, du sel, du poivre et de l'huile";
 
 export const GROUPES_INGREDIENTS: GroupeIngredients[] = [
   {
-    titre: 'Légumes racines',
+    titre: 'Légumes',
     ingredients: [
       {
         id: 'feuilles-betterave',
@@ -45,11 +45,6 @@ export const GROUPES_INGREDIENTS: GroupeIngredients[] = [
         nom: 'Épluchures de topinambour',
         avecArticle: 'les épluchures de topinambour',
       },
-    ],
-  },
-  {
-    titre: 'Choux & légumes verts',
-    ingredients: [
       {
         id: 'epl-asperge',
         nom: "Talons et épluchures d'asperge",
@@ -93,11 +88,6 @@ export const GROUPES_INGREDIENTS: GroupeIngredients[] = [
       { id: 'plumet-fenouil', nom: 'Plumet de fenouil', avecArticle: 'le plumet de fenouil' },
       { id: 'vert-poireau', nom: 'Vert de poireau', avecArticle: 'le vert de poireau' },
       { id: 'salade-fanee', nom: 'Salade un peu fanée', avecArticle: 'la salade fanée' },
-    ],
-  },
-  {
-    titre: 'Légumes du soleil',
-    ingredients: [
       { id: 'aubergine-molle', nom: 'Aubergine ramollie', avecArticle: "l'aubergine" },
       {
         id: 'epl-concombre',
@@ -124,11 +114,12 @@ export const GROUPES_INGREDIENTS: GroupeIngredients[] = [
       { id: 'poivron-ride', nom: 'Poivron ridé', avecArticle: 'le poivron' },
       { id: 'tomates-mures', nom: 'Tomates trop mûres', avecArticle: 'les tomates trop mûres' },
       { id: 'peaux-tomate', nom: 'Peaux de tomate', avecArticle: 'les peaux de tomate' },
-    ],
-  },
-  {
-    titre: 'Gousses & légumineuses',
-    ingredients: [
+      {
+        id: 'pieds-champignons',
+        nom: 'Pieds de champignons',
+        avecArticle: 'les pieds de champignons',
+      },
+      { id: 'champignons-mous', nom: 'Champignons ramollis', avecArticle: 'les champignons' },
       { id: 'cosses-feves', nom: 'Cosses de fèves', avecArticle: 'les cosses de fèves' },
       {
         id: 'bouts-haricots',
@@ -146,22 +137,6 @@ export const GROUPES_INGREDIENTS: GroupeIngredients[] = [
         nom: 'Jus de pois chiches (aquafaba)',
         avecArticle: 'le jus de pois chiches',
       },
-    ],
-  },
-  {
-    titre: 'Champignons',
-    ingredients: [
-      {
-        id: 'pieds-champignons',
-        nom: 'Pieds de champignons',
-        avecArticle: 'les pieds de champignons',
-      },
-      { id: 'champignons-mous', nom: 'Champignons ramollis', avecArticle: 'les champignons' },
-    ],
-  },
-  {
-    titre: 'Légumes variés',
-    ingredients: [
       {
         id: 'legumes-fatigues',
         nom: 'Légumes un peu fatigués',
@@ -171,7 +146,7 @@ export const GROUPES_INGREDIENTS: GroupeIngredients[] = [
     ],
   },
   {
-    titre: 'Fruits d’ici',
+    titre: 'Fruits',
     ingredients: [
       { id: 'queues-cerises', nom: 'Queues de cerise', avecArticle: 'les queues de cerise' },
       {
@@ -199,11 +174,6 @@ export const GROUPES_INGREDIENTS: GroupeIngredients[] = [
         nom: 'Épluchures de rhubarbe',
         avecArticle: 'les épluchures de rhubarbe',
       },
-    ],
-  },
-  {
-    titre: 'Agrumes & exotiques',
-    ingredients: [
       {
         id: 'ecorce-ananas',
         nom: "Écorce et cœur d'ananas",
@@ -219,11 +189,6 @@ export const GROUPES_INGREDIENTS: GroupeIngredients[] = [
         nom: 'Fruits exotiques abîmés',
         avecArticle: 'les fruits exotiques',
       },
-    ],
-  },
-  {
-    titre: 'Fruits à coque',
-    ingredients: [
       { id: 'chataignes-cuites', nom: 'Châtaignes cuites', avecArticle: 'les châtaignes' },
       {
         id: 'fruits-secs',

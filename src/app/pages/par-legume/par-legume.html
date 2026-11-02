@@ -33,21 +33,28 @@
           <span class="titre">{{ groupe.titre }}</span>
           <span class="nombre">{{ groupe.legumes.length }}</span>
         </summary>
-        <div class="chips contenu">
-          @for (l of groupe.legumes; track l.id) {
-            <button
-              class="chip"
-              type="button"
-              [attr.aria-pressed]="l.id === legume().id"
-              (click)="choisir(l.id, true)"
-            >
-              @if (l.emoji) {
-                <span class="emoji" aria-hidden="true">{{ l.emoji }}</span>
-              } @else {
-                <i [style.background]="l.couleur"></i>
+        <div class="contenu">
+          @for (sg of groupe.sousGroupes; track sg.titre) {
+            @if (sg.titre) {
+              <p class="sous-famille">{{ sg.titre }}</p>
+            }
+            <div class="chips">
+              @for (l of sg.elements; track l.id) {
+                <button
+                  class="chip"
+                  type="button"
+                  [attr.aria-pressed]="l.id === legume().id"
+                  (click)="choisir(l.id, true)"
+                >
+                  @if (l.emoji) {
+                    <span class="emoji" aria-hidden="true">{{ l.emoji }}</span>
+                  } @else {
+                    <i [style.background]="l.couleur"></i>
+                  }
+                  {{ l.nom }}
+                </button>
               }
-              {{ l.nom }}
-            </button>
+            </div>
           }
         </div>
       </details>

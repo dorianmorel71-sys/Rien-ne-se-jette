@@ -81,24 +81,31 @@
               <span class="coches">✓ {{ coches }}</span>
             }
           </summary>
-          <div class="restes contenu">
-            @for (ingredient of groupe.ingredients; track ingredient.id) {
-              <button
-                class="reste"
-                type="button"
-                [attr.aria-pressed]="selection.estCoche(ingredient.id)"
-                (click)="selection.basculer(ingredient.id)"
-              >
-                @if (emoji.get(ingredient.id); as e) {
-                  <span class="emoji" aria-hidden="true">{{ e }}</span>
+          <div class="contenu">
+            @for (sg of groupe.sousGroupes; track sg.titre) {
+              @if (sg.titre) {
+                <p class="sous-famille">{{ sg.titre }}</p>
+              }
+              <div class="restes">
+                @for (ingredient of sg.elements; track ingredient.id) {
+                  <button
+                    class="reste"
+                    type="button"
+                    [attr.aria-pressed]="selection.estCoche(ingredient.id)"
+                    (click)="selection.basculer(ingredient.id)"
+                  >
+                    @if (emoji.get(ingredient.id); as e) {
+                      <span class="emoji" aria-hidden="true">{{ e }}</span>
+                    }
+                    {{ ingredient.nom }}
+                    @if (auFrigo().get(ingredient.id); as reste) {
+                      <span class="delai" [attr.data-niveau]="niveau(reste.joursRestants)">
+                        {{ delai(reste.joursRestants) }}
+                      </span>
+                    }
+                  </button>
                 }
-                {{ ingredient.nom }}
-                @if (auFrigo().get(ingredient.id); as reste) {
-                  <span class="delai" [attr.data-niveau]="niveau(reste.joursRestants)">
-                    {{ delai(reste.joursRestants) }}
-                  </span>
-                }
-              </button>
+              </div>
             }
           </div>
         </details>

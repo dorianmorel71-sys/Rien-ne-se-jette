@@ -73,38 +73,14 @@ a:focus-visible {
 }
 
 // Famille repliable (aliments, restes) : titre, compteur et chevron.
-// Une famille a la même couleur dans Aliments et dans Recettes (data-famille).
+// Une famille a la même couleur dans le Guide et dans Recettes (data-famille).
 .famille {
   --c: var(--leaf);
   --c-soft: var(--leaf-soft);
 
-  &[data-famille='Légumes racines'] {
-    --c: var(--root);
-    --c-soft: var(--root-soft);
-  }
-  &[data-famille='Légumes du soleil'] {
-    --c: var(--accent);
-    --c-soft: var(--accent-soft);
-  }
-  &[data-famille='Gousses & légumineuses'] {
-    --c: var(--pod);
-    --c-soft: var(--pod-soft);
-  }
-  &[data-famille='Champignons'] {
-    --c: var(--mushroom);
-    --c-soft: var(--mushroom-soft);
-  }
-  &[data-famille='Fruits d’ici'] {
+  &[data-famille='Fruits'] {
     --c: var(--berry);
     --c-soft: var(--berry-soft);
-  }
-  &[data-famille='Agrumes & exotiques'] {
-    --c: var(--citrus);
-    --c-soft: var(--citrus-soft);
-  }
-  &[data-famille='Fruits à coque'] {
-    --c: var(--nut);
-    --c-soft: var(--nut-soft);
   }
   &[data-famille='Herbes & aromates'] {
     --c: var(--mustard);
@@ -186,5 +162,19 @@ a:focus-visible {
 
   .contenu {
     padding: 0 14px 14px;
+  }
+
+  // Sous-titre dans une famille (« Racines », « Agrumes & exotiques »).
+  .sous-famille {
+    margin: 14px 0 8px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--c);
+
+    &:first-child {
+      margin-top: 2px;
+    }
   }
 }

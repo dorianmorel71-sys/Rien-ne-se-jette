@@ -8,6 +8,16 @@
   </p>
 
   <section>
+    <h3>🙋 Qui s'occupe de tes données</h3>
+    <p>
+      Rien ne se jette est créé par <strong>{{ responsable }}</strong
+      >, responsable des données décrites ici. Pour toute question :
+      <a [href]="'mailto:' + email">{{ email }}</a
+      >.
+    </p>
+  </section>
+
+  <section>
     <h3>📱 Sur ton appareil, sans compte</h3>
     <p>
       Tes favoris, ton compteur de restes sauvés, les ingrédients cochés{{
@@ -71,9 +81,10 @@
     <h3>⚖️ Tes droits</h3>
     <p>
       Tu peux demander à consulter, corriger, récupérer ou effacer tes données, ou t'opposer à leur
-      utilisation. Écris-le dans <a routerLink="/avis">Ton avis</a> en laissant ton e-mail : tu
-      auras une réponse sous un mois. Si tu n'es pas satisfait de la réponse, tu peux t'adresser à
-      la <a href="https://www.cnil.fr/fr/plaintes" target="_blank" rel="noopener">CNIL</a>.
+      utilisation. Écris à <a [href]="'mailto:' + email">{{ email }}</a
+      >, ou passe par <a routerLink="/avis">Ton avis</a> en laissant ton e-mail : tu auras une
+      réponse sous un mois. Si tu n'es pas satisfait de la réponse, tu peux t'adresser à la
+      <a href="https://www.cnil.fr/fr/plaintes" target="_blank" rel="noopener">CNIL</a>.
     </p>
   </section>
 

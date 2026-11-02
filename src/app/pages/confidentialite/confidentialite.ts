@@ -15,6 +15,9 @@ import { PAGES } from '../../pages-noms';
 export class PageConfidentialite {
   protected readonly page = PAGES.confidentialite;
   protected readonly frigoActif = FONCTIONNALITES.frigo;
+  /** Responsable des données, comme le demande le RGPD. */
+  protected readonly responsable = 'Dorian Morel';
+  protected readonly email = 'riennesejette.contact@gmail.com';
   /** À changer à chaque modification du texte. */
   protected readonly miseAJour = '2 novembre 2026';
 }

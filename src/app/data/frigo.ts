@@ -11,7 +11,9 @@ export const JOURS_DECONGELE = 1;
 /** Nombre de jours au frigo, par défaut pour chaque famille de restes. */
 const JOURS_PAR_GROUPE: Record<string, number> = {
   Légumes: 3,
-  Fruits: 3,
+  'Fruits d’ici': 3,
+  'Agrumes & exotiques': 3,
+  'Fruits à coque': 3,
   'Herbes & aromates': 3,
   'Viande & poisson': 2,
   'Épicerie & crèmerie': 3,
@@ -79,6 +81,7 @@ const JOURS_PAR_RESTE: Record<string, number> = {
   'bananes-mures': 2,
   'avocat-mur': 1,
   'fruits-abimes': 2,
+  'fruits-exotiques-abimes': 2,
   'peau-banane': 2,
   zeste: 7,
   'queues-cerises': 30,

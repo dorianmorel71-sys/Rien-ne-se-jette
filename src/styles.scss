@@ -78,9 +78,17 @@ a:focus-visible {
   --c: var(--leaf);
   --c-soft: var(--leaf-soft);
 
-  &[data-famille='Fruits'] {
+  &[data-famille='Fruits d’ici'] {
     --c: var(--berry);
     --c-soft: var(--berry-soft);
+  }
+  &[data-famille='Agrumes & exotiques'] {
+    --c: var(--citrus);
+    --c-soft: var(--citrus-soft);
+  }
+  &[data-famille='Fruits à coque'] {
+    --c: var(--nut);
+    --c-soft: var(--nut-soft);
   }
   &[data-famille='Herbes & aromates'] {
     --c: var(--mustard);

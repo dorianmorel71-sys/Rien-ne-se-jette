@@ -7,7 +7,13 @@ export interface PartieLegume {
 
 /** Famille sous laquelle le légume est rangé dans la liste. */
 export type CategorieLegume =
-  'Légumes' | 'Fruits' | 'Herbes & aromates' | 'Viande & poisson' | 'Épicerie & crèmerie';
+  | 'Légumes'
+  | 'Fruits d’ici'
+  | 'Agrumes & exotiques'
+  | 'Fruits à coque'
+  | 'Herbes & aromates'
+  | 'Viande & poisson'
+  | 'Épicerie & crèmerie';
 
 export interface Legume {
   id: string;

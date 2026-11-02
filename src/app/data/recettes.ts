@@ -888,7 +888,13 @@ export const MODELES_RECETTES: ModeleRecette[] = [
     temps: '10 min + 35 min au four',
     type: 'sucré',
     requis: ['yaourt', 'oeufs', 'farine'],
-    restes: ['fruits-abimes', 'bananes-mures', 'fruits-rouges-abimes', 'kakis-murs'],
+    restes: [
+      'fruits-abimes',
+      'fruits-exotiques-abimes',
+      'bananes-mures',
+      'fruits-rouges-abimes',
+      'kakis-murs',
+    ],
     minRestes: 0,
     optionnels: ['sucre', 'levure', 'zeste'],
     etapes: [
@@ -945,6 +951,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
     requis: [],
     restes: [
       'fruits-abimes',
+      'fruits-exotiques-abimes',
       'bananes-mures',
       'epl-pomme',
       'epl-rhubarbe',
@@ -973,6 +980,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
     restes: [
       'bananes-mures',
       'fruits-abimes',
+      'fruits-exotiques-abimes',
       'raisins-rides',
       'avocat-mur',
       'fruits-rouges-abimes',
@@ -1456,6 +1464,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
     requis: ['vinaigre', 'sucre'],
     restes: [
       'fruits-abimes',
+      'fruits-exotiques-abimes',
       'peau-banane',
       'raisins-rides',
       'ecorce-pasteque',
@@ -1670,6 +1679,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
       'bananes-mures',
       'raisins-rides',
       'fruits-abimes',
+      'fruits-exotiques-abimes',
       'cacao',
       'epices',
       'zeste',
@@ -1681,6 +1691,11 @@ export const MODELES_RECETTES: ModeleRecette[] = [
       { si: 'bananes-mures', texte: 'Ajoute les bananes écrasées.' },
       { si: 'raisins-rides', texte: 'Ajoute les raisins ridés.' },
       { si: 'fruits-abimes', texte: 'Ajoute les fruits sans leurs parties abîmées, en dés.' },
+      {
+        si: 'fruits-exotiques-abimes',
+        sauf: 'fruits-abimes',
+        texte: 'Ajoute les fruits sans leurs parties abîmées, en dés.',
+      },
       { si: 'cacao', texte: 'Ajoute 2 cuillères de cacao ou du chocolat fondu.' },
       { si: 'epices', texte: 'Ajoute une pincée de cannelle.' },
       { si: 'zeste', texte: "Râpe un peu de peau d'agrume par-dessus." },
@@ -1696,7 +1711,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
     requis: ['blancs-oeufs', 'beurre', 'sucre', 'farine'],
     restes: [],
     minRestes: 0,
-    optionnels: ['zeste', 'fruits-abimes', 'miettes-gateau'],
+    optionnels: ['zeste', 'fruits-abimes', 'fruits-exotiques-abimes', 'miettes-gateau'],
     etapes: [
       'Préchauffe le four à 200 °C.',
       'Fais fondre 100 g de beurre jusqu’à ce qu’il sente la noisette.',
@@ -1709,6 +1724,11 @@ export const MODELES_RECETTES: ModeleRecette[] = [
       { si: 'zeste', texte: "Râpe un peu de peau d'agrume dans la pâte." },
       'Verse dans de petits moules beurrés.',
       { si: 'fruits-abimes', texte: 'Pose un petit morceau de fruit sur chaque financier.' },
+      {
+        si: 'fruits-exotiques-abimes',
+        sauf: 'fruits-abimes',
+        texte: 'Pose un petit morceau de fruit sur chaque financier.',
+      },
       'Enfourne 12 à 15 min : les bords doivent être dorés.',
     ],
   },
@@ -1816,7 +1836,13 @@ export const MODELES_RECETTES: ModeleRecette[] = [
     temps: '30 min',
     type: 'sucré',
     requis: ['fond-vin', 'sucre'],
-    restes: ['fruits-abimes', 'raisins-rides', 'epl-pomme', 'figues-mures'],
+    restes: [
+      'fruits-abimes',
+      'fruits-exotiques-abimes',
+      'raisins-rides',
+      'epl-pomme',
+      'figues-mures',
+    ],
     optionnels: ['epices', 'zeste', 'miel'],
     etapes: [
       'Verse le fond de vin dans une casserole avec 60 g de sucre et un verre d’eau.',
@@ -2562,6 +2588,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
     requis: ['oeufs', 'lait', 'farine', 'sucre'],
     restes: [
       'fruits-abimes',
+      'fruits-exotiques-abimes',
       'raisins-rides',
       'bananes-mures',
       'fruits-rouges-abimes',
@@ -2608,7 +2635,14 @@ export const MODELES_RECETTES: ModeleRecette[] = [
     temps: '5 min',
     type: 'boisson',
     requis: ['yaourt'],
-    restes: ['fruits-abimes', 'bananes-mures', 'avocat-mur', 'fruits-rouges-abimes', 'kakis-murs'],
+    restes: [
+      'fruits-abimes',
+      'fruits-exotiques-abimes',
+      'bananes-mures',
+      'avocat-mur',
+      'fruits-rouges-abimes',
+      'kakis-murs',
+    ],
     optionnels: ['miel', 'lait', 'epices'],
     etapes: [
       'Retire les parties abîmées et coupe {restes} en morceaux.',
@@ -2627,6 +2661,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
     requis: ['sucre'],
     restes: [
       'fruits-abimes',
+      'fruits-exotiques-abimes',
       'raisins-rides',
       'epl-rhubarbe',
       'fruits-rouges-abimes',

@@ -31,6 +31,18 @@ export const PAGES = {
       ? 'Tes données sur tous tes appareils, et ton frigo partagé.'
       : 'Tes favoris sur tous tes appareils.',
   },
+  avis: {
+    chemin: '/avis',
+    icone: '💬',
+    nom: 'Ton avis',
+    phrase: 'Un bug, une idée, un aliment qui manque ? Dis-le, chaque message est lu.',
+  },
+  confidentialite: {
+    chemin: '/confidentialite',
+    icone: '🔒',
+    nom: 'Confidentialité',
+    phrase: 'Ce que l’appli garde sur toi, où, et comment l’effacer.',
+  },
   accueil: { chemin: '/accueil', icone: '❓', nom: 'Accueil', phrase: '' },
   invitation: { chemin: '/foyer', icone: '🏠', nom: 'Invitation', phrase: '' },
 } as const;

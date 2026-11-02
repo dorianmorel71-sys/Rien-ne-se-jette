@@ -8,6 +8,11 @@
           {{ compteur.restes() > 1 ? 'restes sauvés' : 'reste sauvé' }}
         </p>
       }
+      @if (url() !== avis.chemin && !url().startsWith(avis.chemin + '?')) {
+        <a class="lien-avis" [routerLink]="avis.chemin" [queryParams]="{ depuis: url() }">
+          <span aria-hidden="true">{{ avis.icone }}</span> {{ avis.nom }}
+        </a>
+      }
     </header>
 
     <nav class="menu" aria-label="Menu">
@@ -44,6 +49,8 @@
 
   <footer>
     <a routerLink="/accueil">❓ Comment ça marche ?</a>
+    <a [routerLink]="avis.chemin" [queryParams]="{ depuis: url() }">💬 Donner mon avis</a>
+    <a routerLink="/confidentialite">🔒 Confidentialité</a>
   </footer>
 </div>
 

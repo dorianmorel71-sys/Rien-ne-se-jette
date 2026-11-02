@@ -1,5 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
-import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { NavigationEnd, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { filter, map } from 'rxjs';
 import { FONCTIONNALITES } from '../environments/fonctionnalites';
 import { MessageAction } from './components/message/message';
 import { RappelMinuteur } from './components/rappel-minuteur/rappel-minuteur';
@@ -25,6 +27,16 @@ export class App {
   private readonly foyer = inject(Foyer);
   // Démarré dès l'ouverture pour ne pas rater la proposition d'installation du navigateur.
   protected readonly installation = inject(Installation);
+
+  protected readonly avis = PAGES.avis;
+  /** Page affichée, transmise au formulaire d'avis pour savoir d'où vient le message. */
+  protected readonly url = toSignal(
+    inject(Router).events.pipe(
+      filter((e) => e instanceof NavigationEnd),
+      map((e) => e.urlAfterRedirects),
+    ),
+    { initialValue: '' },
+  );
 
   protected readonly liens = [
     PAGES.aliments,

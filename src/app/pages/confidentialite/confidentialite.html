@@ -1,0 +1,81 @@
+<app-titre-page [icone]="page.icone" [titre]="page.nom" [sousTitre]="page.phrase" />
+
+<div class="carte">
+  <p class="resume">
+    🌱 <strong>En bref :</strong> pas de publicité, pas de mesure d'audience, rien n'est revendu.
+    Sans compte, tout reste sur ton appareil. Avec un compte, tes données sont sauvegardées pour toi
+    seul, et tu peux tout effacer en un bouton.
+  </p>
+
+  <section>
+    <h3>📱 Sur ton appareil, sans compte</h3>
+    <p>
+      Tes favoris, ton compteur de restes sauvés, les ingrédients cochés{{
+        frigoActif ? ', ton frigo' : ''
+      }}
+      et tes minuteurs sont enregistrés dans ton navigateur. Ils ne quittent pas ton appareil. Pour
+      les effacer, vide les données du site dans les réglages de ton navigateur.
+    </p>
+  </section>
+
+  <section>
+    <h3>👤 Avec un compte (facultatif)</h3>
+    <p>Le compte sert uniquement à retrouver tes données sur tous tes appareils. Il garde :</p>
+    <ul>
+      <li>ton adresse e-mail et ton prénom (s'il est donné, ou celui de ton compte Google) ;</li>
+      <li>
+        tes favoris, ton compteur de restes sauvés{{
+          frigoActif
+            ? ', ton frigo et, si tu le partages, les prénoms des membres de ton foyer'
+            : ''
+        }}.
+      </li>
+    </ul>
+    <p>
+      Toi seul peux lire ces données. Elles sont conservées tant que ton compte existe : le bouton
+      «&nbsp;Supprimer mon compte&nbsp;», sur la page <a routerLink="/compte">Compte</a>, efface
+      tout immédiatement.
+    </p>
+  </section>
+
+  <section>
+    <h3>💬 Quand tu envoies un avis</h3>
+    <p>
+      Le formulaire <a routerLink="/avis">Ton avis</a> enregistre ton message, ton impression, ton
+      e-mail si tu le donnes, la page où tu étais et le type de ton appareil (navigateur, taille
+      d'écran), pour comprendre les bugs. Les avis servent seulement à améliorer l'appli et sont
+      effacés au plus tard deux ans après leur envoi.
+    </p>
+  </section>
+
+  <section>
+    <h3>🏢 Les services utilisés</h3>
+    <ul>
+      <li>
+        <strong>Firebase (Google)</strong> : connexion et sauvegarde des comptes et des avis. Les
+        serveurs peuvent se trouver hors de l'Union européenne ; Google s'engage à protéger ces
+        données selon le RGPD.
+      </li>
+      <li>
+        <strong>GitHub Pages</strong> : héberge l'appli. Comme tout hébergeur, il voit ton adresse
+        IP quand tu ouvres l'appli.
+      </li>
+      <li>
+        <strong>Google Fonts</strong> : fournit les polices d'écriture ; ton adresse IP lui est
+        transmise au chargement.
+      </li>
+    </ul>
+  </section>
+
+  <section>
+    <h3>⚖️ Tes droits</h3>
+    <p>
+      Tu peux demander à consulter, corriger, récupérer ou effacer tes données, ou t'opposer à leur
+      utilisation. Écris-le dans <a routerLink="/avis">Ton avis</a> en laissant ton e-mail : tu
+      auras une réponse sous un mois. Si tu n'es pas satisfait de la réponse, tu peux t'adresser à
+      la <a href="https://www.cnil.fr/fr/plaintes" target="_blank" rel="noopener">CNIL</a>.
+    </p>
+  </section>
+
+  <p class="note">Mise à jour le {{ miseAJour }}.</p>
+</div>

@@ -21,7 +21,7 @@
   <div class="carte">
     <p class="grand">Les comptes arrivent bientôt</p>
     <p>
-      En attendant, tout est gardé sur cet appareil : favoris,{{ frigoActif ? ' frigo' : '' }} et
+      En attendant, tout est gardé sur cet appareil : favoris{{ frigoActif ? ', frigo' : '' }} et
       compteur de restes sauvés.
     </p>
   </div>
@@ -41,7 +41,7 @@
         <ng-container *ngTemplateOutlet="etatSynchro" />
       </p>
       <p>
-        Connecte-toi avec ce compte sur ton téléphone : favoris,{{ frigoActif ? ' frigo' : '' }} et
+        Connecte-toi avec ce compte sur ton téléphone : favoris{{ frigoActif ? ', frigo' : '' }} et
         compteur y seront aussi.
       </p>
     </aside>
@@ -325,6 +325,12 @@
             }
           }
         </button>
+        @if (mode() !== 'oubli') {
+          <p class="note">
+            Ce que ton compte garde, et comment l'effacer :
+            <a routerLink="/confidentialite">confidentialité</a>.
+          </p>
+        }
       </form>
 
       <div class="liens">

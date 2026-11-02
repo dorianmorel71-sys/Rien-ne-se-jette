@@ -1,0 +1,61 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 680px;
+}
+
+.carte {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-top: 10px solid var(--ice);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: clamp(20px, 5vw, 32px);
+  line-height: 1.55;
+
+  p,
+  ul {
+    margin: 0;
+  }
+
+  a {
+    color: var(--accent);
+    font-weight: 700;
+  }
+}
+
+.resume {
+  background: var(--leaf-soft);
+  color: var(--fg);
+  border-radius: 14px;
+  padding: 14px 16px;
+}
+
+section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+h3 {
+  margin: 0;
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: 1.2rem;
+}
+
+ul {
+  padding-left: 1.2em;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.note {
+  color: var(--muted);
+  font-size: 0.85rem;
+}

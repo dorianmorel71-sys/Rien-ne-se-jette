@@ -1,0 +1,76 @@
+<app-titre-page [icone]="page.icone" [titre]="page.nom" [sousTitre]="page.phrase" />
+
+<div class="carte">
+  @if (envoye()) {
+    <p class="emoji" aria-hidden="true">🙏</p>
+    <p class="grand">Merci !</p>
+    <p>
+      Ton message est bien arrivé. C'est grâce à ces retours que l'appli s'améliore pendant les
+      tests.
+    </p>
+    <div class="actions">
+      <a class="principal" [routerLink]="depuis() || '/legume'">Revenir à l'appli</a>
+      <button class="secondaire" type="button" (click)="recommencer()">
+        Envoyer un autre message
+      </button>
+    </div>
+  } @else {
+    <form (submit)="envoyer($event)">
+      <fieldset>
+        <legend>Ton impression <span class="facultatif">(facultatif)</span></legend>
+        <div class="humeurs">
+          @for (h of humeurs; track h.valeur) {
+            <button
+              type="button"
+              [attr.aria-pressed]="humeur() === h.valeur"
+              (click)="choisirHumeur(h.valeur)"
+            >
+              <span class="emoji-humeur" aria-hidden="true">{{ h.emoji }}</span>
+              {{ h.libelle }}
+            </button>
+          }
+        </div>
+      </fieldset>
+
+      <label>
+        Ton message
+        <textarea
+          rows="6"
+          required
+          [attr.maxlength]="longueurMax"
+          [placeholder]="
+            humeur() === 'bug'
+              ? 'Sur quelle page ? Qu’est-ce que tu as fait, et qu’est-ce qui s’est passé ?'
+              : 'Ce qui t’a plu, ce qui t’a gêné, ce qui manque…'
+          "
+          [value]="texte()"
+          (input)="texte.set($any($event.target).value)"
+        ></textarea>
+      </label>
+
+      @if (!compte.utilisateur()) {
+        <label>
+          Ton e-mail <span class="facultatif">(facultatif, pour que je puisse te répondre)</span>
+          <input
+            type="email"
+            autocomplete="email"
+            [value]="email()"
+            (input)="email.set($any($event.target).value)"
+          />
+        </label>
+      }
+
+      @if (erreur()) {
+        <p class="erreur" role="alert">{{ erreur() }}</p>
+      }
+
+      <button class="principal" type="submit" [disabled]="occupe() || !texte().trim()">
+        {{ occupe() ? 'Envoi…' : 'Envoyer' }}
+      </button>
+      <p class="note">
+        Avec ton message partent le nom de la page et le type de ton appareil, pour comprendre les
+        bugs. <a routerLink="/confidentialite">Confidentialité</a>
+      </p>
+    </form>
+  }
+</div>

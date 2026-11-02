@@ -4,8 +4,10 @@ import { FONCTIONNALITES } from '../environments/fonctionnalites';
 import { Compte } from './services/compte';
 import { PAGES, titreOnglet } from './pages-noms';
 import { PageAccueil } from './pages/accueil/accueil';
+import { PageAvis } from './pages/avis/avis';
 import { pageDeDepart } from './pages/accueil/premiere-visite';
 import { PageCompte } from './pages/compte/compte';
+import { PageConfidentialite } from './pages/confidentialite/confidentialite';
 import { PageFrigo } from './pages/frigo/frigo';
 import { PageInvitation } from './pages/invitation/invitation';
 import { MesRestes } from './pages/mes-restes/mes-restes';
@@ -23,6 +25,12 @@ export const routes: Routes = [
         { path: 'foyer/:id', component: PageInvitation, title: titreOnglet(PAGES.invitation.nom) },
       ]
     : []),
+  { path: 'avis', component: PageAvis, title: titreOnglet(PAGES.avis.nom) },
+  {
+    path: 'confidentialite',
+    component: PageConfidentialite,
+    title: titreOnglet(PAGES.confidentialite.nom),
+  },
   // Les favoris sont maintenant rangés dans Recettes et Aliments.
   { path: 'favoris', redirectTo: 'restes' },
   {

@@ -52,6 +52,28 @@ header {
     font-weight: 500;
     white-space: nowrap;
   }
+
+  // Bien visible pendant les tests : c'est là que les testeurs donnent leur avis.
+  .lien-avis {
+    margin-left: auto;
+    background: var(--mustard-soft);
+    color: var(--fg);
+    border-radius: 999px;
+    padding: 5px 13px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
+
+    &:hover {
+      background: var(--mustard);
+      color: var(--on-accent);
+    }
+  }
+
+  .compteur + .lien-avis {
+    margin-left: 0;
+  }
 }
 
 // Barre de menu flottante en bas, à portée de pouce.
@@ -64,7 +86,9 @@ header {
   width: min(520px, calc(100% - 20px));
   height: $hauteur-menu;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  // Autant de colonnes que d'onglets : le frigo n'est pas dans toutes les versions.
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
   gap: 4px;
   padding: 6px;
   background: var(--surface);
@@ -205,7 +229,10 @@ header {
 }
 
 footer {
-  text-align: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 20px;
   font-size: 0.9rem;
 
   a {
@@ -240,7 +267,8 @@ footer {
     flex-direction: column;
     align-items: flex-start;
 
-    .compteur {
+    .compteur,
+    .lien-avis {
       margin: 0;
     }
 

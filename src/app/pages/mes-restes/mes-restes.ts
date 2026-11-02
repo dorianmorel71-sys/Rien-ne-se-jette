@@ -22,6 +22,7 @@ import {
 import { Ingredient, TypeRecette } from '../../models/recette';
 import { FONCTIONNALITES } from '../../../environments/fonctionnalites';
 import { Frigo, RESTES_FRIGO } from '../../services/frigo';
+import { Compte } from '../../services/compte';
 import { Favoris } from '../../services/favoris';
 import { Messages } from '../../services/messages';
 import { libelleDelai, niveauDelai } from '../../utils/urgence';
@@ -63,6 +64,7 @@ export class MesRestes {
   protected readonly selection = inject(SelectionRestes);
   protected readonly page = PAGES.recettes;
   protected readonly favoris = inject(Favoris);
+  protected readonly compte = inject(Compte);
   /** Restes du frigo, pour afficher le temps qu'il leur reste à côté de leur nom. */
   protected readonly auFrigo = computed(
     () => new Map(this.frigo.auFrigo().map((r) => [r.id, r] as const)),

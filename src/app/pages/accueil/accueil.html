@@ -36,7 +36,10 @@
 
 <app-invitation-installation />
 
-<p class="astuces">
-  🔒 Un compte (gratuit, facultatif) garde tes favoris{{ frigoActif ? ' et ton frigo' : '' }} sur
-  tous tes appareils.
-</p>
+@if (compte.actif && !compte.utilisateur()) {
+  <p class="astuces">
+    🔒 Sans compte, ce que tu coches et gardes s'efface quand tu fermes la page. Un compte (gratuit)
+    garde tes favoris{{ frigoActif ? ', ton frigo' : '' }} et tes restes sauvés sur tous tes
+    appareils.
+  </p>
+}

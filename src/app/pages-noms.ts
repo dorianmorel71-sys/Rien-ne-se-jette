@@ -33,7 +33,7 @@ export const PAGES = {
     nom: 'Compte',
     phrase: FONCTIONNALITES.frigo
       ? 'Tes données sur tous tes appareils, et ton frigo partagé.'
-      : 'Tes favoris sur tous tes appareils.',
+      : 'Tes favoris et tes restes sauvés, gardés même après avoir fermé la page.',
   },
   avis: {
     chemin: '/avis',

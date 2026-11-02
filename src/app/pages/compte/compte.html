@@ -10,9 +10,9 @@
     icone="👤"
     [titre]="titre()"
     [sousTitre]="
-      'Facultatif : pour retrouver tes favoris' +
-      (frigoActif ? ' et ton frigo' : '') +
-      ' sur tous tes appareils.'
+      'Gratuit : pour garder tes favoris' +
+      (frigoActif ? ', ton frigo' : '') +
+      ' et tes restes sauvés, même après avoir fermé la page.'
     "
   />
 }
@@ -155,9 +155,8 @@
       </div>
       @if (confirmerSuppression()) {
         <p class="note">
-          Ton compte et ses données seront effacés. Cet appareil garde ses favoris{{
-            frigoActif ? ' et son frigo' : ''
-          }}.
+          Ton compte et ses données seront effacés. Ce qui est sur cet appareil disparaîtra quand tu
+          fermeras la page.
         </p>
       }
       @if (erreur()) {

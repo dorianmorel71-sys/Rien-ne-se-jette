@@ -16,11 +16,11 @@ describe('Données des légumes', () => {
     expect(inconnus).toEqual([]);
   });
 
-  it('range les restes des Recettes dans les mêmes familles, et le même ordre, que les Aliments', () => {
-    expect(GROUPES_INGREDIENTS.map((g) => g.titre)).toEqual([
-      ...CATEGORIES_LEGUMES,
-      GROUPE_PLACARD,
-    ]);
+  it('range les restes des Recettes dans les mêmes familles, et le même ordre, que le Guide', () => {
+    // « Légumes variés » n'existe que dans Recettes : des restes qui ne viennent d'aucun légume précis.
+    const attendu: string[] = [...CATEGORIES_LEGUMES];
+    attendu.splice(attendu.indexOf('Champignons') + 1, 0, 'Légumes variés');
+    expect(GROUPES_INGREDIENTS.map((g) => g.titre)).toEqual([...attendu, GROUPE_PLACARD]);
   });
 
   it('met chaque reste dans la famille de son aliment', () => {

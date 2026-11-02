@@ -7,7 +7,11 @@ export interface PartieLegume {
 
 /** Famille sous laquelle le légume est rangé dans la liste. */
 export type CategorieLegume =
-  | 'Légumes'
+  | 'Légumes racines'
+  | 'Choux & légumes verts'
+  | 'Légumes du soleil'
+  | 'Gousses & légumineuses'
+  | 'Champignons'
   | 'Fruits d’ici'
   | 'Agrumes & exotiques'
   | 'Fruits à coque'

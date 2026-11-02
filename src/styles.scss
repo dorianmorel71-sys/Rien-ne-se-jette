@@ -78,6 +78,22 @@ a:focus-visible {
   --c: var(--leaf);
   --c-soft: var(--leaf-soft);
 
+  &[data-famille='Légumes racines'] {
+    --c: var(--root);
+    --c-soft: var(--root-soft);
+  }
+  &[data-famille='Légumes du soleil'] {
+    --c: var(--accent);
+    --c-soft: var(--accent-soft);
+  }
+  &[data-famille='Gousses & légumineuses'] {
+    --c: var(--pod);
+    --c-soft: var(--pod-soft);
+  }
+  &[data-famille='Champignons'] {
+    --c: var(--mushroom);
+    --c-soft: var(--mushroom-soft);
+  }
   &[data-famille='Fruits d’ici'] {
     --c: var(--berry);
     --c-soft: var(--berry-soft);
@@ -99,8 +115,8 @@ a:focus-visible {
     --c-soft: var(--meat-soft);
   }
   &[data-famille='Épicerie & crèmerie'] {
-    --c: var(--accent);
-    --c-soft: var(--accent-soft);
+    --c: var(--ice);
+    --c-soft: var(--ice-soft);
   }
   &[data-famille='Dans mon placard'] {
     --c: var(--muted);

@@ -5,21 +5,13 @@ export const INDISPENSABLES = "de l'eau, du sel, du poivre et de l'huile";
 
 export const GROUPES_INGREDIENTS: GroupeIngredients[] = [
   {
-    titre: 'Légumes',
+    titre: 'Légumes racines',
     ingredients: [
-      {
-        id: 'epl-asperge',
-        nom: "Talons et épluchures d'asperge",
-        avecArticle: "les talons et épluchures d'asperge",
-      },
-      { id: 'aubergine-molle', nom: 'Aubergine ramollie', avecArticle: "l'aubergine" },
       {
         id: 'feuilles-betterave',
         nom: 'Feuilles de betterave',
         avecArticle: 'les feuilles de betterave',
       },
-      { id: 'cotes-blettes', nom: 'Côtes de blettes', avecArticle: 'les côtes de blettes' },
-      { id: 'tronc-brocoli', nom: 'Tronc de brocoli', avecArticle: 'le tronc de brocoli' },
       { id: 'fanes-carotte', nom: 'Fanes de carotte', avecArticle: 'les fanes de carotte' },
       { id: 'epl-carotte', nom: 'Épluchures de carotte', avecArticle: 'les épluchures de carotte' },
       {
@@ -28,12 +20,43 @@ export const GROUPES_INGREDIENTS: GroupeIngredients[] = [
         avecArticle: 'les épluchures de céleri-rave',
       },
       { id: 'feuilles-celeri', nom: 'Feuilles de céleri', avecArticle: 'les feuilles de céleri' },
+      { id: 'fanes-navet', nom: 'Fanes de navet', avecArticle: 'les fanes de navet' },
+      { id: 'epl-navet', nom: 'Épluchures de navet', avecArticle: 'les épluchures de navet' },
+      { id: 'epl-panais', nom: 'Épluchures de panais', avecArticle: 'les épluchures de panais' },
       {
-        id: 'pieds-champignons',
-        nom: 'Pieds de champignons',
-        avecArticle: 'les pieds de champignons',
+        id: 'epl-patate-douce',
+        nom: 'Épluchures de patate douce',
+        avecArticle: 'les épluchures de patate douce',
       },
-      { id: 'champignons-mous', nom: 'Champignons ramollis', avecArticle: 'les champignons' },
+      {
+        id: 'epl-pdt',
+        nom: 'Épluchures de pomme de terre',
+        avecArticle: 'les épluchures de pomme de terre',
+      },
+      {
+        id: 'pdt-cuites',
+        nom: 'Pommes de terre cuites',
+        avecArticle: 'les pommes de terre cuites',
+      },
+      { id: 'puree', nom: 'Reste de purée', avecArticle: 'le reste de purée' },
+      { id: 'fanes-radis', nom: 'Fanes de radis', avecArticle: 'les fanes de radis' },
+      {
+        id: 'epl-topinambour',
+        nom: 'Épluchures de topinambour',
+        avecArticle: 'les épluchures de topinambour',
+      },
+    ],
+  },
+  {
+    titre: 'Choux & légumes verts',
+    ingredients: [
+      {
+        id: 'epl-asperge',
+        nom: "Talons et épluchures d'asperge",
+        avecArticle: "les talons et épluchures d'asperge",
+      },
+      { id: 'cotes-blettes', nom: 'Côtes de blettes', avecArticle: 'les côtes de blettes' },
+      { id: 'tronc-brocoli', nom: 'Tronc de brocoli', avecArticle: 'le tronc de brocoli' },
       {
         id: 'feuilles-chou',
         nom: 'Grosses feuilles de chou',
@@ -66,6 +89,16 @@ export const GROUPES_INGREDIENTS: GroupeIngredients[] = [
         nom: 'Feuilles de chou-rave',
         avecArticle: 'les feuilles de chou-rave',
       },
+      { id: 'endives-molles', nom: 'Endives ramollies', avecArticle: 'les endives' },
+      { id: 'plumet-fenouil', nom: 'Plumet de fenouil', avecArticle: 'le plumet de fenouil' },
+      { id: 'vert-poireau', nom: 'Vert de poireau', avecArticle: 'le vert de poireau' },
+      { id: 'salade-fanee', nom: 'Salade un peu fanée', avecArticle: 'la salade fanée' },
+    ],
+  },
+  {
+    titre: 'Légumes du soleil',
+    ingredients: [
+      { id: 'aubergine-molle', nom: 'Aubergine ramollie', avecArticle: "l'aubergine" },
       {
         id: 'epl-concombre',
         nom: 'Épluchures de concombre',
@@ -87,25 +120,22 @@ export const GROUPES_INGREDIENTS: GroupeIngredients[] = [
         nom: 'Cœur de grosse courgette',
         avecArticle: 'le cœur de courgette',
       },
-      { id: 'endives-molles', nom: 'Endives ramollies', avecArticle: 'les endives' },
-      { id: 'plumet-fenouil', nom: 'Plumet de fenouil', avecArticle: 'le plumet de fenouil' },
+      { id: 'epis-mais', nom: 'Épis de maïs égrenés', avecArticle: 'les épis de maïs' },
+      { id: 'poivron-ride', nom: 'Poivron ridé', avecArticle: 'le poivron' },
+      { id: 'tomates-mures', nom: 'Tomates trop mûres', avecArticle: 'les tomates trop mûres' },
+      { id: 'peaux-tomate', nom: 'Peaux de tomate', avecArticle: 'les peaux de tomate' },
+    ],
+  },
+  {
+    titre: 'Gousses & légumineuses',
+    ingredients: [
       { id: 'cosses-feves', nom: 'Cosses de fèves', avecArticle: 'les cosses de fèves' },
       {
         id: 'bouts-haricots',
         nom: 'Bouts de haricots verts',
         avecArticle: 'les bouts de haricots verts',
       },
-      { id: 'epis-mais', nom: 'Épis de maïs égrenés', avecArticle: 'les épis de maïs' },
-      { id: 'fanes-navet', nom: 'Fanes de navet', avecArticle: 'les fanes de navet' },
-      { id: 'epl-navet', nom: 'Épluchures de navet', avecArticle: 'les épluchures de navet' },
-      { id: 'epl-panais', nom: 'Épluchures de panais', avecArticle: 'les épluchures de panais' },
-      {
-        id: 'epl-patate-douce',
-        nom: 'Épluchures de patate douce',
-        avecArticle: 'les épluchures de patate douce',
-      },
       { id: 'cosses-pois', nom: 'Cosses de petits pois', avecArticle: 'les cosses de petits pois' },
-      { id: 'vert-poireau', nom: 'Vert de poireau', avecArticle: 'le vert de poireau' },
       {
         id: 'legumineuses',
         nom: 'Lentilles ou pois chiches cuits',
@@ -116,27 +146,22 @@ export const GROUPES_INGREDIENTS: GroupeIngredients[] = [
         nom: 'Jus de pois chiches (aquafaba)',
         avecArticle: 'le jus de pois chiches',
       },
-      { id: 'poivron-ride', nom: 'Poivron ridé', avecArticle: 'le poivron' },
+    ],
+  },
+  {
+    titre: 'Champignons',
+    ingredients: [
       {
-        id: 'epl-pdt',
-        nom: 'Épluchures de pomme de terre',
-        avecArticle: 'les épluchures de pomme de terre',
+        id: 'pieds-champignons',
+        nom: 'Pieds de champignons',
+        avecArticle: 'les pieds de champignons',
       },
-      {
-        id: 'pdt-cuites',
-        nom: 'Pommes de terre cuites',
-        avecArticle: 'les pommes de terre cuites',
-      },
-      { id: 'puree', nom: 'Reste de purée', avecArticle: 'le reste de purée' },
-      { id: 'fanes-radis', nom: 'Fanes de radis', avecArticle: 'les fanes de radis' },
-      { id: 'salade-fanee', nom: 'Salade un peu fanée', avecArticle: 'la salade fanée' },
-      { id: 'tomates-mures', nom: 'Tomates trop mûres', avecArticle: 'les tomates trop mûres' },
-      { id: 'peaux-tomate', nom: 'Peaux de tomate', avecArticle: 'les peaux de tomate' },
-      {
-        id: 'epl-topinambour',
-        nom: 'Épluchures de topinambour',
-        avecArticle: 'les épluchures de topinambour',
-      },
+      { id: 'champignons-mous', nom: 'Champignons ramollis', avecArticle: 'les champignons' },
+    ],
+  },
+  {
+    titre: 'Légumes variés',
+    ingredients: [
       {
         id: 'legumes-fatigues',
         nom: 'Légumes un peu fatigués',
@@ -180,11 +205,6 @@ export const GROUPES_INGREDIENTS: GroupeIngredients[] = [
     titre: 'Agrumes & exotiques',
     ingredients: [
       {
-        id: 'fruits-exotiques-abimes',
-        nom: 'Fruits exotiques abîmés',
-        avecArticle: 'les fruits exotiques',
-      },
-      {
         id: 'ecorce-ananas',
         nom: "Écorce et cœur d'ananas",
         avecArticle: "l'écorce et le cœur d'ananas",
@@ -194,6 +214,11 @@ export const GROUPES_INGREDIENTS: GroupeIngredients[] = [
       { id: 'peau-banane', nom: 'Peaux de banane bio', avecArticle: 'les peaux de banane' },
       { id: 'zeste', nom: "Peau de citron ou d'orange", avecArticle: "la peau d'agrume" },
       { id: 'kakis-murs', nom: 'Kakis très mûrs', avecArticle: 'les kakis' },
+      {
+        id: 'fruits-exotiques-abimes',
+        nom: 'Fruits exotiques abîmés',
+        avecArticle: 'les fruits exotiques',
+      },
     ],
   },
   {

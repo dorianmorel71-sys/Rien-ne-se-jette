@@ -9,7 +9,9 @@ export const PAGES = {
     chemin: '/legume',
     icone: '🥕',
     nom: 'Aliments',
-    phrase: 'Que faire de chaque partie : épluchures, fanes, trognon, os, arêtes…',
+    phrase: FONCTIONNALITES.viandePoisson
+      ? 'Que faire de chaque partie : épluchures, fanes, trognon, os, arêtes…'
+      : 'Que faire de chaque partie : épluchures, fanes, trognon, croûtes…',
   },
   recettes: {
     chemin: '/restes',

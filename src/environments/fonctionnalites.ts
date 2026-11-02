@@ -6,4 +6,6 @@
 export const FONCTIONNALITES = {
   /** Frigo, frigo partagé et invitations. */
   frigo: false,
+  /** Fiches et restes de viande et de poisson, et les recettes qui en ont besoin. */
+  viandePoisson: false,
 };

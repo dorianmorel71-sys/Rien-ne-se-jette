@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, inject, input, signal } from '@angular/core';
+import { FONCTIONNALITES } from '../../../environments/fonctionnalites';
 import { RecetteGeneree } from '../../models/recette';
 import { Compteur } from '../../services/compteur';
 import { Favoris } from '../../services/favoris';
@@ -30,6 +31,8 @@ export class CarteRecette {
   readonly archivee = input(false);
 
   protected readonly enCuisine = signal(false);
+  /** « végétarien » n'apporte rien quand aucune recette n'a de viande. */
+  protected readonly avecViande = FONCTIONNALITES.viandePoisson;
 
   /** Restes du frigo, pour afficher le temps qu'il leur reste avant leur date. */
   protected readonly auFrigo = computed(

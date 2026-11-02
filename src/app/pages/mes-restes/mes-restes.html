@@ -157,14 +157,16 @@
       >
         Sans four
       </button>
-      <button
-        class="filtre"
-        type="button"
-        [attr.aria-pressed]="vegetarien()"
-        (click)="vegetarien.set(!vegetarien())"
-      >
-        🌱 Végétarien
-      </button>
+      @if (avecViande) {
+        <button
+          class="filtre"
+          type="button"
+          [attr.aria-pressed]="vegetarien()"
+          (click)="vegetarien.set(!vegetarien())"
+        >
+          🌱 Végétarien
+        </button>
+      }
     </div>
   }
 

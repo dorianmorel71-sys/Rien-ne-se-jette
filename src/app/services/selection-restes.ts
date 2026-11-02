@@ -1,6 +1,7 @@
 import { computed, effect, inject, Injectable, signal } from '@angular/core';
 import { GROUPE_PLACARD } from '../data/frigo';
 import { GROUPES_INGREDIENTS, INGREDIENTS_EXEMPLE } from '../data/ingredients';
+import { INGREDIENTS_MASQUES } from '../data/visibles';
 import { MODELES_RECETTES } from '../data/recettes';
 import { Ingredient, RecetteGeneree } from '../models/recette';
 import { ecrire, lire } from '../utils/stockage';
@@ -54,7 +55,10 @@ export class SelectionRestes {
     if (manuels) return manuels;
     return new Set(this.origine() === 'frigo' ? this.restesDuFrigo() : INGREDIENTS_EXEMPLE);
   });
-  private readonly choix = computed(() => new Set([...this.restes(), ...this.placard()]));
+  private readonly choix = computed(
+    () =>
+      new Set([...this.restes(), ...this.placard()].filter((id) => !INGREDIENTS_MASQUES.has(id))),
+  );
 
   /** Demande à la page « Recettes » de défiler jusqu'aux recettes à son ouverture. */
   readonly defilerVersRecettes = signal(false);

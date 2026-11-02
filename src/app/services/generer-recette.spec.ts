@@ -84,7 +84,12 @@ describe('accord des étapes', () => {
     requis: [],
     restes: ['poireau', 'fanes', 'courgette'],
     optionnels: [],
-    etapes: ['Ajoute {restes} coupés.', 'Lave {restes} et mets-les dans un bol.', 'Retourne-les.'],
+    etapes: [
+      'Ajoute {restes} coupés.',
+      'Lave {restes} et mets-les dans un bol.',
+      'Retourne-les.',
+      'Pèse-{les} et ajoute {leur} poids en sucre.',
+    ],
   };
   const etapes = (...ids: string[]) =>
     genererRecette(modele, new Set(ids), restes)?.etapes.slice(0, 2);
@@ -107,6 +112,15 @@ describe('accord des étapes', () => {
     );
     expect(etapes('poireau', 'fanes')?.[0]).toBe(
       'Ajoute le vert de poireau et les fanes de radis coupés.',
+    );
+  });
+
+  it('accorde {les} et {leur} dans les étapes suivantes', () => {
+    expect(genererRecette(modele, new Set(['courgette']), restes)?.etapes[3]).toBe(
+      'Pèse-la et ajoute son poids en sucre.',
+    );
+    expect(genererRecette(modele, new Set(['fanes']), restes)?.etapes[3]).toBe(
+      'Pèse-les et ajoute leur poids en sucre.',
     );
   });
 

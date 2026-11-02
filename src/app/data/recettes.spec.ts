@@ -1,5 +1,6 @@
 import { GROUPES_INGREDIENTS, INGREDIENTS_EXEMPLE } from './ingredients';
 import { MODELES_RECETTES } from './recettes';
+import { genererRecette } from '../services/generer-recette';
 
 const IDS = new Set(GROUPES_INGREDIENTS.flatMap((g) => g.ingredients).map((i) => i.id));
 
@@ -46,6 +47,18 @@ describe('Données des recettes', () => {
         m.restes.length === 0 &&
         m.etapes.some((e) => (typeof e === 'string' ? e : e.texte).includes('{restes}')),
     ).map((m) => m.nom);
+    expect(erreurs).toEqual([]);
+  });
+
+  it('ne laisse aucune accolade dans les étapes, quel que soit le reste coché', () => {
+    const parId = new Map(GROUPES_INGREDIENTS.flatMap((g) => g.ingredients).map((i) => [i.id, i]));
+    const erreurs: string[] = [];
+    for (const m of MODELES_RECETTES) {
+      for (const reste of m.restes) {
+        const recette = genererRecette(m, new Set([...m.requis, ...m.optionnels, reste]), parId);
+        for (const e of recette?.etapes ?? []) if (/[{}]/.test(e)) erreurs.push(`${m.nom} : ${e}`);
+      }
+    }
     expect(erreurs).toEqual([]);
   });
 });

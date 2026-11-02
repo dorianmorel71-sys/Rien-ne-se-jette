@@ -4,7 +4,7 @@
   <input
     class="recherche"
     type="search"
-    placeholder="Cherche : carotte, poireau, poulet, saumon…"
+    [placeholder]="'Cherche : ' + exemplesRecherche"
     autocomplete="off"
     aria-label="Rechercher un aliment"
     [value]="recherche()"

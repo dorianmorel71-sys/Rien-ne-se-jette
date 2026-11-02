@@ -12,9 +12,10 @@ import {
 } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { FONCTIONNALITES } from '../../../environments/fonctionnalites';
 import { FicheLegume } from '../../components/fiche-legume/fiche-legume';
 import { TitrePage } from '../../components/titre-page/titre-page';
-import { CATEGORIES_LEGUMES, LEGUMES } from '../../data/legumes';
+import { CATEGORIES_VISIBLES, LEGUMES_VISIBLES } from '../../data/visibles';
 import { Legume } from '../../models/legume';
 import { Favoris } from '../../services/favoris';
 import { astuceDuJour } from '../../data/astuces';
@@ -53,7 +54,7 @@ export class ParLegume {
   readonly legumesFiltres = computed(() => {
     const filtre = normaliser(this.recherche().trim());
     const mois = this.moisCourant;
-    return LEGUMES.filter(
+    return LEGUMES_VISIBLES.filter(
       (l) =>
         (!filtre ||
           [l.nom, l.id, ...(l.synonymes ?? [])].some((nom) => normaliser(nom).includes(filtre))) &&
@@ -71,7 +72,7 @@ export class ParLegume {
       .filter((l): l is Legume => !!l);
     return [
       { titre: FAMILLE_GARDEES, legumes: gardees },
-      ...CATEGORIES_LEGUMES.map((titre) => ({
+      ...CATEGORIES_VISIBLES.map((titre) => ({
         titre,
         legumes: filtres
           .filter((l) => l.categorie === titre)
@@ -80,9 +81,14 @@ export class ParLegume {
     ].filter((g) => g.legumes.length > 0);
   });
 
-  readonly legume = computed(() => LEGUMES.find((l) => l.id === this.id()) ?? LEGUMES[0]);
+  readonly legume = computed(
+    () => LEGUMES_VISIBLES.find((l) => l.id === this.id()) ?? LEGUMES_VISIBLES[0],
+  );
 
   protected readonly page = PAGES.aliments;
+  protected readonly exemplesRecherche = FONCTIONNALITES.viandePoisson
+    ? 'carotte, poireau, poulet, saumon…'
+    : 'carotte, poireau, pain, fromage…';
   private readonly titre = inject(Title);
 
   /** Familles dépliées ; au départ, celle du légume affiché. */
@@ -131,7 +137,7 @@ export class ParLegume {
   }
 
   auHasard(): void {
-    const autres = LEGUMES.filter((l) => l.id !== this.legume().id);
+    const autres = LEGUMES_VISIBLES.filter((l) => l.id !== this.legume().id);
     this.recherche.set('');
     this.choisir(autres[Math.floor(Math.random() * autres.length)].id);
   }

@@ -10,8 +10,8 @@ import {
 } from '@angular/core';
 import { CarteRecette } from '../../components/carte-recette/carte-recette';
 import { TitrePage } from '../../components/titre-page/titre-page';
-import { GROUPES_INGREDIENTS, INDISPENSABLES } from '../../data/ingredients';
-import { LEGUMES } from '../../data/legumes';
+import { INDISPENSABLES } from '../../data/ingredients';
+import { GROUPES_INGREDIENTS_VISIBLES as GROUPES, LEGUMES_VISIBLES } from '../../data/visibles';
 import { Ingredient, TypeRecette } from '../../models/recette';
 import { FONCTIONNALITES } from '../../../environments/fonctionnalites';
 import { Frigo, RESTES_FRIGO } from '../../services/frigo';
@@ -24,7 +24,7 @@ import { normaliser } from '../../utils/texte';
 
 /** Emoji de l'aliment d'où vient chaque reste, le même que dans Aliments. */
 const EMOJI_PAR_RESTE = new Map<string, string>();
-for (const l of LEGUMES) {
+for (const l of LEGUMES_VISIBLES) {
   for (const id of l.restes ?? []) {
     if (l.emoji && !EMOJI_PAR_RESTE.has(id)) EMOJI_PAR_RESTE.set(id, l.emoji);
   }
@@ -53,6 +53,8 @@ export class MesRestes {
   private readonly messages = inject(Messages);
   protected readonly indispensables = INDISPENSABLES;
   protected readonly emoji = EMOJI_PAR_RESTE;
+  /** Sans viande ni poisson dans cette version, toutes les recettes sont végétariennes. */
+  protected readonly avecViande = FONCTIONNALITES.viandePoisson;
 
   private readonly frigo = inject(Frigo);
 
@@ -61,9 +63,9 @@ export class MesRestes {
   /** Familles dépliées ; au départ, celles où quelque chose est coché. */
   protected readonly ouvertes = signal<ReadonlySet<string>>(
     new Set(
-      GROUPES_INGREDIENTS.filter((g) =>
-        g.ingredients.some((i) => this.selection.estCoche(i.id)),
-      ).map((g) => g.titre),
+      GROUPES.filter((g) => g.ingredients.some((i) => this.selection.estCoche(i.id))).map(
+        (g) => g.titre,
+      ),
     ),
   );
   protected readonly toutOuvrir = computed(() => !!this.recherche().trim());
@@ -110,8 +112,8 @@ export class MesRestes {
   /** Groupes réduits aux ingrédients qui correspondent à la recherche. */
   protected readonly groupes = computed(() => {
     const filtre = normaliser(this.recherche().trim());
-    if (!filtre) return GROUPES_INGREDIENTS;
-    return GROUPES_INGREDIENTS.map((g) => ({
+    if (!filtre) return GROUPES;
+    return GROUPES.map((g) => ({
       ...g,
       ingredients: g.ingredients.filter((i) => normaliser(i.nom).includes(filtre)),
     })).filter((g) => g.ingredients.length > 0);

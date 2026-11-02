@@ -25,8 +25,9 @@ export class PageAccueil {
       page: PAGES.aliments,
       couleur: 'herbes',
       titre: 'Que faire de cet aliment ?',
-      texte:
-        'Fanes, épluchures, trognon, os, arêtes : pour chaque aliment, ce qui se mange et comment le cuisiner.',
+      texte: FONCTIONNALITES.viandePoisson
+        ? 'Fanes, épluchures, trognon, os, arêtes : pour chaque aliment, ce qui se mange et comment le cuisiner.'
+        : 'Fanes, épluchures, trognon, croûtes : pour chaque aliment, ce qui se mange et comment le cuisiner.',
     },
     {
       page: PAGES.recettes,

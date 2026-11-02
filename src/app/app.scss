@@ -242,16 +242,75 @@ header {
   }
 }
 
+// Pied de page : une petite carte signée, avec les liens utiles en pastilles.
 footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 22px 16px;
+  text-align: center;
+  background: var(--surface);
+  border: 2px dashed var(--line);
+  border-radius: var(--radius);
+
+  .signature p {
+    margin: 0;
+  }
+
+  .nom {
+    font-family: var(--f-display);
+    font-weight: 800;
+    font-size: 1.2rem;
+    letter-spacing: -0.02em;
+
+    span {
+      font-style: italic;
+      color: var(--accent);
+    }
+  }
+
+  .devise {
+    margin-top: 4px;
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+}
+
+.liens-pied {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 8px 20px;
-  font-size: 0.9rem;
+  gap: 8px;
 
   a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 14px;
+    border-radius: 999px;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    color: var(--fg);
+    font-size: 0.88rem;
     font-weight: 700;
-    color: var(--muted);
+    text-decoration: none;
+    transition:
+      background 0.2s,
+      border-color 0.2s;
+
+    &:hover {
+      border-color: var(--muted);
+    }
+
+    &.avis {
+      background: var(--mustard-soft);
+      border-color: var(--mustard-soft);
+
+      &:hover {
+        border-color: var(--mustard);
+      }
+    }
   }
 }
 

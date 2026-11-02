@@ -481,7 +481,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
     ],
     optionnels: ['farine', 'fromage-bouts', 'epices'],
     etapes: [
-      'Râpe ou hache finement {restes}.',
+      { texte: 'Râpe ou hache finement {restes}.', sansRestes: ['riz-cuit', 'legumineuses'] },
       {
         si: 'epl-courgette',
         texte: "Presse les épluchures de courgette dans un torchon pour enlever l'eau.",
@@ -490,6 +490,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
         si: 'legumineuses',
         texte: 'Écrase grossièrement les lentilles ou pois chiches à la fourchette.',
       },
+      { si: 'riz-cuit', texte: 'Mets le riz cuit dans un saladier.' },
       'Mélange avec un œuf battu, du sel et du poivre.',
       { si: 'farine', texte: 'Ajoute 2 à 3 cuillères de farine pour que la pâte tienne.' },
       { si: 'fromage-bouts', texte: 'Ajoute les bouts de fromage râpés.' },
@@ -1966,7 +1967,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
     etapes: [
       {
         si: 'pomme-de-terre',
-        texte: 'Coupe les pommes de terre crues en dés et cuis-les 10 min à l’eau.',
+        texte: 'Coupe la pomme de terre crue en dés, cuis-la 10 min à l’eau et égoutte.',
       },
       'Fais chauffer 2 cuillères de graisse de cuisson dans une grande poêle.',
       'Ajoute {restes} en morceaux et laisse dorer 10 min sans trop remuer.',

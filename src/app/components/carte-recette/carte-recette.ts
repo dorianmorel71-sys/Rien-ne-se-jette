@@ -79,16 +79,21 @@ export class CarteRecette {
     const total = this.compteur.restes();
     const sauves = total - restesAvant;
     const palier = PALIERS.filter((p) => restesAvant < p && total >= p).at(-1);
+    const annuler = () => {
+      this.compteur.annuler(recette);
+      this.frigo.remettre(sortis);
+    };
+    if (palier) {
+      this.messages.afficher(`${palier} restes sauvés !`, annuler, {
+        detail: `Environ ${enEuros(total)} d’économies, bravo !`,
+      });
+      return;
+    }
     this.messages.afficher(
-      palier
-        ? `🎉 Cap des ${palier} restes sauvés : environ ${enEuros(total)} d’économies !`
-        : sauves > 0
-          ? `🌱 Bravo, ${sauves} ${sauves > 1 ? 'restes sauvés' : 'reste sauvé'} (≈ ${enEuros(sauves)}) !`
-          : '✓ Recette notée',
-      () => {
-        this.compteur.annuler(recette);
-        this.frigo.remettre(sortis);
-      },
+      sauves > 0
+        ? `🌱 Bravo, ${sauves} ${sauves > 1 ? 'restes sauvés' : 'reste sauvé'} (≈ ${enEuros(sauves)}) !`
+        : '✓ Recette notée',
+      annuler,
     );
   }
 }

@@ -96,6 +96,8 @@
                   >
                     @if (emoji.get(ingredient.id); as e) {
                       <span class="emoji" aria-hidden="true">{{ e }}</span>
+                    } @else {
+                      <i class="pastille" [style.background]="couleur.get(ingredient.id)"></i>
                     }
                     {{ ingredient.nom }}
                     @if (auFrigo().get(ingredient.id); as reste) {
@@ -119,6 +121,14 @@
     </p>
   </div>
 </details>
+
+<!-- Sur téléphone, les recettes sont sous la longue liste : un raccourci pour y aller. -->
+@if (ajusterOuvert() && nb > 0 && recettesFiltrees().length) {
+  @let n = recettesFiltrees().length;
+  <button class="voir-recettes" type="button" (click)="voirRecettes()">
+    Voir {{ n > 1 ? 'les ' + n + ' recettes' : 'la recette' }} ↓
+  </button>
+}
 
 <div class="colonne-recettes">
   @if (favoris.recettes().length) {
@@ -197,4 +207,22 @@
       }
     }
   </div>
+
+  @if (nb > 0 && selection.aUnPres().length) {
+    <section class="a-un-pres" aria-labelledby="titre-a-un-pres">
+      <h2 id="titre-a-un-pres">🛒 Il te manque juste…</h2>
+      <p class="aide">Un produit du placard en plus, et ces recettes sauvent aussi tes restes.</p>
+      <ul>
+        @for (s of selection.aUnPres(); track s.ingredient.id) {
+          <li>
+            <div>
+              <strong>{{ s.ingredient.nom }}</strong>
+              <span class="noms">{{ s.recettes.join(' · ') }}</span>
+            </div>
+            <button type="button" (click)="selection.basculer(s.ingredient.id)">+ J'en ai</button>
+          </li>
+        }
+      </ul>
+    </section>
+  }
 </div>

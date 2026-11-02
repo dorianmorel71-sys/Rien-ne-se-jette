@@ -9,7 +9,10 @@
   </h3>
   <div class="actions">
     @if (!archivee()) {
-      <span class="correspondance">{{ r.ingredients.length }} de tes ingrédients</span>
+      <span class="correspondance"
+        >✓ {{ r.ingredients.length }}
+        {{ r.ingredients.length > 1 ? 'ingrédients' : 'ingrédient' }} à toi</span
+      >
     }
     <app-bouton-favori
       [actif]="favoris.estRecetteFavorite(r.nom)"

@@ -86,6 +86,32 @@ export class SelectionRestes {
       );
   });
 
+  /**
+   * Produits du placard qui débloqueraient d'autres recettes avec les restes cochés :
+   * « Avec des œufs en plus : Pain perdu salé ». Les plus utiles d'abord.
+   */
+  readonly aUnPres = computed<{ ingredient: Ingredient; recettes: string[] }[]>(() => {
+    const choix = this.choix();
+    if (![...choix].some((id) => !PLACARD.has(id))) return [];
+    const possibles = new Set(this.recettes().map((r) => r.nom));
+    const parProduit = new Map<string, string[]>();
+    for (const modele of MODELES_RECETTES) {
+      if (possibles.has(modele.nom)) continue;
+      for (const id of [...modele.requis, ...modele.restes]) {
+        if (!PLACARD.has(id) || choix.has(id) || INGREDIENTS_MASQUES.has(id)) continue;
+        const recette = genererRecette(modele, new Set([...choix, id]), this.ingredientsParId);
+        // Seulement les recettes qui sauvent au moins un des restes cochés.
+        if (!recette?.ingredients.some((i) => choix.has(i.id) && !PLACARD.has(i.id))) continue;
+        parProduit.set(id, [...(parProduit.get(id) ?? []), modele.nom]);
+        break;
+      }
+    }
+    return [...parProduit]
+      .map(([id, recettes]) => ({ ingredient: this.ingredientsParId.get(id)!, recettes }))
+      .sort((a, b) => b.recettes.length - a.recettes.length)
+      .slice(0, 4);
+  });
+
   constructor() {
     effect(() => ecrire(CLE_PLACARD, [...this.placard()]));
   }

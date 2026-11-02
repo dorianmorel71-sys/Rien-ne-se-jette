@@ -442,7 +442,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
     ],
     etapes: [
       { si: 'oignon', texte: "Fais revenir l'oignon émincé 3 min dans un peu d'huile." },
-      'Ajoute {restes} coupés petits et fais revenir 5 min à la poêle.',
+      'Ajoute {restes} coupés en petits morceaux et fais revenir 5 min à la poêle.',
       { si: 'jambon', texte: 'Ajoute les bouts de jambon coupés.' },
       { si: 'poulet-cuit', texte: 'Ajoute les restes de poulet effilochés.' },
       { si: 'viande-cuite', texte: 'Ajoute les restes de viande coupés en petits dés.' },
@@ -684,7 +684,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
     ],
     etapes: [
       { si: 'ail', texte: "Fais revenir l'ail haché 1 min dans un peu d'huile." },
-      'Fais sauter {restes} coupés fins 4 min à feu vif.',
+      'Fais sauter {restes} coupés finement 4 min à feu vif.',
       { si: 'poulet-cuit', texte: 'Ajoute les restes de poulet effilochés.' },
       { si: 'viande-cuite', texte: 'Ajoute les restes de viande coupés en petits dés.' },
       { si: 'lardons', texte: 'Fais dorer les lardons 3 min à la poêle et ajoute-les.' },
@@ -769,7 +769,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
       { sauf: 'lait', texte: 'Bats 2 œufs avec du sel et du poivre.' },
       { si: 'tiges-herbes', texte: "Ajoute les tiges d'herbes hachées finement." },
       'Trempe les tranches de pain rassis et dore-les à la poêle 3 min par face.',
-      "Fais revenir {restes} coupés petits 5 min dans un peu d'huile et garnis-en les tranches.",
+      "Fais revenir {restes} coupés en petits morceaux 5 min dans un peu d'huile et garnis-en les tranches.",
       { si: 'jambon', texte: 'Ajoute les bouts de jambon.' },
       { si: 'fromage-bouts', texte: 'Fais fondre les bouts de fromage dessus.' },
     ],

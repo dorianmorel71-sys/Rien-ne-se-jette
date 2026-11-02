@@ -277,6 +277,7 @@ export const LEGUMES: Legume[] = [
   {
     id: 'radis',
     nom: 'Radis',
+    synonymes: ['radis noir', 'radis rose'],
     saison: [3, 4, 5, 6, 7, 8],
     compost: ['Fanes jaunies'],
     categorie: 'Légumes',
@@ -356,6 +357,7 @@ export const LEGUMES: Legume[] = [
   {
     id: 'petits-pois',
     nom: 'Petits pois',
+    synonymes: ['pois gourmands', 'mange-tout'],
     saison: [5, 6, 7],
     compost: ['Fibres des cosses filtrées du velouté'],
     emoji: '🫛',
@@ -628,6 +630,7 @@ export const LEGUMES: Legume[] = [
   {
     id: 'chou',
     nom: 'Chou',
+    synonymes: ['chou rouge', 'chou blanc', 'chou vert', 'chou frisé'],
     saison: [1, 2, 3, 10, 11, 12],
     compost: ['Feuilles très abîmées'],
     emoji: '🥬',
@@ -794,7 +797,16 @@ export const LEGUMES: Legume[] = [
   {
     id: 'salade',
     nom: 'Salade',
-    synonymes: ['laitue', 'roquette', 'mâche', 'batavia', 'frisée', 'scarole', 'sucrine'],
+    synonymes: [
+      'laitue',
+      'roquette',
+      'mâche',
+      'batavia',
+      'frisée',
+      'scarole',
+      'sucrine',
+      'cresson',
+    ],
     saison: [4, 5, 6, 7, 8, 9, 10],
     compost: ['Feuilles gluantes ou abîmées'],
     emoji: '🥗',
@@ -1430,6 +1442,265 @@ export const LEGUMES: Legume[] = [
       { nom: 'Tiges abîmées', usages: ['En compote ou en crumble'] },
     ],
     avertissement: 'Les feuilles de rhubarbe sont toxiques : ne les mange jamais.',
+  },
+  // ---------- Fruits et légumes d'automne et d'hiver ----------
+  {
+    id: 'fruits-rouges',
+    nom: 'Fruits rouges',
+    synonymes: ['framboise', 'myrtille', 'mûre', 'groseille', 'cassis', 'fruits des bois'],
+    emoji: '🫐',
+    categorie: 'Fruits',
+    saison: [6, 7, 8, 9],
+    restes: ['fruits-rouges-abimes'],
+    compost: ['Fruits moisis : retire-les vite, la moisissure gagne les voisins'],
+    conservation: [
+      'Au frigo sans les laver, étalés dans une boîte : 2 à 3 jours',
+      'Congelés à plat sur une assiette, puis en sachet : ils ne collent pas entre eux',
+    ],
+    couleur: '#b8325a',
+    score: '2 parties',
+    intro:
+      'Les fruits les plus fragiles du marché : en deux jours, ils s’abîment. Ils se rattrapent très bien.',
+    parties: [
+      {
+        nom: 'Fruits écrasés ou trop mûrs',
+        usages: [
+          '<b>Coulis</b> : mixés avec un peu de sucre, puis filtrés',
+          'Compote ou confiture express',
+          'Dans un smoothie ou mélangés à un yaourt',
+        ],
+      },
+      {
+        nom: 'Fruits un peu ramollis',
+        usages: [
+          '<b>Congelés</b> pour un crumble ou un gâteau plus tard',
+          'Dans un clafoutis, des muffins ou une pâte à crêpes',
+        ],
+      },
+    ],
+  },
+  {
+    id: 'coing',
+    nom: 'Coing',
+    categorie: 'Fruits',
+    saison: [9, 10, 11],
+    restes: ['epl-coing'],
+    compost: ['Pépins, une fois la gelée filtrée'],
+    conservation: [
+      'Coings entiers : 2 semaines au frais, à l’air libre (ils parfument toute la pièce)',
+      'Pelures et trognons : 2 jours au frigo, ou congelés en attendant de faire une gelée',
+    ],
+    couleur: '#d4b02a',
+    score: '3 parties sur 3',
+    intro: 'Le coing est le champion du zéro déchet : même ses pelures font une délicieuse gelée.',
+    parties: [
+      {
+        nom: 'Chair',
+        usages: [
+          '<b>Pâte de coing</b> ou compote, avec un peu de pomme',
+          'Rôti au four avec du miel : il se mange toujours cuit, cru il est dur et âpre',
+        ],
+      },
+      {
+        nom: 'Pelures et trognons',
+        usages: [
+          '<b>Gelée de coing</b> : ils sont riches en pectine, c’est ce qui fait prendre la gelée',
+          'Cuits avec la chair, ils rendent la compote plus parfumée',
+        ],
+      },
+      {
+        nom: 'Duvet',
+        usages: ['Frotte-le avec un torchon sec avant de cuisiner le fruit'],
+      },
+    ],
+    avertissement:
+      'Les pépins de coing ne se croquent pas : cuis-les dans un petit sachet de tissu, puis retire-les.',
+  },
+  {
+    id: 'chataigne',
+    nom: 'Châtaigne',
+    synonymes: ['marron', 'marrons'],
+    emoji: '🌰',
+    categorie: 'Fruits',
+    saison: [10, 11, 12],
+    restes: ['chataignes-cuites'],
+    compost: [
+      'Écorces et peaux brunes',
+      'Bogues, en petite quantité : elles piquent et se décomposent lentement',
+    ],
+    conservation: [
+      'Fraîches : 1 semaine au frigo dans un sac en papier',
+      'Cuites et épluchées : 3 jours au frigo, ou congelées',
+    ],
+    couleur: '#8a5a32',
+    score: '2 parties',
+    intro: 'Le fruit de l’automne : une fois cuites, les châtaignes en trop se glissent partout.',
+    parties: [
+      {
+        nom: 'Châtaignes cuites',
+        usages: [
+          '<b>Velouté</b> avec un oignon et un reste de légumes',
+          'Poêlées avec des champignons ou des légumes d’automne',
+          'Écrasées en purée, salée ou sucrée',
+        ],
+      },
+      {
+        nom: 'Châtaignes fraîches à trier',
+        usages: [
+          'Plonge-les dans un bol d’eau : celles qui flottent sont souvent véreuses',
+          'Fends toujours l’écorce avant la cuisson, sinon elles éclatent',
+        ],
+      },
+    ],
+    avertissement:
+      'Ne confonds pas avec le marron d’Inde des parcs, toxique : sa bogue a peu de piquants et son fruit n’a pas de petite pointe.',
+  },
+  {
+    id: 'figue',
+    nom: 'Figue',
+    categorie: 'Fruits',
+    saison: [7, 8, 9, 10],
+    restes: ['figues-mures'],
+    compost: [],
+    conservation: [
+      'Mûres : 2 jours au frigo, sans les entasser',
+      'Coupées en deux, elles se congèlent pour une confiture plus tard',
+    ],
+    couleur: '#7b3f6e',
+    score: '2 parties sur 2',
+    intro: 'Une figue trop mûre est encore plus sucrée : c’est le moment de la cuisiner.',
+    parties: [
+      {
+        nom: 'Figues trop mûres',
+        usages: [
+          '<b>Confiture</b> ou chutney pour le fromage',
+          'Rôties au four avec un filet de miel',
+          'Dans un clafoutis ou un gâteau',
+        ],
+      },
+      {
+        nom: 'Peau',
+        usages: ['Elle se mange : inutile d’éplucher les figues'],
+      },
+    ],
+  },
+  {
+    id: 'kaki',
+    nom: 'Kaki',
+    synonymes: ['plaquemine'],
+    categorie: 'Fruits',
+    saison: [10, 11, 12],
+    restes: ['kakis-murs'],
+    compost: ['Pédoncule et peau des kakis très mous'],
+    conservation: [
+      'Pour le faire mûrir : dans un sac, à côté d’une pomme ou d’une banane',
+      'Bien mou : 2 jours au frigo, ou la chair congelée',
+    ],
+    couleur: '#e07b24',
+    score: '2 parties',
+    intro: 'Souvent jeté parce qu’il est tout mou, alors que c’est justement quand il est prêt.',
+    parties: [
+      {
+        nom: 'Kaki bien mou',
+        usages: [
+          '<b>À la cuillère</b>, comme une crème',
+          'Mixé dans un smoothie ou un lassi',
+          'Dans un gâteau, à la place de la banane',
+        ],
+      },
+      {
+        nom: 'Peau',
+        usages: ['Fine sur les kakis croquants (« kaki pomme ») : elle se mange'],
+      },
+    ],
+    avertissement:
+      'Pas encore mûr, le kaki est très âpre : attends qu’il soit mou, sauf la variété croquante.',
+  },
+  {
+    id: 'noix',
+    nom: 'Noix & noisettes',
+    synonymes: ['noix', 'noisette', 'amande', 'fruits secs', 'fruits à coque'],
+    emoji: '🥜',
+    categorie: 'Fruits',
+    saison: [9, 10, 11],
+    restes: ['fruits-secs'],
+    compost: ['Coquilles, cassées en morceaux : elles se décomposent lentement'],
+    conservation: [
+      'Dans leur coque : plusieurs mois au sec et au frais',
+      'Décortiquées : au frigo ou au congélateur, elles rancissent bien moins vite',
+    ],
+    couleur: '#a0703c',
+    score: '2 parties',
+    intro: 'Le fond de sachet oublié au placard a encore de quoi relever bien des plats.',
+    parties: [
+      {
+        nom: 'Fond de sachet',
+        usages: [
+          '<b>Dans un pesto</b> de fanes ou d’herbes, à la place des pignons',
+          'Torréfiées 5 min à la poêle sèche, sur une salade ou un velouté',
+          'Concassées dans un crumble, un cake ou un gâteau',
+        ],
+      },
+      {
+        nom: 'Coquilles',
+        usages: ['Au compost, ou au fond des pots de fleurs pour le drainage'],
+      },
+    ],
+    avertissement: 'Une noix qui sent le rance ou a un goût amer ne se mange plus.',
+  },
+  {
+    id: 'salsifis',
+    nom: 'Salsifis',
+    synonymes: ['scorsonère'],
+    categorie: 'Légumes',
+    saison: [10, 11, 12, 1, 2, 3],
+    compost: ['Épluchures'],
+    conservation: [
+      'Racines : 1 semaine au frigo, dans un torchon humide',
+      'Cuits : 2 jours au frigo dans une boîte',
+    ],
+    couleur: '#5b4636',
+    score: '2 parties',
+    intro: 'Un légume d’hiver oublié, au goût doux, proche de l’artichaut.',
+    parties: [
+      {
+        nom: 'Racines',
+        usages: [
+          '<b>Épluche-les avec des gants</b> : elles rendent un suc collant',
+          'Plonge-les aussitôt dans de l’eau citronnée pour qu’elles ne noircissent pas',
+          'Poêlés au beurre, en gratin ou en velouté',
+        ],
+      },
+      {
+        nom: 'Jeunes feuilles',
+        usages: ['En salade, comme une chicorée'],
+      },
+    ],
+  },
+  {
+    id: 'rutabaga',
+    nom: 'Rutabaga',
+    categorie: 'Légumes',
+    saison: [10, 11, 12, 1, 2, 3],
+    compost: ['Épluchures, surtout si elles sont cirées'],
+    conservation: ['Entier : 2 semaines au frigo', 'Coupé : 4 jours, filmé'],
+    couleur: '#c9a34e',
+    score: '2 parties',
+    intro: 'Cousin du navet, plus doux et un peu sucré : parfait dans les plats d’hiver.',
+    parties: [
+      {
+        nom: 'Racine',
+        usages: [
+          '<b>En purée</b>, mélangé à des pommes de terre',
+          'Rôti au four en frites, avec un filet d’huile',
+          'Dans un pot-au-feu ou une soupe',
+        ],
+      },
+      {
+        nom: 'Fanes',
+        usages: ['Si elles sont encore là, elles se cuisinent comme celles du navet'],
+      },
+    ],
   },
   // ---------- Viande & poisson ----------
   {

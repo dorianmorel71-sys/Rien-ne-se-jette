@@ -398,3 +398,42 @@ footer {
     margin-top: 0;
   }
 }
+
+// Sur téléphone : un pied de page compact, les liens sur une seule ligne.
+@include ecran.telephone {
+  footer {
+    gap: 10px;
+    padding: 14px 10px;
+
+    .nom {
+      font-size: 1.05rem;
+    }
+
+    .devise {
+      display: none;
+    }
+  }
+
+  .liens-pied {
+    flex-wrap: nowrap;
+    gap: 6px;
+
+    a {
+      padding: 6px 11px;
+      font-size: 0.82rem;
+      white-space: nowrap;
+    }
+
+    .long {
+      display: none;
+    }
+  }
+}
+
+.liens-pied .court {
+  display: none;
+
+  @include ecran.telephone {
+    display: inline;
+  }
+}

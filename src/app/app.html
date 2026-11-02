@@ -70,9 +70,13 @@
       <p class="devise">Fanes, épluchures et restes ont droit à une deuxième vie 🌱</p>
     </div>
     <nav class="liens-pied" aria-label="Liens utiles">
-      <a routerLink="/accueil"><span aria-hidden="true">❓</span> Comment ça marche</a>
+      <a routerLink="/accueil"
+        ><span aria-hidden="true">❓</span> <span class="long">Comment ça marche</span
+        ><span class="court">Aide</span></a
+      >
       <a class="avis" [routerLink]="avis.chemin" [queryParams]="{ depuis: url() }">
-        <span aria-hidden="true">💬</span> Donner mon avis
+        <span aria-hidden="true">💬</span> <span class="long">Donner mon avis</span
+        ><span class="court">Avis</span>
       </a>
       <a routerLink="/confidentialite"><span aria-hidden="true">🔒</span> Confidentialité</a>
     </nav>

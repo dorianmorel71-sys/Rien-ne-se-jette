@@ -155,7 +155,9 @@
       </div>
       @if (confirmerSuppression()) {
         <p class="note">
-          Ton compte et ses données seront effacés. Cet appareil garde ses favoris et son frigo.
+          Ton compte et ses données seront effacés. Cet appareil garde ses favoris{{
+            frigoActif ? ' et son frigo' : ''
+          }}.
         </p>
       }
       @if (erreur()) {

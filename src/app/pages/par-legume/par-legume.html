@@ -6,7 +6,7 @@
     type="search"
     placeholder="Cherche : carotte, poireau, poulet, saumon…"
     autocomplete="off"
-    aria-label="Rechercher un légume ou un fruit"
+    aria-label="Rechercher un aliment"
     [value]="recherche()"
     (input)="rechercher($any($event.target).value)"
     (keydown.enter)="validerRecherche()"
@@ -54,7 +54,7 @@
     } @empty {
       <p class="vide">
         @if (recherche()) {
-          Pas encore de fiche pour « {{ recherche() }} ». Essaie un autre légume.
+          Pas encore de fiche pour « {{ recherche() }} ». Essaie un autre aliment.
         } @else {
           Rien de saison ne correspond.
         }

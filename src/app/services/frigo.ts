@@ -1,4 +1,5 @@
 import { computed, effect, Injectable, signal } from '@angular/core';
+import { FONCTIONNALITES } from '../../environments/fonctionnalites';
 import { GROUPE_PLACARD, JOURS_CONGELATEUR, JOURS_DECONGELE, joursAuFrigo } from '../data/frigo';
 import { GROUPES_INGREDIENTS } from '../data/ingredients';
 import { LEGUMES } from '../data/legumes';
@@ -88,9 +89,9 @@ export class Frigo {
   /** Tout l'état, pour la sauvegarde dans le compte. */
   readonly etat = this.rangements.asReadonly();
 
-  /** Les plus urgents d'abord. */
+  /** Les plus urgents d'abord ; aucun quand le frigo n'est pas ouvert dans cette version. */
   readonly restes = computed<ResteAuFrigo[]>(() =>
-    this.rangements()
+    (FONCTIONNALITES.frigo ? this.rangements() : [])
       .flatMap((r) => {
         const i = ingredient(r);
         if (!i) return [];

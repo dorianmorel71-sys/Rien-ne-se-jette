@@ -5,6 +5,21 @@ import { ecrire, lire } from '../utils/stockage';
 
 const CLE = 'rien-ne-se-jette.compteur';
 
+/**
+ * Valeur moyenne d'un reste sauvé, en euros : un demi-pain, deux bananes, un yaourt…
+ * ou les produits qu'on n'a pas eu à acheter. Une estimation volontairement prudente.
+ */
+export const EUROS_PAR_RESTE = 0.5;
+
+/** Paliers fêtés par un message : « 🎉 10 restes sauvés ! ». */
+export const PALIERS = [5, 10, 25, 50, 100, 250, 500];
+
+/** « 6 € », « 0,50 € ». */
+export function enEuros(restes: number): string {
+  const euros = restes * EUROS_PAR_RESTE;
+  return Number.isInteger(euros) ? `${euros} €` : `${euros.toFixed(2).replace('.', ',')} €`;
+}
+
 /** Les produits du placard ne sont pas des restes sauvés. */
 const PLACARD = new Set(
   GROUPES_INGREDIENTS.find((g) => g.titre === 'Dans mon placard')?.ingredients.map((i) => i.id),
@@ -31,6 +46,8 @@ export class Compteur {
   readonly etat = this.donnees.asReadonly();
   readonly restes = computed(() => this.donnees().restes);
   readonly recettes = computed(() => this.donnees().recettes);
+  /** Estimation de l'argent économisé, déjà mise en forme. */
+  readonly euros = computed(() => enEuros(this.restes()));
 
   constructor() {
     effect(() => ecrire(CLE, this.donnees()));

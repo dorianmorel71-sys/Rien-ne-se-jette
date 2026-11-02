@@ -1,16 +1,16 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { FONCTIONNALITES } from '../../../environments/fonctionnalites';
+import { ChoixRapide } from '../../components/choix-rapide/choix-rapide';
 import { InvitationInstallation } from '../../components/invitation-installation/invitation-installation';
 import { PAGES } from '../../pages-noms';
 import { Compte } from '../../services/compte';
 import { Compteur } from '../../services/compteur';
-import { marquerAccueilVu } from './premiere-visite';
 
-/** À quoi sert l'appli et comment s'en servir : montrée à la première visite. */
+/** Page d'arrivée : « qu'est-ce qui traîne dans ta cuisine ? », puis à quoi sert l'appli. */
 @Component({
   selector: 'app-accueil',
-  imports: [RouterLink, InvitationInstallation],
+  imports: [RouterLink, ChoixRapide, InvitationInstallation],
   templateUrl: './accueil.html',
   styleUrl: './accueil.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -52,9 +52,4 @@ export class PageAccueil {
         'Sur chaque recette : les étapes en grand, une par une, avec des minuteurs. L’écran reste allumé.',
     },
   ].filter((e) => FONCTIONNALITES.frigo || e.page !== PAGES.frigo);
-
-  constructor() {
-    // Vue une fois : on arrivera ensuite directement sur les légumes.
-    marquerAccueilVu();
-  }
 }

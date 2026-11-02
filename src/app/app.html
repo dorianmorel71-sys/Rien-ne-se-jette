@@ -1,9 +1,21 @@
 <div class="wrap">
   <div class="cote">
     <header>
-      <h1>Rien ne se <span>jette</span></h1>
+      <h1>
+        <a routerLink="/accueil" aria-label="Rien ne se jette, accueil"
+          >Rien ne se <span>jette</span></a
+        >
+      </h1>
       @if (compteur.recettes()) {
-        <p class="compteur" [title]="compteur.recettes() + ' recettes cuisinées'">
+        <p
+          class="compteur"
+          [title]="
+            compteur.recettes() +
+            ' recettes cuisinées, environ ' +
+            compteur.euros() +
+            ' d’économies'
+          "
+        >
           🌱 <strong>{{ compteur.restes() }}</strong>
           {{ compteur.restes() > 1 ? 'restes sauvés' : 'reste sauvé' }}
         </p>

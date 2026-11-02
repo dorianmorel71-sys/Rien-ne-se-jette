@@ -5,7 +5,7 @@ import { Compte } from './services/compte';
 import { PAGES, titreOnglet } from './pages-noms';
 import { PageAccueil } from './pages/accueil/accueil';
 import { PageAvis } from './pages/avis/avis';
-import { pageDeDepart } from './pages/accueil/premiere-visite';
+import { ficheDeDepart } from './pages/accueil/premiere-visite';
 import { PageCompte } from './pages/compte/compte';
 import { PageConfidentialite } from './pages/confidentialite/confidentialite';
 import { PageFrigo } from './pages/frigo/frigo';
@@ -15,7 +15,7 @@ import { ParLegume } from './pages/par-legume/par-legume';
 
 export const routes: Routes = [
   { path: 'accueil', component: PageAccueil, title: titreOnglet(PAGES.accueil.nom) },
-  { path: 'legume', redirectTo: () => pageDeDepart(true) },
+  { path: 'legume', redirectTo: () => ficheDeDepart() },
   { path: 'legume/:id', component: ParLegume, title: titreOnglet(PAGES.aliments.nom) },
   { path: 'restes', component: MesRestes, title: titreOnglet(PAGES.recettes.nom) },
   // Le frigo et ses invitations n'existent que dans la version de développement.
@@ -38,6 +38,6 @@ export const routes: Routes = [
     component: PageCompte,
     title: () => titreOnglet(inject(Compte).nomAffiche() ?? 'Se connecter'),
   },
-  // Première visite : l'accueil qui explique l'appli ; ensuite, directement les légumes.
-  { path: '**', redirectTo: () => pageDeDepart() },
+  // On arrive toujours sur l'accueil : « qu'est-ce qui traîne dans ta cuisine ? ».
+  { path: '**', redirectTo: 'accueil' },
 ];

@@ -1,6 +1,7 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { SwUpdate } from '@angular/service-worker';
 import { ecrire, lire } from '../utils/stockage';
+import { Compteur } from './compteur';
 
 const CLE_MASQUEE = 'rien-ne-se-jette.installation-masquee';
 
@@ -14,6 +15,7 @@ interface EvenementInstallation extends Event {
 @Injectable({ providedIn: 'root' })
 export class Installation {
   private readonly miseAJour = inject(SwUpdate);
+  private readonly compteur = inject(Compteur);
 
   private readonly evenement = signal<EvenementInstallation | null>(null);
   private readonly installee = signal(
@@ -27,8 +29,16 @@ export class Installation {
     /iphone|ipad|ipod/i.test(navigator.userAgent) ||
     (navigator.userAgent.includes('Macintosh') && navigator.maxTouchPoints > 1);
 
+  /**
+   * On propose l'installation après une première recette cuisinée : l'appli a fait
+   * ses preuves, et c'est là qu'on a envie de la garder sous la main.
+   */
   readonly proposer = computed(
-    () => !this.installee() && !this.masquee() && (!!this.evenement() || this.ios),
+    () =>
+      this.compteur.recettes() > 0 &&
+      !this.installee() &&
+      !this.masquee() &&
+      (!!this.evenement() || this.ios),
   );
   /** Vrai quand une nouvelle version de l'appli est prête. */
   readonly nouvelleVersion = signal(false);

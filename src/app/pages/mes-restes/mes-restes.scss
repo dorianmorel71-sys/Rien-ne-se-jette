@@ -92,30 +92,6 @@
   gap: 10px;
 }
 
-// Chaque famille de restes a sa couleur, même quand la recherche en masque.
-.famille {
-  &[data-groupe='Bouts de légumes'] {
-    --c: var(--mustard);
-    --c-soft: var(--mustard-soft);
-  }
-  &[data-groupe='Restes de repas'] {
-    --c: var(--accent);
-    --c-soft: var(--accent-soft);
-  }
-  &[data-groupe='Viande et poisson'] {
-    --c: var(--meat);
-    --c-soft: var(--meat-soft);
-  }
-  &[data-groupe='Fruits'] {
-    --c: var(--berry);
-    --c-soft: var(--berry-soft);
-  }
-  &[data-groupe='Dans mon placard'] {
-    --c: var(--muted);
-    --c-soft: var(--line);
-  }
-}
-
 .restes {
   display: flex;
   flex-wrap: wrap;
@@ -138,6 +114,11 @@
 
   &:hover {
     border-color: var(--c);
+  }
+
+  .emoji {
+    font-size: 1.05em;
+    line-height: 1;
   }
 
   &[aria-pressed='true'] {

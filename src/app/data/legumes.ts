@@ -202,7 +202,7 @@ export const LEGUMES: Legume[] = [
       'Épluchures : à cuisiner le jour même, elles noircissent vite',
       "Tu peux les garder quelques heures dans l'eau froide",
     ],
-    restes: ['epl-pdt'],
+    restes: ['epl-pdt', 'pdt-cuites', 'puree'],
     couleur: '#b58a4c',
     score: '1 partie',
     intro: 'Les épluchures font de vraies chips, à condition de bien les choisir.',
@@ -1607,6 +1607,46 @@ export const LEGUMES: Legume[] = [
       {
         nom: 'Jus et graisse',
         usages: ['Pour faire sauter des pommes de terre ou des légumes', 'Pour lier une sauce'],
+      },
+    ],
+  },
+  {
+    id: 'charcuterie',
+    nom: 'Charcuterie',
+    synonymes: ['jambon', 'lardons', 'saucisse', 'chorizo', 'saucisson', 'bacon'],
+    emoji: '🥓',
+    categorie: 'Viande & poisson',
+    saison: TOUTE_L_ANNEE,
+    restes: ['jambon', 'lardons', 'saucisses', 'chorizo'],
+    compost: [],
+    conservation: [
+      'Jambon, lardons et saucisses entamés : 3 à 4 jours au frigo, bien fermés',
+      'Saucisson et chorizo entamés : 2 semaines au frigo, enveloppés dans un torchon',
+    ],
+    couleur: '#b8325a',
+    score: '3 parties',
+    intro: 'Une tranche de jambon ou un fond de lardons suffit à donner du goût à tout un plat.',
+    parties: [
+      {
+        nom: 'Jambon',
+        usages: [
+          '<b>Croque-monsieur</b>, quiche ou endives au jambon',
+          'En dés dans des pâtes, une omelette ou une salade composée',
+        ],
+      },
+      {
+        nom: 'Lardons et saucisses',
+        usages: [
+          '<b>Dans une soupe</b> de légumes ou de lentilles',
+          'En rondelles dans un riz sauté ou une poêlée de légumes',
+        ],
+      },
+      {
+        nom: 'Chorizo et saucisson',
+        usages: [
+          'En fines rondelles sur une pizza ou dans une omelette',
+          'Le talon du saucisson, en petits dés dans une potée',
+        ],
       },
     ],
   },

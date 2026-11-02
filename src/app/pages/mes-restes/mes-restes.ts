@@ -11,6 +11,7 @@ import {
 import { CarteRecette } from '../../components/carte-recette/carte-recette';
 import { TitrePage } from '../../components/titre-page/titre-page';
 import { GROUPES_INGREDIENTS, INDISPENSABLES } from '../../data/ingredients';
+import { LEGUMES } from '../../data/legumes';
 import { Ingredient, TypeRecette } from '../../models/recette';
 import { FONCTIONNALITES } from '../../../environments/fonctionnalites';
 import { Frigo, RESTES_FRIGO } from '../../services/frigo';
@@ -20,6 +21,14 @@ import { libelleDelai, niveauDelai } from '../../utils/urgence';
 import { SelectionRestes } from '../../services/selection-restes';
 import { PAGES } from '../../pages-noms';
 import { normaliser } from '../../utils/texte';
+
+/** Emoji de l'aliment d'où vient chaque reste, le même que dans Aliments. */
+const EMOJI_PAR_RESTE = new Map<string, string>();
+for (const l of LEGUMES) {
+  for (const id of l.restes ?? []) {
+    if (l.emoji && !EMOJI_PAR_RESTE.has(id)) EMOJI_PAR_RESTE.set(id, l.emoji);
+  }
+}
 
 /** Durée maximale, attente comprise, pour le filtre « rapide ». */
 const MINUTES_RAPIDE = 20;
@@ -43,6 +52,7 @@ export class MesRestes {
   protected readonly niveau = niveauDelai;
   private readonly messages = inject(Messages);
   protected readonly indispensables = INDISPENSABLES;
+  protected readonly emoji = EMOJI_PAR_RESTE;
 
   private readonly frigo = inject(Frigo);
 

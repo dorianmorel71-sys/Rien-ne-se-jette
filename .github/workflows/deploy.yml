@@ -13,9 +13,11 @@ permissions:
   pages: write
   id-token: write
 
+# Les publications attendent leur tour au lieu de s'annuler : chacune publie main et dev,
+# donc un push sur dev ne doit jamais faire tomber celui de main.
 concurrency:
   group: pages
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   build:

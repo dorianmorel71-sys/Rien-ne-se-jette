@@ -15,9 +15,10 @@ export interface GroupeIngredients {
  * Étape d'un modèle de recette. Une chaîne simple s'affiche toujours.
  * `si` : affichée seulement si cet ingrédient est coché ; `sauf` : seulement s'il ne l'est pas.
  * Le texte peut contenir `{restes}`, remplacé par les restes cochés ; l'étape est
- * alors masquée quand aucun n'est coché.
+ * alors masquée quand aucun n'est coché. `sansRestes` : restes qui ne vont pas dans ce
+ * `{restes}`-là (le riz cuit ne se râpe pas).
  */
-export type Etape = string | { texte: string; si?: string; sauf?: string };
+export type Etape = string | { texte: string; si?: string; sauf?: string; sansRestes?: string[] };
 
 /** Modèle à partir duquel on génère une recette avec uniquement ce qui est coché. */
 /** Salé par défaut. */

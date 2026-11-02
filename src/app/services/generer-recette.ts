@@ -113,15 +113,26 @@ export function genererRecette(
   if (restes.length < (modele.minRestes ?? 1)) return null;
 
   const optionnels = modele.optionnels.filter((id) => coches.has(id));
-  const restesCoches = restes.map((id) => ingredients.get(id)).filter((i): i is Ingredient => !!i);
-  const texteRestes = enumerer(restesCoches.map((i) => i.avecArticle));
-  const genre = accord(restesCoches);
+  // Texte et accord des restes d'une étape, sans ceux qu'elle écarte.
+  const restesDe = (sans: string[] = []) =>
+    restes
+      .filter((id) => !sans.includes(id))
+      .map((id) => ingredients.get(id))
+      .filter((i): i is Ingredient => !!i);
 
   const etapes = modele.etapes
     .map((etape) => (typeof etape === 'string' ? { texte: etape } : etape))
     .filter((e) => (!e.si || coches.has(e.si)) && (!e.sauf || !coches.has(e.sauf)))
-    .filter((e) => restes.length > 0 || !e.texte.includes('{restes}'))
-    .map((e) => majuscule(accorder(e.texte, genre).replace('{restes}', texteRestes)));
+    .map((e) => ({ texte: e.texte, restes: restesDe(e.sansRestes) }))
+    .filter((e) => e.restes.length > 0 || !e.texte.includes('{restes}'))
+    .map((e) =>
+      majuscule(
+        accorder(e.texte, accord(e.restes)).replace(
+          '{restes}',
+          enumerer(e.restes.map((i) => i.avecArticle)),
+        ),
+      ),
+    );
 
   const avertissement = modele.avertissement;
   const utilises = [...modele.requis, ...restes, ...optionnels];

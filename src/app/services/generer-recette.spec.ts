@@ -124,6 +124,20 @@ describe('accord des étapes', () => {
     );
   });
 
+  it('écarte de {restes} les restes listés dans sansRestes', () => {
+    const m = {
+      ...modele,
+      etapes: [{ texte: 'Râpe {restes}.', sansRestes: ['poireau'] }, 'Cuis {restes}.'],
+    };
+    expect(genererRecette(m, new Set(['poireau', 'courgette']), restes)?.etapes).toEqual([
+      'Râpe la courgette.',
+      'Cuis le vert de poireau et la courgette.',
+    ]);
+    expect(genererRecette(m, new Set(['poireau']), restes)?.etapes).toEqual([
+      'Cuis le vert de poireau.',
+    ]);
+  });
+
   it('ne touche pas aux étapes sans {restes}', () => {
     expect(genererRecette(modele, new Set(['poireau']), restes)?.etapes[2]).toBe('Retourne-les.');
   });

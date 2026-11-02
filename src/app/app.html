@@ -34,7 +34,12 @@
               }
             }
           </span>
-          <span class="libelle">{{ lien.chemin === '/compte' ? nomCompte() : lien.nom }}</span>
+          @if (lien.chemin === '/compte') {
+            <span class="libelle">{{ nomCompte() }}</span>
+          } @else {
+            <span class="libelle long">{{ lien.nom }}</span>
+            <span class="libelle court">{{ lien.nomCourt }}</span>
+          }
           @if (lien.chemin === '/frigo' && frigo.urgents()) {
             <span class="visually-hidden">, {{ frigo.urgents() }} à finir vite</span>
           }

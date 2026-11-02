@@ -38,12 +38,14 @@ export class App {
     { initialValue: '' },
   );
 
-  protected readonly liens = [
-    PAGES.aliments,
-    PAGES.recettes,
-    ...(FONCTIONNALITES.frigo ? [PAGES.frigo] : []),
-    PAGES.compte,
-  ];
+  protected readonly liens = (
+    [
+      PAGES.aliments,
+      PAGES.recettes,
+      ...(FONCTIONNALITES.frigo ? [PAGES.frigo] : []),
+      PAGES.compte,
+    ] as const
+  ).map((p) => ({ ...p, nomCourt: 'nomCourt' in p ? p.nomCourt : p.nom }));
   /** Le prénom une fois connecté, « Se connecter » sinon (ou « Compte » si les comptes sont coupés). */
   protected readonly nomCompte = computed(() =>
     !this.compte.actif ? PAGES.compte.nom : (this.compte.nomAffiche() ?? 'Se connecter'),

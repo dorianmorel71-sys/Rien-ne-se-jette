@@ -143,6 +143,20 @@ header {
     text-overflow: ellipsis;
     white-space: nowrap;
   }
+  // Nom court sur téléphone (« Guide »), nom complet ailleurs (« Guide anti-gaspi »).
+  .court {
+    display: none;
+  }
+
+  @include ecran.telephone {
+    .long {
+      display: none;
+    }
+
+    .court {
+      display: block;
+    }
+  }
 
   .avatar {
     display: grid;

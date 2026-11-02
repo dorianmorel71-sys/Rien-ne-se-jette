@@ -9,6 +9,8 @@ export const PAGES = {
     chemin: '/legume',
     icone: '🥕',
     nom: 'Guide anti-gaspi',
+    /** Dans la barre de menu du téléphone, où la place manque. */
+    nomCourt: 'Guide',
     phrase: FONCTIONNALITES.viandePoisson
       ? 'Que faire de chaque partie : épluchures, fanes, trognon, os, arêtes…'
       : 'Que faire de chaque partie : épluchures, fanes, trognon, croûtes…',

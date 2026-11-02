@@ -21,6 +21,7 @@ import { Favoris } from '../../services/favoris';
 import { astuceDuJour } from '../../data/astuces';
 import { nomMois } from '../../utils/saison';
 import { PAGES, titreOnglet } from '../../pages-noms';
+import { enSousGroupes } from '../../utils/sous-familles';
 import { normaliser } from '../../utils/texte';
 import { retenirFiche } from '../accueil/premiere-visite';
 
@@ -78,7 +79,9 @@ export class ParLegume {
           .filter((l) => l.categorie === titre)
           .sort((a, b) => a.nom.localeCompare(b.nom, 'fr')),
       })),
-    ].filter((g) => g.legumes.length > 0);
+    ]
+      .filter((g) => g.legumes.length > 0)
+      .map((g) => ({ ...g, sousGroupes: enSousGroupes(g.titre, g.legumes, (l) => l.sousFamille) }));
   });
 
   readonly legume = computed(

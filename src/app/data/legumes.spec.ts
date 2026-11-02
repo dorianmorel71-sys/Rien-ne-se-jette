@@ -1,6 +1,6 @@
 import { GROUPE_PLACARD } from './frigo';
 import { GROUPES_INGREDIENTS } from './ingredients';
-import { CATEGORIES_LEGUMES, LEGUMES } from './legumes';
+import { CATEGORIES_LEGUMES, LEGUMES, SOUS_FAMILLES } from './legumes';
 
 describe('Données des légumes', () => {
   it("n'a pas de légume en double", () => {
@@ -17,10 +17,18 @@ describe('Données des légumes', () => {
   });
 
   it('range les restes des Recettes dans les mêmes familles, et le même ordre, que le Guide', () => {
-    // « Légumes variés » n'existe que dans Recettes : des restes qui ne viennent d'aucun légume précis.
-    const attendu: string[] = [...CATEGORIES_LEGUMES];
-    attendu.splice(attendu.indexOf('Champignons') + 1, 0, 'Légumes variés');
-    expect(GROUPES_INGREDIENTS.map((g) => g.titre)).toEqual([...attendu, GROUPE_PLACARD]);
+    expect(GROUPES_INGREDIENTS.map((g) => g.titre)).toEqual([
+      ...CATEGORIES_LEGUMES,
+      GROUPE_PLACARD,
+    ]);
+  });
+
+  it('donne un sous-titre connu à chaque aliment des familles qui en ont', () => {
+    const mal = LEGUMES.filter((l) => {
+      const sous = SOUS_FAMILLES[l.categorie];
+      return sous ? !sous.includes(l.sousFamille ?? '') : !!l.sousFamille;
+    }).map((l) => `${l.nom} : « ${l.sousFamille} » dans « ${l.categorie} »`);
+    expect(mal).toEqual([]);
   });
 
   it('met chaque reste dans la famille de son aliment', () => {

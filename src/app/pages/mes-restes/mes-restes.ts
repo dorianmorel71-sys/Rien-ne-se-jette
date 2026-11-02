@@ -20,15 +20,22 @@ import { Messages } from '../../services/messages';
 import { libelleDelai, niveauDelai } from '../../utils/urgence';
 import { SelectionRestes } from '../../services/selection-restes';
 import { PAGES } from '../../pages-noms';
+import { enSousGroupes } from '../../utils/sous-familles';
 import { normaliser } from '../../utils/texte';
 
-/** Emoji de l'aliment d'où vient chaque reste, le même que dans le Guide anti-gaspi. */
+/** Emoji et sous-famille de l'aliment d'où vient chaque reste, les mêmes que dans le Guide anti-gaspi. */
 const EMOJI_PAR_RESTE = new Map<string, string>();
+const SOUS_FAMILLE_PAR_RESTE = new Map<string, string>();
 for (const l of LEGUMES_VISIBLES) {
   for (const id of l.restes ?? []) {
     if (l.emoji && !EMOJI_PAR_RESTE.has(id)) EMOJI_PAR_RESTE.set(id, l.emoji);
+    if (l.sousFamille && !SOUS_FAMILLE_PAR_RESTE.has(id))
+      SOUS_FAMILLE_PAR_RESTE.set(id, l.sousFamille);
   }
 }
+
+/** Restes de légumes qui ne viennent d'aucun légume précis (« Légumes cuits »). */
+const LEGUMES_VARIES = 'Légumes variés';
 
 /** Durée maximale, attente comprise, pour le filtre « rapide ». */
 const MINUTES_RAPIDE = 20;
@@ -109,14 +116,23 @@ export class MesRestes {
       this.selection.nombre() === 0,
   );
 
-  /** Groupes réduits aux ingrédients qui correspondent à la recherche. */
+  /** Groupes réduits aux ingrédients qui correspondent à la recherche, rangés sous leurs sous-titres. */
   protected readonly groupes = computed(() => {
     const filtre = normaliser(this.recherche().trim());
-    if (!filtre) return GROUPES;
     return GROUPES.map((g) => ({
       ...g,
-      ingredients: g.ingredients.filter((i) => normaliser(i.nom).includes(filtre)),
-    })).filter((g) => g.ingredients.length > 0);
+      ingredients: g.ingredients.filter((i) => !filtre || normaliser(i.nom).includes(filtre)),
+    }))
+      .filter((g) => g.ingredients.length > 0)
+      .map((g) => ({
+        ...g,
+        sousGroupes: enSousGroupes(
+          g.titre,
+          g.ingredients,
+          (i) => SOUS_FAMILLE_PAR_RESTE.get(i.id),
+          LEGUMES_VARIES,
+        ),
+      }));
   });
 
   protected readonly types: { valeur: TypeRecette | null; libelle: string }[] = [

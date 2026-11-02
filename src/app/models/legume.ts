@@ -7,17 +7,7 @@ export interface PartieLegume {
 
 /** Famille sous laquelle le légume est rangé dans la liste. */
 export type CategorieLegume =
-  | 'Légumes racines'
-  | 'Choux & légumes verts'
-  | 'Légumes du soleil'
-  | 'Gousses & légumineuses'
-  | 'Champignons'
-  | 'Fruits d’ici'
-  | 'Agrumes & exotiques'
-  | 'Fruits à coque'
-  | 'Herbes & aromates'
-  | 'Viande & poisson'
-  | 'Épicerie & crèmerie';
+  'Légumes' | 'Fruits' | 'Herbes & aromates' | 'Viande & poisson' | 'Épicerie & crèmerie';
 
 export interface Legume {
   id: string;
@@ -25,6 +15,8 @@ export interface Legume {
   /** Autres noms qu'on peut taper dans la recherche : « persil » pour les herbes fraîches. */
   synonymes?: string[];
   categorie: CategorieLegume;
+  /** Sous-titre dans la famille (« Racines », « Agrumes & exotiques »), voir SOUS_FAMILLES. */
+  sousFamille?: string;
   /** Illustration ; à défaut, on affiche l'initiale sur la couleur du légume. */
   emoji?: string;
   /** Ingrédients de « Mes restes » qui viennent de ce légume. */

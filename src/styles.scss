@@ -28,6 +28,12 @@ body {
 }
 
 button:focus-visible,
+// Liens dans le texte : aux couleurs de l'appli plutôt qu'en bleu par défaut.
+a {
+  color: var(--accent);
+  text-underline-offset: 2px;
+}
+
 a:focus-visible {
   outline: 3px solid var(--mustard);
   outline-offset: 2px;

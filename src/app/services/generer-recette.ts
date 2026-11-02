@@ -25,6 +25,70 @@ export function enMinutes(temps: string): number {
   return dureesDans(temps, 'haute').reduce((total, minutes) => total + minutes, 0);
 }
 
+/** Noms féminins en tête des restes (« les épluchures de carotte »), pour accorder les étapes. */
+const NOMS_FEMININS = new Set([
+  'aubergine',
+  'bananes',
+  'carapaces',
+  'carcasse',
+  'châtaignes',
+  'côtes',
+  'cosses',
+  'crêpes',
+  'croûte',
+  'écorce',
+  'endives',
+  'épices',
+  'épluchures',
+  'fanes',
+  'feuilles',
+  'figues',
+  'graines',
+  'grosses',
+  'herbes',
+  'lentilles',
+  'miettes',
+  'noix',
+  'pâtes',
+  'peaux',
+  'pelures',
+  'pommes',
+  'queues',
+  'sardines',
+  'saucisses',
+  'têtes',
+  'tiges',
+  'tomates',
+]);
+
+/** Nom en tête d'un reste, sans son article : « les fanes de radis » → « fanes ». */
+export function nomDeTete(avecArticle: string): string {
+  return avecArticle.replace(/^(les |le |la |l'|l’|des |du )/, '').split(/[\s']/)[0];
+}
+
+/** Genre et nombre d'un groupe de restes, pour accorder « coupés » et « -les » dans les étapes. */
+export function accord(restes: Ingredient[]): { feminin: boolean; pluriel: boolean } {
+  const pluriel = restes.length > 1 || restes.some((r) => /^(les|des) | et /.test(r.avecArticle));
+  const feminin = restes.every(
+    (r) =>
+      !/ et l/.test(r.avecArticle) &&
+      (r.avecArticle.startsWith('la ') || NOMS_FEMININS.has(nomDeTete(r.avecArticle))),
+  );
+  return { feminin, pluriel };
+}
+
+/**
+ * Accorde une étape écrite au masculin pluriel avec les restes cochés :
+ * « Ajoute {restes} coupés » → « Ajoute la courgette coupée », et « mets-les » → « mets-la ».
+ */
+function accorder(texte: string, { feminin, pluriel }: { feminin: boolean; pluriel: boolean }) {
+  if (!texte.includes('{restes}')) return texte;
+  const fin = (feminin ? 'e' : '') + (pluriel ? 's' : '');
+  return texte
+    .replace(/(\{restes\}(?: bien| très bien)?) (\p{L}+)és\b/u, `$1 $2é${fin}`)
+    .replace(/-les\b/g, pluriel ? '-les' : feminin ? '-la' : '-le');
+}
+
 /** « a », « a et b », « a, b et c ». */
 export function enumerer(elements: string[]): string {
   if (elements.length <= 1) return elements.join('');
@@ -46,13 +110,15 @@ export function genererRecette(
   if (restes.length < (modele.minRestes ?? 1)) return null;
 
   const optionnels = modele.optionnels.filter((id) => coches.has(id));
-  const texteRestes = enumerer(restes.map((id) => ingredients.get(id)?.avecArticle ?? id));
+  const restesCoches = restes.map((id) => ingredients.get(id)).filter((i): i is Ingredient => !!i);
+  const texteRestes = enumerer(restesCoches.map((i) => i.avecArticle));
+  const genre = accord(restesCoches);
 
   const etapes = modele.etapes
     .map((etape) => (typeof etape === 'string' ? { texte: etape } : etape))
     .filter((e) => (!e.si || coches.has(e.si)) && (!e.sauf || !coches.has(e.sauf)))
     .filter((e) => restes.length > 0 || !e.texte.includes('{restes}'))
-    .map((e) => majuscule(e.texte.replace('{restes}', texteRestes)));
+    .map((e) => majuscule(accorder(e.texte, genre).replace('{restes}', texteRestes)));
 
   const avertissement = modele.avertissement;
   const utilises = [...modele.requis, ...restes, ...optionnels];

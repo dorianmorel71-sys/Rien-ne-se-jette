@@ -23,12 +23,17 @@ import { PAGES } from '../../pages-noms';
 import { enSousGroupes } from '../../utils/sous-familles';
 import { normaliser } from '../../utils/texte';
 
-/** Emoji et sous-famille de l'aliment d'où vient chaque reste, les mêmes que dans le Guide anti-gaspi. */
+/**
+ * Emoji (ou à défaut couleur) et sous-famille de l'aliment d'où vient chaque reste,
+ * les mêmes que dans le Guide anti-gaspi.
+ */
 const EMOJI_PAR_RESTE = new Map<string, string>();
+const COULEUR_PAR_RESTE = new Map<string, string>();
 const SOUS_FAMILLE_PAR_RESTE = new Map<string, string>();
 for (const l of LEGUMES_VISIBLES) {
   for (const id of l.restes ?? []) {
     if (l.emoji && !EMOJI_PAR_RESTE.has(id)) EMOJI_PAR_RESTE.set(id, l.emoji);
+    if (!COULEUR_PAR_RESTE.has(id)) COULEUR_PAR_RESTE.set(id, l.couleur);
     if (l.sousFamille && !SOUS_FAMILLE_PAR_RESTE.has(id))
       SOUS_FAMILLE_PAR_RESTE.set(id, l.sousFamille);
   }
@@ -60,6 +65,7 @@ export class MesRestes {
   private readonly messages = inject(Messages);
   protected readonly indispensables = INDISPENSABLES;
   protected readonly emoji = EMOJI_PAR_RESTE;
+  protected readonly couleur = COULEUR_PAR_RESTE;
   /** Sans viande ni poisson dans cette version, toutes les recettes sont végétariennes. */
   protected readonly avecViande = FONCTIONNALITES.viandePoisson;
 
@@ -67,14 +73,8 @@ export class MesRestes {
 
   protected readonly recherche = signal('');
 
-  /** Familles dépliées ; au départ, celles où quelque chose est coché. */
-  protected readonly ouvertes = signal<ReadonlySet<string>>(
-    new Set(
-      GROUPES.filter((g) => g.ingredients.some((i) => this.selection.estCoche(i.id))).map(
-        (g) => g.titre,
-      ),
-    ),
-  );
+  /** Familles dépliées : toutes repliées au départ, le nombre de cochés reste visible. */
+  protected readonly ouvertes = signal<ReadonlySet<string>>(new Set());
   protected readonly toutOuvrir = computed(() => !!this.recherche().trim());
 
   protected replier(famille: string, ouverte: boolean): void {
@@ -159,6 +159,14 @@ export class MesRestes {
   );
 
   private readonly recettes = viewChild.required<ElementRef<HTMLElement>>('recettes');
+
+  /** Bouton « Voir les recettes » : replie « Ce que j'ai » et descend jusqu'aux recettes. */
+  protected voirRecettes(): void {
+    this.ajusterOuvert.set(false);
+    setTimeout(() =>
+      this.recettes().nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' }),
+    );
+  }
 
   constructor() {
     // Arrivée depuis une fiche légume : on montre directement les recettes.

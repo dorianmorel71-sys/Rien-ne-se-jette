@@ -5,6 +5,7 @@ export const CATEGORIES_LEGUMES: CategorieLegume[] = [
   'Fruits',
   'Herbes & aromates',
   'Viande & poisson',
+  'Épicerie & crèmerie',
 ];
 
 const TOUTE_L_ANNEE = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
@@ -157,6 +158,7 @@ export const LEGUMES: Legume[] = [
   {
     id: 'courge',
     nom: 'Courge / potimarron',
+    synonymes: ['potiron', 'citrouille', 'butternut', 'potimarron'],
     saison: [1, 2, 9, 10, 11, 12],
     compost: ['Peau des courges dures si tu ne la rôtis pas'],
     emoji: '🎃',
@@ -191,6 +193,7 @@ export const LEGUMES: Legume[] = [
   {
     id: 'pomme-de-terre',
     nom: 'Pomme de terre',
+    synonymes: ['patate'],
     saison: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
     compost: ['Germes et parties vertes : à ne pas manger, mais très bien au compost'],
     emoji: '🥔',
@@ -221,6 +224,7 @@ export const LEGUMES: Legume[] = [
   {
     id: 'oignon',
     nom: 'Oignon & échalote',
+    synonymes: ['échalote', 'oignon nouveau', 'ciboule', 'cébette'],
     saison: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
     compost: ['Racines', 'Pelures après le bouillon'],
     emoji: '🧅',
@@ -304,6 +308,7 @@ export const LEGUMES: Legume[] = [
   {
     id: 'celeri',
     nom: 'Céleri',
+    synonymes: ['céleri-rave', 'céleri branche'],
     saison: [1, 2, 3, 9, 10, 11, 12],
     compost: ['Base terreuse', 'Les légumes du bouillon, une fois filtrés'],
     emoji: '🥬',
@@ -393,6 +398,20 @@ export const LEGUMES: Legume[] = [
   {
     id: 'herbes',
     nom: 'Herbes fraîches',
+    synonymes: [
+      'persil',
+      'basilic',
+      'coriandre',
+      'ciboulette',
+      'menthe',
+      'aneth',
+      'thym',
+      'romarin',
+      'estragon',
+      'sauge',
+      'cerfeuil',
+      'laurier',
+    ],
     saison: [4, 5, 6, 7, 8, 9, 10],
     compost: ['Tiges dures (thym, romarin) après infusion'],
     emoji: '🌿',
@@ -449,6 +468,7 @@ export const LEGUMES: Legume[] = [
   {
     id: 'agrumes',
     nom: 'Citron & orange',
+    synonymes: ['orange', 'clémentine', 'mandarine', 'pamplemousse', 'citron vert', 'agrumes'],
     saison: [1, 2, 3, 11, 12],
     compost: ['Écorces en petite quantité et coupées en morceaux : elles sont acides'],
     emoji: '🍋',
@@ -476,6 +496,7 @@ export const LEGUMES: Legume[] = [
   {
     id: 'tomate',
     nom: 'Tomate',
+    synonymes: ['tomates cerises'],
     saison: [6, 7, 8, 9],
     compost: ['Pédoncules', 'Feuilles et tiges du plant : elles ne se mangent pas'],
     emoji: '🍅',
@@ -712,6 +733,7 @@ export const LEGUMES: Legume[] = [
   {
     id: 'blettes',
     nom: 'Blettes',
+    synonymes: ['bettes', 'poirée'],
     saison: [6, 7, 8, 9, 10],
     compost: ['Feuilles abîmées'],
     emoji: '🥬',
@@ -772,6 +794,7 @@ export const LEGUMES: Legume[] = [
   {
     id: 'salade',
     nom: 'Salade',
+    synonymes: ['laitue', 'roquette', 'mâche', 'batavia', 'frisée', 'scarole', 'sucrine'],
     saison: [4, 5, 6, 7, 8, 9, 10],
     compost: ['Feuilles gluantes ou abîmées'],
     emoji: '🥗',
@@ -949,6 +972,7 @@ export const LEGUMES: Legume[] = [
   {
     id: 'champignons',
     nom: 'Champignons',
+    synonymes: ['champignon de Paris', 'cèpe', 'girolle', 'pleurote'],
     saison: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
     compost: ['Bout terreux du pied'],
     emoji: '🍄',
@@ -999,6 +1023,7 @@ export const LEGUMES: Legume[] = [
   {
     id: 'mais',
     nom: 'Maïs',
+    synonymes: ['épi'],
     saison: [8, 9, 10],
     compost: ['Épis, après le bouillon'],
     emoji: '🌽',
@@ -1020,6 +1045,7 @@ export const LEGUMES: Legume[] = [
   {
     id: 'legumineuses',
     nom: 'Pois chiches & haricots secs',
+    synonymes: ['lentilles', 'flageolets', 'haricots rouges', 'haricots blancs'],
     saison: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
     compost: ['Eau de trempage des légumes secs'],
     emoji: '🫘',
@@ -1276,6 +1302,7 @@ export const LEGUMES: Legume[] = [
   {
     id: 'peche-abricot',
     nom: 'Pêche, abricot & prune',
+    synonymes: ['nectarine', 'brugnon', 'mirabelle', 'reine-claude', 'quetsche'],
     saison: [6, 7, 8, 9],
     compost: ['Noyaux : ils se décomposent très lentement, enterre-les ou jette-les'],
     emoji: '🍑',
@@ -1408,6 +1435,7 @@ export const LEGUMES: Legume[] = [
   {
     id: 'poulet',
     nom: 'Poulet rôti',
+    synonymes: ['volaille', 'dinde', 'pintade'],
     emoji: '🍗',
     categorie: 'Viande & poisson',
     saison: TOUTE_L_ANNEE,
@@ -1454,6 +1482,7 @@ export const LEGUMES: Legume[] = [
   {
     id: 'saumon',
     nom: 'Saumon',
+    synonymes: ['truite'],
     emoji: '🐟',
     categorie: 'Viande & poisson',
     saison: TOUTE_L_ANNEE,
@@ -1489,6 +1518,7 @@ export const LEGUMES: Legume[] = [
   {
     id: 'crevettes',
     nom: 'Crevettes',
+    synonymes: ['gambas', 'langoustines'],
     emoji: '🦐',
     categorie: 'Viande & poisson',
     saison: TOUTE_L_ANNEE,
@@ -1515,6 +1545,17 @@ export const LEGUMES: Legume[] = [
   {
     id: 'poisson-entier',
     nom: 'Poisson entier',
+    synonymes: [
+      'dorade',
+      'daurade',
+      'bar',
+      'loup',
+      'maquereau',
+      'cabillaud',
+      'merlu',
+      'sardine',
+      'truite',
+    ],
     emoji: '🐠',
     categorie: 'Viande & poisson',
     saison: TOUTE_L_ANNEE,
@@ -1537,6 +1578,7 @@ export const LEGUMES: Legume[] = [
   {
     id: 'pot-au-feu',
     nom: 'Rôti et pot-au-feu',
+    synonymes: ['bœuf', 'porc', 'veau', 'agneau', 'gigot', 'rôti', 'côte de bœuf'],
     emoji: '🥩',
     categorie: 'Viande & poisson',
     saison: TOUTE_L_ANNEE,
@@ -1565,6 +1607,206 @@ export const LEGUMES: Legume[] = [
       {
         nom: 'Jus et graisse',
         usages: ['Pour faire sauter des pommes de terre ou des légumes', 'Pour lier une sauce'],
+      },
+    ],
+  },
+  {
+    id: 'pain',
+    nom: 'Pain',
+    synonymes: ['baguette', 'brioche', 'croissant', 'viennoiserie', 'pain de mie'],
+    emoji: '🥖',
+    categorie: 'Épicerie & crèmerie',
+    saison: TOUTE_L_ANNEE,
+    restes: ['pain-rassis', 'brioche-rassise'],
+    compost: ['Pain moisi, en petits morceaux'],
+    conservation: [
+      'Dans un sac en tissu ou une boîte à pain, jamais au frigo : il y rassit plus vite',
+      'Tranché puis congelé : il se grille directement, sans décongeler',
+    ],
+    couleur: '#c98a1b',
+    score: '3 parties',
+    intro:
+      'Le pain rassis n’est pas perdu : pour beaucoup de recettes, il est même meilleur que le frais.',
+    parties: [
+      {
+        nom: 'Pain rassis',
+        usages: [
+          '<b>Pain perdu</b> : trempé dans du lait battu avec un œuf, doré au beurre',
+          '<b>Croûtons</b> : en dés avec un filet d’huile, 10 min au four à 180 °C',
+          'Panzanella : salade de tomates où le pain boit leur jus',
+        ],
+      },
+      {
+        nom: 'Quignons et bouts trop durs',
+        usages: [
+          '<b>Chapelure</b> : séchés au four puis mixés, elle se garde des semaines en bocal',
+          'Dans une soupe à l’oignon, ou mixés dans un gaspacho pour l’épaissir',
+        ],
+      },
+      {
+        nom: 'Brioche et viennoiseries',
+        usages: [
+          '<b>Pudding</b> ou pain perdu brioché',
+          'Croissant de la veille : 3 min au four, il redevient croustillant',
+        ],
+      },
+    ],
+    avertissement:
+      'Pain moisi : ne retire pas juste la tache verte, la moisissure s’étend plus loin sans se voir. Il ne se mange plus.',
+  },
+  {
+    id: 'fromage',
+    nom: 'Fromage',
+    synonymes: ['parmesan', 'comté', 'emmental', 'gruyère', 'camembert', 'brie', 'chèvre'],
+    emoji: '🧀',
+    categorie: 'Épicerie & crèmerie',
+    saison: TOUTE_L_ANNEE,
+    restes: ['fromage-bouts', 'croute-parmesan'],
+    compost: [],
+    conservation: [
+      'Emballé dans du papier ou une boîte, dans le bac à légumes du frigo',
+      'Râpé, il se congèle très bien en sachet, prêt pour un gratin',
+    ],
+    couleur: '#e0b23a',
+    score: '3 parties',
+    intro: 'Les petits bouts qui traînent au fond du frigo font les meilleures sauces et gratins.',
+    parties: [
+      {
+        nom: 'Bouts et talons',
+        usages: [
+          '<b>Fromage fort</b> : mixés avec un peu de vin blanc ou de crème, à tartiner',
+          'Râpés sur un gratin, une quiche ou des pâtes',
+          'Fondus dans une béchamel : une sauce au fromage pour des légumes',
+        ],
+      },
+      {
+        nom: 'Croûte de parmesan',
+        usages: [
+          '<b>Dans une soupe</b> ou un minestrone : elle fond doucement et donne beaucoup de goût',
+          'Retire ce qu’il en reste avant de servir',
+        ],
+      },
+      {
+        nom: 'Croûte des autres fromages',
+        usages: [
+          'Brie et camembert : la croûte blanche se mange',
+          'Croûtes dures (comté, tomme) : dans un bouillon, comme celle du parmesan',
+        ],
+      },
+    ],
+    avertissement: 'Les croûtes en cire ou en paraffine (gouda, édam…) ne se mangent pas.',
+  },
+  {
+    id: 'oeufs',
+    nom: 'Œufs',
+    synonymes: ['blanc d’œuf', 'jaune d’œuf', 'coquille'],
+    emoji: '🥚',
+    categorie: 'Épicerie & crèmerie',
+    saison: TOUTE_L_ANNEE,
+    restes: ['blancs-oeufs', 'jaunes-oeufs'],
+    compost: ['Coquilles, écrasées pour qu’elles se décomposent plus vite'],
+    conservation: [
+      'Blancs : 3 jours au frigo dans une boîte fermée, ou congelés (ils montent encore très bien)',
+      'Jaunes : 1 jour au frigo, recouverts d’un filet d’eau pour ne pas sécher',
+    ],
+    couleur: '#e8c26a',
+    score: '3 parties',
+    intro: 'Une recette n’a pris que les jaunes, ou que les blancs ? L’autre moitié a sa recette.',
+    parties: [
+      {
+        nom: 'Blancs',
+        usages: [
+          '<b>Meringues</b> : deux fois leur poids en sucre, 1 h 30 au four à 100 °C',
+          'Financiers ou tuiles',
+          'Dans une omelette, battus avec des œufs entiers',
+        ],
+      },
+      {
+        nom: 'Jaunes',
+        usages: [
+          '<b>Crème anglaise</b> ou crème pâtissière',
+          'Mayonnaise maison',
+          'Au pinceau, pour dorer une pâte ou une tarte',
+        ],
+      },
+      {
+        nom: 'Coquilles',
+        usages: ['Écrasées au pied des plantes du jardin, ou au compost'],
+      },
+    ],
+    avertissement:
+      'Les jaunes crus (mayonnaise, tiramisu) se mangent le jour même. Évite-les pour les femmes enceintes, les jeunes enfants et les personnes âgées.',
+  },
+  {
+    id: 'riz-pates',
+    nom: 'Riz & pâtes',
+    synonymes: ['riz', 'pâtes', 'semoule', 'boulgour', 'quinoa', 'nouilles'],
+    emoji: '🍚',
+    categorie: 'Épicerie & crèmerie',
+    saison: TOUTE_L_ANNEE,
+    restes: ['riz-cuit', 'pates-cuites', 'semoule-cuite'],
+    compost: [],
+    conservation: [
+      'Riz cuit : au frigo dans l’heure, et 1 à 2 jours au plus',
+      'Pâtes cuites : 3 jours au frigo, avec un filet d’huile pour qu’elles ne collent pas',
+    ],
+    couleur: '#d9b77e',
+    score: '3 parties',
+    intro: 'On en cuit toujours trop : le reste fait un deuxième repas en dix minutes.',
+    parties: [
+      {
+        nom: 'Riz cuit',
+        usages: [
+          '<b>Riz sauté</b> à la poêle bien chaude, avec un œuf et des restes de légumes',
+          'Galettes de riz liées à l’œuf et au fromage râpé',
+          'Riz au lait, avec un riz cuit à l’eau sans sel',
+        ],
+      },
+      {
+        nom: 'Pâtes cuites',
+        usages: [
+          '<b>Frittata de pâtes</b> : à la poêle avec des œufs battus et du fromage',
+          'Gratin de pâtes, ou salade de pâtes',
+        ],
+      },
+      {
+        nom: 'Semoule et boulgour',
+        usages: ['<b>Taboulé</b> avec des herbes et du citron', 'Galettes poêlées, liées à l’œuf'],
+      },
+    ],
+    avertissement:
+      'Le riz cuit oublié à température ambiante peut rendre malade, même bien réchauffé : mets-le vite au frigo.',
+  },
+  {
+    id: 'cafe-the',
+    nom: 'Café & thé',
+    synonymes: ['marc de café', 'thé', 'tisane', 'infusion'],
+    emoji: '☕',
+    categorie: 'Épicerie & crèmerie',
+    restes: ['cafe-froid'],
+    compost: ['Marc de café et filtres en papier', 'Feuilles de thé, et sachets sans plastique'],
+    conservation: ['Café refroidi : 2 jours au frigo, ou en glaçons pour un café glacé'],
+    couleur: '#7a5236',
+    score: '3 parties',
+    intro: 'Le fond de cafetière et le marc ont encore de quoi servir.',
+    parties: [
+      {
+        nom: 'Café refroidi',
+        usages: [
+          '<b>Tiramisu</b>, ou café glacé avec du lait',
+          'Dans une pâte à gâteau au chocolat : il en renforce le goût',
+        ],
+      },
+      {
+        nom: 'Marc de café',
+        usages: [
+          'Sec, dans une coupelle au frigo : il absorbe les odeurs',
+          'Au jardin, en petite quantité au pied des plantes',
+        ],
+      },
+      {
+        nom: 'Thé infusé',
+        usages: ['<b>Thé glacé</b> : refroidi avec du citron et un peu de miel'],
       },
     ],
   },

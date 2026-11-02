@@ -55,7 +55,8 @@ export class ParLegume {
     const mois = this.moisCourant;
     return LEGUMES.filter(
       (l) =>
-        (!filtre || normaliser(l.nom).includes(filtre) || normaliser(l.id).includes(filtre)) &&
+        (!filtre ||
+          [l.nom, l.id, ...(l.synonymes ?? [])].some((nom) => normaliser(nom).includes(filtre))) &&
         (!this.deSaison() || !!l.saison?.includes(mois)),
     );
   });

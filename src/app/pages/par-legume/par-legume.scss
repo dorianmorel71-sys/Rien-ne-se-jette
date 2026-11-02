@@ -90,6 +90,10 @@
     --c: var(--mustard);
     --c-soft: var(--mustard-soft);
   }
+  &[data-famille='Épicerie & crèmerie'] {
+    --c: var(--ice);
+    --c-soft: var(--ice-soft);
+  }
   &[data-famille='Viande & poisson'] {
     --c: var(--meat);
     --c-soft: var(--meat-soft);

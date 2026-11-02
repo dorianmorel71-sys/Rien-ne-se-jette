@@ -6,11 +6,14 @@ export interface PartieLegume {
 }
 
 /** Famille sous laquelle le légume est rangé dans la liste. */
-export type CategorieLegume = 'Légumes' | 'Fruits' | 'Herbes & aromates' | 'Viande & poisson';
+export type CategorieLegume =
+  'Légumes' | 'Fruits' | 'Herbes & aromates' | 'Viande & poisson' | 'Épicerie & crèmerie';
 
 export interface Legume {
   id: string;
   nom: string;
+  /** Autres noms qu'on peut taper dans la recherche : « persil » pour les herbes fraîches. */
+  synonymes?: string[];
   categorie: CategorieLegume;
   /** Illustration ; à défaut, on affiche l'initiale sur la couleur du légume. */
   emoji?: string;

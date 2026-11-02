@@ -10,8 +10,9 @@ import { Frigo } from './frigo';
 import { genererRecette } from './generer-recette';
 
 const CLE_PLACARD = 'rien-ne-se-jette.placard';
+const CLE_PLACARD_DEMANDE = 'rien-ne-se-jette.placard-demande';
 
-const PLACARD = new Set(
+export const PLACARD = new Set(
   GROUPES_INGREDIENTS.find((g) => g.titre === GROUPE_PLACARD)?.ingredients.map((i) => i.id),
 );
 
@@ -58,6 +59,24 @@ export class SelectionRestes {
   private readonly choix = computed(
     () =>
       new Set([...this.restes(), ...this.placard()].filter((id) => !INGREDIENTS_MASQUES.has(id))),
+  );
+
+  /**
+   * Faut-il demander ce qu'il y a toujours au placard ? Une seule fois, et pas si
+   * le placard a déjà été coché.
+   */
+  readonly placardADemander = signal(
+    !lire(CLE_PLACARD_DEMANDE, false) && this.placard().size === 0,
+  );
+
+  placardDemande(): void {
+    this.placardADemander.set(false);
+    ecrire(CLE_PLACARD_DEMANDE, true);
+  }
+
+  /** Restes cochés à la main, hors placard (l'exemple ne compte pas). */
+  readonly restesCoches = computed(() =>
+    this.estExemple() ? [] : [...this.restes()].filter((id) => !INGREDIENTS_MASQUES.has(id)),
   );
 
   /** Demande à la page « Recettes » de défiler jusqu'aux recettes à son ouverture. */
@@ -133,6 +152,12 @@ export class SelectionRestes {
     const depart = this.estExemple() ? [] : this.restes();
     this.restesManuels.set(new Set([...depart, ...ids.filter((id) => !PLACARD.has(id))]));
     this.placard.update((p) => new Set([...p, ...ids.filter((id) => PLACARD.has(id))]));
+  }
+
+  /** Coche ou décoche un reste en repartant de zéro si l'exemple était affiché. */
+  basculerSansExemple(id: string): void {
+    if (this.estExemple() && !PLACARD.has(id)) this.restesManuels.set(new Set());
+    this.basculer(id);
   }
 
   toutDecocher(): void {

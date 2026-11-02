@@ -376,3 +376,50 @@
     cursor: pointer;
   }
 }
+
+// Placard demandé une seule fois, en tête des recettes.
+.placard {
+  --c: var(--muted);
+  --c-soft: var(--mustard-soft);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px;
+  border-radius: var(--radius);
+  background: var(--mustard-soft);
+
+  h2 {
+    margin: 0;
+    font-family: var(--f-display);
+    font-size: 1.15rem;
+  }
+
+  .aide {
+    margin: 0;
+    font-size: 0.9rem;
+  }
+
+  .restes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .reste {
+    --c: var(--mustard);
+    --c-soft: var(--surface);
+    background: var(--surface);
+  }
+
+  .valider {
+    align-self: flex-start;
+    font: inherit;
+    font-weight: 700;
+    padding: 9px 20px;
+    border: 0;
+    border-radius: 999px;
+    background: var(--fg);
+    color: var(--bg);
+    cursor: pointer;
+  }
+}

@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { RecetteGeneree } from '../models/recette';
-import { Compteur } from './compteur';
+import { Compteur, enEuros } from './compteur';
 
 const RECETTE: RecetteGeneree = {
   nom: 'Omelette test',
@@ -37,5 +37,13 @@ describe('Compteur', () => {
     compteur.annuler(RECETTE);
     compteur.annuler(RECETTE);
     expect(compteur.fois('Omelette test')).toBe(0);
+  });
+});
+
+describe('enEuros', () => {
+  it('affiche les euros sans centimes inutiles', () => {
+    expect(enEuros(0)).toBe('0 €');
+    expect(enEuros(1)).toBe('0,50 €');
+    expect(enEuros(12)).toBe('6 €');
   });
 });

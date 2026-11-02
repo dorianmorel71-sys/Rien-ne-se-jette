@@ -1,0 +1,44 @@
+<h2 id="titre-choix">Qu'est-ce qui traîne dans ta cuisine ?</h2>
+
+<input
+  class="recherche"
+  type="search"
+  placeholder="Pain, bananes, épluchures…"
+  autocomplete="off"
+  aria-labelledby="titre-choix"
+  [value]="recherche()"
+  (input)="recherche.set($any($event.target).value)"
+/>
+
+<div class="restes" role="group" aria-labelledby="titre-choix">
+  @for (i of proposes(); track i.id) {
+    <button
+      class="reste"
+      type="button"
+      [attr.aria-pressed]="estCoche(i.id)"
+      (click)="basculer(i.id)"
+    >
+      @if (emoji.get(i.id); as e) {
+        <span class="emoji" aria-hidden="true">{{ e }}</span>
+      } @else {
+        <i class="pastille" [style.background]="couleur.get(i.id) ?? 'var(--leaf)'"></i>
+      }
+      {{ i.nom }}
+    </button>
+  } @empty {
+    <p class="vide">Rien ne correspond à « {{ recherche() }} ». Essaie un autre mot.</p>
+  }
+</div>
+
+@let n = nombreRecettes();
+@if (nombreCoches()) {
+  <button class="voir" type="button" (click)="voirRecettes()">
+    @if (n) {
+      Voir {{ n > 1 ? 'les ' + n + ' recettes' : 'la recette' }} →
+    } @else {
+      Voir les idées →
+    }
+  </button>
+} @else {
+  <p class="aide">Touche ce que tu as, même plusieurs choses.</p>
+}

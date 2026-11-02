@@ -188,6 +188,32 @@
   }
 
   <div class="recettes" #recettes>
+    @if (selection.placardADemander()) {
+      <section class="placard" aria-labelledby="titre-placard">
+        <h2 id="titre-placard">🧺 Qu'as-tu toujours chez toi ?</h2>
+        <p class="aide">
+          Coche-les une fois : on s'en souviendra, et tu auras bien plus de recettes.
+        </p>
+        <div class="restes">
+          @for (ingredient of basesPlacard; track ingredient.id) {
+            <button
+              class="reste"
+              type="button"
+              [attr.aria-pressed]="selection.estCoche(ingredient.id)"
+              (click)="selection.basculer(ingredient.id)"
+            >
+              {{ ingredient.nom }}
+            </button>
+          }
+        </div>
+        <button class="valider" type="button" (click)="selection.placardDemande()">
+          C'est noté
+        </button>
+      </section>
+    }
+
+    <app-invitation-installation />
+
     @if (nb === 0) {
       <p class="vide">
         Ouvre « Ce que j'ai » et coche tes restes pour voir les recettes possibles.

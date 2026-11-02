@@ -9,9 +9,15 @@ import {
   viewChild,
 } from '@angular/core';
 import { CarteRecette } from '../../components/carte-recette/carte-recette';
+import { InvitationInstallation } from '../../components/invitation-installation/invitation-installation';
 import { TitrePage } from '../../components/titre-page/titre-page';
 import { INDISPENSABLES } from '../../data/ingredients';
-import { GROUPES_INGREDIENTS_VISIBLES as GROUPES, LEGUMES_VISIBLES } from '../../data/visibles';
+import { GROUPES_INGREDIENTS_VISIBLES as GROUPES } from '../../data/visibles';
+import {
+  COULEUR_PAR_RESTE,
+  EMOJI_PAR_RESTE,
+  SOUS_FAMILLE_PAR_RESTE,
+} from '../../data/icones-restes';
 import { Ingredient, TypeRecette } from '../../models/recette';
 import { FONCTIONNALITES } from '../../../environments/fonctionnalites';
 import { Frigo, RESTES_FRIGO } from '../../services/frigo';
@@ -23,31 +29,31 @@ import { PAGES } from '../../pages-noms';
 import { enSousGroupes } from '../../utils/sous-familles';
 import { normaliser } from '../../utils/texte';
 
-/**
- * Emoji (ou à défaut couleur) et sous-famille de l'aliment d'où vient chaque reste,
- * les mêmes que dans le Guide anti-gaspi.
- */
-const EMOJI_PAR_RESTE = new Map<string, string>();
-const COULEUR_PAR_RESTE = new Map<string, string>();
-const SOUS_FAMILLE_PAR_RESTE = new Map<string, string>();
-for (const l of LEGUMES_VISIBLES) {
-  for (const id of l.restes ?? []) {
-    if (l.emoji && !EMOJI_PAR_RESTE.has(id)) EMOJI_PAR_RESTE.set(id, l.emoji);
-    if (!COULEUR_PAR_RESTE.has(id)) COULEUR_PAR_RESTE.set(id, l.couleur);
-    if (l.sousFamille && !SOUS_FAMILLE_PAR_RESTE.has(id))
-      SOUS_FAMILLE_PAR_RESTE.set(id, l.sousFamille);
-  }
-}
-
 /** Restes de légumes qui ne viennent d'aucun légume précis (« Légumes cuits »). */
 const LEGUMES_VARIES = 'Légumes variés';
+
+/** Ce que la plupart des cuisines ont toujours : demandé une fois, puis retenu. */
+const BASES_PLACARD = [
+  'oeufs',
+  'lait',
+  'beurre',
+  'farine',
+  'sucre',
+  'oignon',
+  'ail',
+  'pomme-de-terre',
+  'citron',
+  'pates-seches',
+  'riz-sec',
+  'moutarde',
+];
 
 /** Durée maximale, attente comprise, pour le filtre « rapide ». */
 const MINUTES_RAPIDE = 20;
 
 @Component({
   selector: 'app-mes-restes',
-  imports: [CarteRecette, TitrePage],
+  imports: [CarteRecette, InvitationInstallation, TitrePage],
   templateUrl: './mes-restes.html',
   styleUrl: './mes-restes.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -66,6 +72,9 @@ export class MesRestes {
   protected readonly indispensables = INDISPENSABLES;
   protected readonly emoji = EMOJI_PAR_RESTE;
   protected readonly couleur = COULEUR_PAR_RESTE;
+  protected readonly basesPlacard = BASES_PLACARD.map((id) =>
+    GROUPES.flatMap((g) => g.ingredients).find((i) => i.id === id),
+  ).filter((i): i is Ingredient => !!i);
   /** Sans viande ni poisson dans cette version, toutes les recettes sont végétariennes. */
   protected readonly avecViande = FONCTIONNALITES.viandePoisson;
 

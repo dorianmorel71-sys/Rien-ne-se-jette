@@ -184,3 +184,21 @@ app-alerte {
   text-underline-offset: 3px;
   cursor: pointer;
 }
+
+// Partager : discret, à côté des boutons de cuisine.
+.partager {
+  font: inherit;
+  font-weight: 700;
+  font-size: 0.9rem;
+  padding: 7px 14px;
+  border-radius: 999px;
+  border: 1.5px solid var(--line);
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+
+  &:hover {
+    border-color: var(--muted);
+    color: var(--fg);
+  }
+}

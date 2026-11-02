@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, inject, input, signal } from '@angular/core';
 import { FONCTIONNALITES } from '../../../environments/fonctionnalites';
 import { RecetteGeneree } from '../../models/recette';
-import { Compteur } from '../../services/compteur';
+import { Compteur, enEuros, PALIERS } from '../../services/compteur';
 import { Favoris } from '../../services/favoris';
 import { Frigo } from '../../services/frigo';
 import { Messages } from '../../services/messages';
@@ -41,17 +41,50 @@ export class CarteRecette {
   protected readonly delai = libelleDelai;
   protected readonly niveau = niveauDelai;
 
+  /**
+   * Envoie la recette à quelqu'un (WhatsApp, SMS…) avec le lien de l'appli,
+   * ou la copie quand le navigateur ne sait pas partager.
+   */
+  protected async partager(): Promise<void> {
+    const r = this.recette();
+    const lien = location.origin + location.pathname;
+    const texte = [
+      `${r.emoji ?? '🍽️'} ${r.nom} (${r.temps})`,
+      `Avec : ${r.ingredients.map((i) => i.nom.toLowerCase()).join(', ')}`,
+      r.etapes.map((e, i) => `${i + 1}. ${e}`).join('\n'),
+      'Trouvée sur Rien ne se jette, l’appli pour cuisiner ses restes 🌱',
+    ].join('\n\n');
+    if (navigator.share) {
+      try {
+        await navigator.share({ title: r.nom, text: texte, url: lien });
+      } catch {
+        // Partage annulé : rien à faire.
+      }
+      return;
+    }
+    try {
+      await navigator.clipboard.writeText(`${texte}\n${lien}`);
+      this.messages.afficher('📋 Recette copiée : colle-la où tu veux');
+    } catch {
+      this.messages.afficher('Impossible de copier la recette sur cet appareil');
+    }
+  }
+
   /** Compte la recette et sort ses restes du frigo. */
   protected cuisiner(): void {
     const recette = this.recette();
     const restesAvant = this.compteur.restes();
     this.compteur.cuisiner(recette);
     const sortis = this.frigo.retirer(recette.ingredients.map((i) => i.id));
-    const sauves = this.compteur.restes() - restesAvant;
+    const total = this.compteur.restes();
+    const sauves = total - restesAvant;
+    const palier = PALIERS.filter((p) => restesAvant < p && total >= p).at(-1);
     this.messages.afficher(
-      sauves > 0
-        ? `🌱 Bravo, ${sauves} ${sauves > 1 ? 'restes sauvés' : 'reste sauvé'} !`
-        : '✓ Recette notée',
+      palier
+        ? `🎉 Cap des ${palier} restes sauvés : environ ${enEuros(total)} d’économies !`
+        : sauves > 0
+          ? `🌱 Bravo, ${sauves} ${sauves > 1 ? 'restes sauvés' : 'reste sauvé'} (≈ ${enEuros(sauves)}) !`
+          : '✓ Recette notée',
       () => {
         this.compteur.annuler(recette);
         this.frigo.remettre(sortis);

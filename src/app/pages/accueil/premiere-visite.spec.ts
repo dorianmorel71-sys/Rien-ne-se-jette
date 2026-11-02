@@ -1,14 +1,12 @@
-import { marquerAccueilVu, pageDeDepart, retenirFiche } from './premiere-visite';
+import { ficheDeDepart, retenirFiche } from './premiere-visite';
 
-describe('pageDeDepart', () => {
-  it("montre l'accueil une seule fois, puis la dernière fiche", () => {
+describe('ficheDeDepart', () => {
+  it('rouvre la dernière fiche consultée', () => {
     // Le stockage peut manquer en test : la fonction doit quand même répondre.
-    expect(['accueil', 'legume/carotte']).toContain(pageDeDepart());
-    expect(pageDeDepart(true)).toMatch(/^legume\//);
-    marquerAccueilVu();
+    expect(ficheDeDepart()).toMatch(/^legume\//);
     retenirFiche('poireau');
     if (typeof localStorage?.setItem === 'function') {
-      expect(pageDeDepart()).toBe('legume/poireau');
+      expect(ficheDeDepart()).toBe('legume/poireau');
     }
   });
 });

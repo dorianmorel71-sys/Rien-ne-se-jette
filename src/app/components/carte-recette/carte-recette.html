@@ -61,6 +61,7 @@
   <button class="cuisinee" type="button" (click)="cuisiner()">
     {{ fois ? "+1 : je l'ai refaite" : "Je l'ai cuisinée" }}
   </button>
+  <button class="partager" type="button" (click)="partager()">↗ Partager</button>
   @if (fois) {
     <span class="fois">✓ Cuisinée {{ fois }} fois</span>
     <button class="annuler" type="button" (click)="compteur.annuler(r)">Annuler</button>

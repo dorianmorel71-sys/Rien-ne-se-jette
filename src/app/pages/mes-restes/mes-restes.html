@@ -70,7 +70,7 @@
         @let coches = nombreCoches(groupe.ingredients);
         <details
           class="famille"
-          [attr.data-groupe]="groupe.titre"
+          [attr.data-famille]="groupe.titre"
           [open]="toutOuvrir() || ouvertes().has(groupe.titre)"
           (toggle)="replier(groupe.titre, $any($event.target).open)"
         >
@@ -89,6 +89,9 @@
                 [attr.aria-pressed]="selection.estCoche(ingredient.id)"
                 (click)="selection.basculer(ingredient.id)"
               >
+                @if (emoji.get(ingredient.id); as e) {
+                  <span class="emoji" aria-hidden="true">{{ e }}</span>
+                }
                 {{ ingredient.nom }}
                 @if (auFrigo().get(ingredient.id); as reste) {
                   <span class="delai" [attr.data-niveau]="niveau(reste.joursRestants)">

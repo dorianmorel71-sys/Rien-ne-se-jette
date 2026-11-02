@@ -10,15 +10,34 @@ export const JOURS_DECONGELE = 1;
 
 /** Nombre de jours au frigo, par défaut pour chaque famille de restes. */
 const JOURS_PAR_GROUPE: Record<string, number> = {
-  'Épluchures et fanes': 3,
-  'Bouts de légumes': 4,
-  'Restes de repas': 3,
-  'Viande et poisson': 2,
+  Légumes: 3,
   Fruits: 3,
+  'Herbes & aromates': 3,
+  'Viande & poisson': 2,
+  'Épicerie & crèmerie': 3,
 };
 
 /** Restes qui se gardent nettement moins ou plus longtemps que leur famille. */
 const JOURS_PAR_RESTE: Record<string, number> = {
+  // Bouts de légumes plus solides que les épluchures.
+  'vert-poireau': 4,
+  'tronc-brocoli': 4,
+  'feuilles-chou-fleur': 4,
+  'trognon-chou-fleur': 4,
+  'feuilles-chou': 4,
+  'cotes-blettes': 4,
+  'feuilles-celeri': 4,
+  'coeur-courgette': 4,
+  'filaments-courge': 4,
+  'pieds-champignons': 4,
+  'tiges-herbes': 4,
+  'legumes-fatigues': 4,
+  'endives-molles': 4,
+  'poivron-ride': 4,
+  'aubergine-molle': 4,
+  'champignons-mous': 4,
+  'bouts-haricots': 4,
+
   'fanes-carotte': 2,
   'fanes-radis': 2,
   'fanes-navet': 2,

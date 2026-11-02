@@ -72,11 +72,33 @@ a:focus-visible {
   }
 }
 
-// Famille repliable (légumes, restes) : titre, compteur et chevron.
-// Chaque page choisit la couleur avec --c et --c-soft.
+// Famille repliable (aliments, restes) : titre, compteur et chevron.
+// Une famille a la même couleur dans Aliments et dans Recettes (data-famille).
 .famille {
   --c: var(--leaf);
   --c-soft: var(--leaf-soft);
+
+  &[data-famille='Fruits'] {
+    --c: var(--berry);
+    --c-soft: var(--berry-soft);
+  }
+  &[data-famille='Herbes & aromates'] {
+    --c: var(--mustard);
+    --c-soft: var(--mustard-soft);
+  }
+  &[data-famille='Viande & poisson'] {
+    --c: var(--meat);
+    --c-soft: var(--meat-soft);
+  }
+  &[data-famille='Épicerie & crèmerie'] {
+    --c: var(--accent);
+    --c-soft: var(--accent-soft);
+  }
+  &[data-famille='Dans mon placard'] {
+    --c: var(--muted);
+    --c-soft: var(--line);
+  }
+
   background: var(--surface);
   border: 1px solid var(--line);
   border-left: 6px solid var(--c);

@@ -31,7 +31,7 @@ export const routes: Routes = [
     component: PageConfidentialite,
     title: titreOnglet(PAGES.confidentialite.nom),
   },
-  // Les favoris sont maintenant rangés dans Recettes et Aliments.
+  // Les favoris sont maintenant rangés dans Recettes et le Guide anti-gaspi.
   { path: 'favoris', redirectTo: 'restes' },
   {
     path: 'compte',

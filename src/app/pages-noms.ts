@@ -8,7 +8,7 @@ export const PAGES = {
   aliments: {
     chemin: '/legume',
     icone: '🥕',
-    nom: 'Aliments',
+    nom: 'Guide anti-gaspi',
     phrase: FONCTIONNALITES.viandePoisson
       ? 'Que faire de chaque partie : épluchures, fanes, trognon, os, arêtes…'
       : 'Que faire de chaque partie : épluchures, fanes, trognon, croûtes…',

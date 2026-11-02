@@ -10,6 +10,7 @@ import {
 } from '@angular/core';
 import { CarteRecette } from '../../components/carte-recette/carte-recette';
 import { InvitationInstallation } from '../../components/invitation-installation/invitation-installation';
+import { RappelCompte } from '../../components/rappel-compte/rappel-compte';
 import { TitrePage } from '../../components/titre-page/titre-page';
 import { INDISPENSABLES } from '../../data/ingredients';
 import { GROUPES_INGREDIENTS_VISIBLES as GROUPES } from '../../data/visibles';
@@ -53,7 +54,7 @@ const MINUTES_RAPIDE = 20;
 
 @Component({
   selector: 'app-mes-restes',
-  imports: [CarteRecette, InvitationInstallation, TitrePage],
+  imports: [CarteRecette, InvitationInstallation, RappelCompte, TitrePage],
   templateUrl: './mes-restes.html',
   styleUrl: './mes-restes.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

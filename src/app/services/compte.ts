@@ -4,7 +4,7 @@ import type { Firestore } from 'firebase/firestore';
 import { FIREBASE_CONFIG } from '../firebase.config';
 import { DonneesCompte, fusionner } from '../utils/fusion';
 import { jsonStable } from '../utils/json';
-import { ecrire, lire } from '../utils/stockage';
+import { ecrire, garderSurAppareil, lire } from '../utils/stockage';
 import { Compteur } from './compteur';
 import { Favoris } from './favoris';
 import { Frigo } from './frigo';
@@ -141,6 +141,8 @@ export class Compte {
           ? { uid: u.uid, nom: u.displayName, email: u.email, creeLe: u.metadata.creationTime }
           : null,
       );
+      // Sans compte, les données ne durent que le temps de l'onglet.
+      garderSurAppareil(!!u);
       this.pret.set(true);
       if (u) this.ecouter(u.uid);
     });
@@ -258,7 +260,7 @@ export class Compte {
     await auth.sendPasswordResetEmail(instanceAuth, email);
   }
 
-  /** Les données restent sur l'appareil après la déconnexion. */
+  /** Après la déconnexion, les données restent jusqu'à la fermeture de l'onglet. */
   async deconnecter(): Promise<void> {
     const { auth, instanceAuth } = await this.charge();
     clearTimeout(this.minuterie);
@@ -280,7 +282,7 @@ export class Compte {
     this.foyerId.set(id);
   }
 
-  /** Supprime les données du compte puis le compte ; l'appareil garde les siennes. */
+  /** Supprime les données du compte puis le compte ; l'onglet garde les siennes jusqu'à sa fermeture. */
   async supprimerCompte(): Promise<void> {
     const { auth, store, instanceAuth, db } = await this.charge();
     const user = instanceAuth.currentUser;

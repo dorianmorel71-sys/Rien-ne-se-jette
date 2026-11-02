@@ -66,8 +66,15 @@ export const MODELES_RECETTES: ModeleRecette[] = [
     ],
     optionnels: ['oignon', 'pomme-de-terre', 'lait', 'fromage-bouts'],
     etapes: [
-      { si: 'oignon', texte: "Fais revenir l'oignon émincé 5 min dans un peu d'huile." },
-      "Ajoute {restes} coupés, couvre d'eau (environ 1 L) et sale.",
+      {
+        si: 'oignon',
+        texte: "Fais revenir l'oignon émincé 5 min dans une casserole avec un peu d'huile.",
+      },
+      { si: 'oignon', texte: "Ajoute {restes} coupés, couvre d'eau (environ 1 L) et sale." },
+      {
+        sauf: 'oignon',
+        texte: "Mets {restes} coupés dans une casserole, couvre d'eau (environ 1 L) et sale.",
+      },
       {
         si: 'pomme-de-terre',
         texte: 'Ajoute la pomme de terre en dés : la soupe sera plus onctueuse.',
@@ -215,7 +222,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
     optionnels: ['ail', 'graines-courge', 'fromage-bouts', 'citron', 'fruits-secs'],
     etapes: [
       'Lave et sèche bien {restes}.',
-      "Mixe-les avec un filet d'huile et une pincée de sel.",
+      'Mets-{les} dans un mixeur avec une pincée de sel.',
       { si: 'ail', texte: "Ajoute une gousse d'ail épluchée." },
       {
         si: 'graines-courge',
@@ -227,7 +234,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
       },
       { si: 'fromage-bouts', texte: 'Râpe les bouts de fromage dans le mélange.' },
       { si: 'citron', texte: 'Ajoute un filet de jus de citron.' },
-      "Ajoute l'huile petit à petit jusqu'à une texture de sauce. Se garde 3 jours au frigo.",
+      "Mixe en versant l'huile petit à petit jusqu'à une texture de sauce. Se garde 3 jours au frigo.",
     ],
   },
   {
@@ -962,7 +969,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
     optionnels: ['sucre', 'miel', 'zeste', 'epices'],
     etapes: [
       'Retire les parties abîmées et les pépins, puis coupe {restes} en morceaux.',
-      "Mets-les dans une casserole avec un fond d'eau et cuis 15 min à feu doux.",
+      "Mets-{les} dans une casserole avec un fond d'eau et cuis 15 min à feu doux.",
       { si: 'sucre', texte: 'Ajoute un peu de sucre si les fruits sont acides.' },
       { si: 'miel', texte: 'Ou ajoute une cuillère de miel.' },
       { si: 'zeste', texte: "Râpe un peu de peau d'agrume dedans." },
@@ -989,7 +996,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
     ],
     optionnels: ['yaourt', 'lait', 'miel'],
     etapes: [
-      'Retire les parties abîmées et coupe {restes} en morceaux.',
+      'Retire les parties abîmées, coupe {restes} en morceaux et mets-les dans un mixeur.',
       { si: 'yaourt', texte: 'Ajoute le yaourt.' },
       { si: 'lait', texte: 'Ajoute un verre de lait.' },
       { sauf: 'lait', texte: "Ajoute un verre d'eau bien froide." },
@@ -2351,7 +2358,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
     etapes: [
       'Préchauffe le four à 180 °C.',
       'Fais revenir {restes} hachés 5 min à la poêle, sale et poivre.',
-      'Répartis-les dans des ramequins et casse un œuf dans chacun.',
+      'Répartis-{les} dans des ramequins et casse un œuf dans chacun.',
       { si: 'lait', texte: 'Ajoute une cuillère de crème ou de lait.' },
       { si: 'fromage-bouts', texte: 'Ajoute un peu de fromage râpé.' },
       'Pose les ramequins dans un plat avec 2 cm d’eau chaude et enfourne 12 min.',
@@ -2489,7 +2496,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
       'Ajoute {restes} coupés en petits dés.',
       { si: 'tiges-herbes', texte: "Ajoute les tiges d'herbes hachées." },
       { si: 'epices', texte: 'Ajoute une pincée de paprika ou de curry.' },
-      'Sale peu (le fromage et le jambon le sont déjà), poivre.',
+      "Sale (peu s'il y a du fromage ou de la charcuterie) et poivre.",
       'Verse dans un moule à cake huilé et enfourne 45 min.',
     ],
   },
@@ -2646,7 +2653,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
     optionnels: ['miel', 'lait', 'epices'],
     etapes: [
       'Retire les parties abîmées et coupe {restes} en morceaux.',
-      'Mixe-les avec le yaourt et un verre d’eau fraîche (ou de lait).',
+      'Mixe-{les} avec le yaourt et un verre d’eau fraîche (ou de lait).',
       { si: 'lait', texte: 'Avec du lait, il sera plus onctueux.' },
       { si: 'miel', texte: 'Sucre avec un peu de miel.' },
       { si: 'epices', texte: 'Ajoute une pincée de cardamome ou de cannelle.' },
@@ -2670,7 +2677,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
     optionnels: ['citron', 'epl-pomme', 'epices'],
     etapes: [
       'Retire les parties abîmées et coupe {restes} en morceaux.',
-      'Pèse-les et ajoute la moitié de leur poids en sucre.',
+      'Pèse-{les} et ajoute la moitié de {leur} poids en sucre.',
       { si: 'citron', texte: 'Ajoute le jus d’un demi-citron : elle prendra mieux.' },
       {
         si: 'epl-pomme',

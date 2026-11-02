@@ -82,11 +82,14 @@ export function accord(restes: Ingredient[]): { feminin: boolean; pluriel: boole
  * « Ajoute {restes} coupés » → « Ajoute la courgette coupée », et « mets-les » → « mets-la ».
  */
 function accorder(texte: string, { feminin, pluriel }: { feminin: boolean; pluriel: boolean }) {
+  const pronom = pluriel ? 'les' : feminin ? 'la' : 'le';
+  // {les} et {leur} : les restes repris dans une étape suivante (« mets-{les} »).
+  texte = texte.replaceAll('{les}', pronom).replaceAll('{leur}', pluriel ? 'leur' : 'son');
   if (!texte.includes('{restes}')) return texte;
   const fin = (feminin ? 'e' : '') + (pluriel ? 's' : '');
   return texte
     .replace(/(\{restes\}(?: bien| très bien)?) (\p{L}+)és\b/u, `$1 $2é${fin}`)
-    .replace(/-les\b/g, pluriel ? '-les' : feminin ? '-la' : '-le');
+    .replace(/-les\b/g, `-${pronom}`);
 }
 
 /** « a », « a et b », « a, b et c ». */

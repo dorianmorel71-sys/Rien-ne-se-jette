@@ -82,6 +82,11 @@ const JOURS_PAR_RESTE: Record<string, number> = {
   'peau-banane': 2,
   zeste: 7,
   'queues-cerises': 30,
+  'fruits-rouges-abimes': 2,
+  'figues-mures': 2,
+  'kakis-murs': 2,
+  'epl-coing': 2,
+  'fruits-secs': 60,
 };
 
 const GROUPE_PAR_RESTE = new Map(

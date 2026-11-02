@@ -89,6 +89,26 @@
 .etapes {
   display: grid;
   gap: 12px;
+
+  // Sur téléphone : les cartes défilent sur le côté, une et demie visible.
+  @include ecran.telephone {
+    grid-auto-flow: column;
+    grid-auto-columns: 82%;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    margin: 0 -16px;
+    padding: 0 16px 4px;
+    scroll-padding: 0 16px;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    .etape {
+      scroll-snap-align: start;
+    }
+  }
 }
 
 .etape {

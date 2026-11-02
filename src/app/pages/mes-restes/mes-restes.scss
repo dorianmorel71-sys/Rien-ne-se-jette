@@ -96,6 +96,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 7px;
+  @include ecran.rangee-defilante;
 }
 
 .reste {

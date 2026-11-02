@@ -22,7 +22,8 @@
   📅 {{ s.texte }}
 </p>
 
-<div class="parties">
+<!-- Parties, conservation et compost : des cartes qui défilent sur le côté, sur téléphone. -->
+<div class="cartes">
   @for (partie of l.parties; track partie.nom) {
     <div class="partie">
       <h3>{{ partie.nom }}</h3>
@@ -33,29 +34,29 @@
       </ul>
     </div>
   }
+
+  @if (l.conservation?.length) {
+    <div class="conservation">
+      <h3>🧊 Pour les garder</h3>
+      <ul>
+        @for (conseil of l.conservation; track conseil) {
+          <li>{{ conseil }}</li>
+        }
+      </ul>
+    </div>
+  }
+
+  @if (l.compost?.length) {
+    <div class="compost">
+      <h3>♻️ Au compost</h3>
+      <ul>
+        @for (element of l.compost; track element) {
+          <li>{{ element }}</li>
+        }
+      </ul>
+    </div>
+  }
 </div>
-
-@if (l.conservation?.length) {
-  <div class="conservation">
-    <h3>🧊 Pour les garder</h3>
-    <ul>
-      @for (conseil of l.conservation; track conseil) {
-        <li>{{ conseil }}</li>
-      }
-    </ul>
-  </div>
-}
-
-@if (l.compost?.length) {
-  <div class="compost">
-    <h3>♻️ Au compost</h3>
-    <ul>
-      @for (element of l.compost; track element) {
-        <li>{{ element }}</li>
-      }
-    </ul>
-  </div>
-}
 
 @if (l.avertissement) {
   <app-alerte>{{ l.avertissement }}</app-alerte>

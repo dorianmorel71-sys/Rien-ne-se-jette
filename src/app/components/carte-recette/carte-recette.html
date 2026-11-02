@@ -21,6 +21,7 @@
   </div>
 </div>
 
+@let fois = compteur.fois(r.nom);
 <p class="meta">
   {{ r.temps }}
   @if (!r.four) {
@@ -28,6 +29,9 @@
   }
   @if (r.vegetarien && avecViande) {
     · végétarien
+  }
+  @if (fois) {
+    · <span class="fois-meta">✓ cuisinée {{ fois }} fois</span>
   }
 </p>
 
@@ -43,6 +47,7 @@
   }
 </div>
 
+<!-- Fermée, la carte reste courte : les étapes et les boutons de cuisine sont à l'intérieur. -->
 <details [open]="ouverte()">
   <summary>Voir la recette</summary>
   <ol>
@@ -53,20 +58,19 @@
   @if (r.avertissement) {
     <app-alerte>{{ r.avertissement }}</app-alerte>
   }
-</details>
 
-@let fois = compteur.fois(r.nom);
-<div class="cuisine">
-  <button class="mode" type="button" (click)="enCuisine.set(true)">👩‍🍳 Mode cuisine</button>
-  <button class="cuisinee" type="button" (click)="cuisiner()">
-    {{ fois ? "+1 : je l'ai refaite" : "Je l'ai cuisinée" }}
-  </button>
-  <button class="partager" type="button" (click)="partager()">↗ Partager</button>
-  @if (fois) {
-    <span class="fois">✓ Cuisinée {{ fois }} fois</span>
-    <button class="annuler" type="button" (click)="compteur.annuler(r)">Annuler</button>
-  }
-</div>
+  <div class="cuisine">
+    <button class="mode" type="button" (click)="enCuisine.set(true)">👩‍🍳 Mode cuisine</button>
+    <button class="cuisinee" type="button" (click)="cuisiner()">
+      {{ fois ? "+1 : je l'ai refaite" : "Je l'ai cuisinée" }}
+    </button>
+    <button class="partager" type="button" (click)="partager()">↗ Partager</button>
+    @if (fois) {
+      <span class="fois">✓ Cuisinée {{ fois }} fois</span>
+      <button class="annuler" type="button" (click)="compteur.annuler(r)">Annuler</button>
+    }
+  </div>
+</details>
 
 @if (enCuisine()) {
   <app-mode-cuisine [recette]="r" (cuisinee)="cuisiner()" (fermer)="enCuisine.set(false)" />

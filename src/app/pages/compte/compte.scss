@@ -80,7 +80,7 @@
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
   gap: 8px;
 
   a {
@@ -544,5 +544,105 @@ label.case {
     padding: 0;
     accent-color: var(--leaf);
     box-shadow: none;
+  }
+}
+
+// Petit bilan sous les chiffres : recette préférée, prochain cap.
+.bilan {
+  list-style: none;
+  margin: 0;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  border-radius: 14px;
+  background: var(--leaf-soft);
+  font-size: 0.92rem;
+}
+
+// Profil, e-mail et mot de passe : repliés pour garder la page courte.
+.profil {
+  border: 1.5px solid var(--line);
+  border-radius: 14px;
+  padding: 12px 14px;
+
+  > summary {
+    cursor: pointer;
+    font-weight: 700;
+  }
+
+  &[open] {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    > summary {
+      margin-bottom: 2px;
+    }
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  form + form {
+    padding-top: 12px;
+    border-top: 1px dashed var(--line);
+  }
+
+  .sous-titre {
+    margin: 0;
+  }
+}
+
+.avatars,
+.couleurs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+
+  button {
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    padding: 0;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    font-size: 1.3rem;
+    cursor: pointer;
+
+    &[aria-pressed='true'] {
+      border-color: var(--fg);
+      box-shadow: 0 0 0 2px var(--surface) inset;
+    }
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+}
+
+.couleurs button {
+  width: 30px;
+  height: 30px;
+}
+
+// Prénom et bouton sur la même ligne.
+.profil form.ligne {
+  flex-direction: row;
+  align-items: flex-end;
+
+  label {
+    flex: 1;
+  }
+
+  button {
+    flex-shrink: 0;
   }
 }

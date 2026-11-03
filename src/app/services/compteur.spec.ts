@@ -32,6 +32,15 @@ describe('Compteur', () => {
     expect(compteur.restes()).toBe(depart + 3);
   });
 
+  it('trouve la recette préférée et le prochain cap', () => {
+    compteur.remplacer({ restes: 3, recettes: 3, fois: { A: 1, B: 2 } });
+    expect(compteur.preferee()).toEqual({ nom: 'B', fois: 2 });
+    expect(compteur.prochainCap()).toEqual({ cap: 5, manque: 2 });
+
+    compteur.remplacer({ restes: 1, recettes: 1, fois: { A: 1 } });
+    expect(compteur.preferee()).toBeNull();
+  });
+
   it('annule une seule fois à la fois, sans descendre sous zéro', () => {
     compteur.cuisiner(RECETTE);
     compteur.annuler(RECETTE);

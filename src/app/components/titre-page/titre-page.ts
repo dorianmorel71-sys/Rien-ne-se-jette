@@ -1,12 +1,14 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { AvatarCompte } from '../avatar/avatar';
 
 /** Titre d'une page, le même que dans le menu et l'onglet du navigateur. */
 @Component({
   selector: 'app-titre-page',
+  imports: [AvatarCompte],
   template: `
     <h2>
-      @if (avatar(); as initiale) {
-        <span class="avatar" aria-hidden="true">{{ initiale }}</span>
+      @if (avatar()) {
+        <app-avatar class="avatar" aria-hidden="true" />
       } @else {
         <span class="icone" aria-hidden="true">{{ icone() }}</span>
       }
@@ -38,15 +40,7 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
     }
 
     .avatar {
-      display: grid;
-      place-items: center;
-      flex-shrink: 0;
-      width: 1.5em;
-      height: 1.5em;
-      border-radius: 50%;
-      background: var(--mustard);
-      color: #2b1d14;
-      font-size: 0.85em;
+      font-size: 1.1em;
     }
 
     p {
@@ -62,5 +56,6 @@ export class TitrePage {
   readonly titre = input.required<string>();
   readonly sousTitre = input<string>();
   /** Initiale de la personne connectée : affichée dans un rond à la place de l'icône. */
-  readonly avatar = input<string | null>();
+  /** Affiche l'avatar du compte à la place de l'icône. */
+  readonly avatar = input(false);
 }

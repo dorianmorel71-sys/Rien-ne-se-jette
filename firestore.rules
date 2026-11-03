@@ -4,7 +4,37 @@ service cloud.firestore {
   match /databases/{database}/documents {
     // Chaque personne ne peut lire et écrire que son propre document.
     match /utilisateurs/{uid} {
-      allow read, write: if request.auth != null && request.auth.uid == uid;
+      function moi() {
+        return request.auth != null && request.auth.uid == uid;
+      }
+
+      function donnees() {
+        return request.resource.data;
+      }
+
+      // Champ modifié par cette écriture (les autres ont déjà été vérifiés avant).
+      function change(champ) {
+        return resource == null || champ in donnees().diff(resource.data).affectedKeys();
+      }
+
+      // Seuls les champs de l'appli, avec leur type et une taille raisonnable.
+      function valide() {
+        return donnees().keys().hasOnly(['favoris', 'compteur', 'frigo', 'foyer', 'nouvelles', 'avatar'])
+          && (!('favoris' in donnees()) || donnees().favoris is map)
+          && (!('compteur' in donnees()) || donnees().compteur is map)
+          && (!('frigo' in donnees()) || (donnees().frigo is list && donnees().frigo.size() <= 500))
+          && (!('foyer' in donnees()) || (donnees().foyer is string && donnees().foyer.size() <= 100))
+          && (!change('nouvelles') || !('nouvelles' in donnees())
+            || (donnees().nouvelles.keys().hasOnly(['email', 'date'])
+              && donnees().nouvelles.date == request.time))
+          && (!change('avatar') || !('avatar' in donnees())
+            || (donnees().avatar.keys().hasOnly(['emoji', 'couleur', 'photo'])
+              && (!('emoji' in donnees().avatar) || donnees().avatar.emoji.size() <= 20)
+              && (!('couleur' in donnees().avatar) || donnees().avatar.couleur.size() <= 40)));
+      }
+
+      allow read, delete: if moi();
+      allow create, update: if moi() && valide();
     }
 
     // Avis des testeurs : chacun peut en envoyer, personne ne peut les relire depuis l'appli

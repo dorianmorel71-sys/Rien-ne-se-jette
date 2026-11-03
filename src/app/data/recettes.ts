@@ -2818,7 +2818,7 @@ export const MODELES_RECETTES: ModeleRecette[] = [
       'Préchauffe le four à 160 °C. Rince les graines, retire les filaments et sèche-les bien dans un torchon.',
       'Mélange-les avec 2 cuillères de miel et une pincée de sel.',
       { si: 'epices', texte: 'Ajoute une pincée de cannelle, ou de piment si tu aimes.' },
-      'Étale-les sur une plaque avec du papier cuisson et enfourne 15 min en remuant à mi-cuisson.',
+      'Étale-les sur une plaque avec du papier cuisson et enfourne 12 à 15 min en remuant à mi-cuisson : le miel brûle vite, surveille la fin.',
       'Laisse refroidir : elles deviennent croquantes. À grignoter ou sur un yaourt.',
     ],
   },
@@ -2864,12 +2864,12 @@ export const MODELES_RECETTES: ModeleRecette[] = [
     minRestes: 0,
     optionnels: ['beurre', 'epices', 'fond-confiture'],
     etapes: [
-      'Préchauffe le four à 200 °C. Coupe les crêpes en triangles, comme une pizza.',
+      'Préchauffe le four à 180 °C. Coupe les crêpes en triangles, comme une pizza.',
       { si: 'beurre', texte: 'Badigeonne-les de beurre fondu.' },
       { sauf: 'beurre', texte: "Badigeonne-les d'un peu d'huile." },
       { si: 'epices', texte: 'Saupoudre de sucre et de cannelle.' },
       { sauf: 'epices', texte: 'Saupoudre de sucre.' },
-      "Étale-les sur une plaque et enfourne 8 à 10 min, jusqu'à ce qu'elles dorent. Elles durcissent en refroidissant.",
+      'Étale-les sur une plaque et enfourne 8 à 10 min, en surveillant : elles doivent juste dorer. Elles durcissent en refroidissant.',
       {
         si: 'fond-confiture',
         texte:

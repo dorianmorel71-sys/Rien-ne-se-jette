@@ -48,6 +48,16 @@ export class Compteur {
   readonly recettes = computed(() => this.donnees().recettes);
   /** Estimation de l'argent économisé, déjà mise en forme. */
   readonly euros = computed(() => enEuros(this.restes()));
+  /** La recette la plus refaite, si l'une l'a été au moins deux fois. */
+  readonly preferee = computed(() => {
+    const [nom, fois] = Object.entries(this.donnees().fois).sort((a, b) => b[1] - a[1])[0] ?? [];
+    return nom && fois > 1 ? { nom, fois } : null;
+  });
+  /** Prochain cap à atteindre, et combien de restes il manque. */
+  readonly prochainCap = computed(() => {
+    const cap = PALIERS.find((p) => p > this.restes());
+    return cap ? { cap, manque: cap - this.restes() } : null;
+  });
 
   constructor() {
     effect(() => ecrire(CLE, this.donnees()));

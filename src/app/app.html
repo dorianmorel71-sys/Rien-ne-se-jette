@@ -32,7 +32,7 @@
         <a [routerLink]="lien.chemin" routerLinkActive="actif" ariaCurrentWhenActive="page">
           <span class="icone" aria-hidden="true">
             @if (lien.chemin === '/compte' && compte.initiale()) {
-              <span class="avatar">{{ compte.initiale() }}</span>
+              <app-avatar />
               <!-- État de la sauvegarde : vert à jour, jaune en cours, rouge en erreur. -->
               <span class="synchro" [attr.data-etat]="compte.synchro()"></span>
             } @else {

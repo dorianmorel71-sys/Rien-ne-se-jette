@@ -1,7 +1,7 @@
 @if (compte.utilisateur(); as u) {
   <app-titre-page
     [icone]="page.icone"
-    [avatar]="compte.initiale()"
+    [avatar]="true"
     [titre]="compte.nomAffiche() ?? page.nom"
     [sousTitre]="u.email ?? page.phrase"
   />
@@ -55,6 +55,27 @@
       <ul class="resume">
         <li>
           <a routerLink="/restes">
+            <span class="icone" aria-hidden="true">🌱</span>
+            <strong>{{ compteur.restes() }}</strong>
+            {{ compteur.restes() > 1 ? 'restes sauvés' : 'reste sauvé' }}
+          </a>
+        </li>
+        <li>
+          <a routerLink="/restes">
+            <span class="icone" aria-hidden="true">💶</span>
+            <strong>≈ {{ compteur.euros() }}</strong>
+            d'économies
+          </a>
+        </li>
+        <li>
+          <a routerLink="/restes">
+            <span class="icone" aria-hidden="true">🍲</span>
+            <strong>{{ compteur.recettes() }}</strong>
+            {{ compteur.recettes() > 1 ? 'recettes cuisinées' : 'recette cuisinée' }}
+          </a>
+        </li>
+        <li>
+          <a routerLink="/restes">
             <span class="icone" aria-hidden="true">🔖</span>
             <strong>{{ favoris.nombre() }}</strong>
             {{ favoris.nombre() > 1 ? 'gardés' : 'gardé' }}
@@ -69,14 +90,142 @@
             </a>
           </li>
         }
-        <li>
-          <a routerLink="/restes">
-            <span class="icone" aria-hidden="true">🌱</span>
-            <strong>{{ compteur.restes() }}</strong>
-            {{ compteur.restes() > 1 ? 'restes sauvés' : 'reste sauvé' }}
-          </a>
-        </li>
       </ul>
+      @if (compteur.preferee() || compteur.prochainCap()) {
+        <ul class="bilan">
+          @if (compteur.preferee(); as p) {
+            <li>
+              ⭐ Ta recette préférée : <strong>{{ p.nom }}</strong
+              >, cuisinée {{ p.fois }} fois
+            </li>
+          }
+          @if (compteur.prochainCap(); as c) {
+            <li>
+              🎯 Encore <strong>{{ c.manque }}</strong>
+              {{ c.manque > 1 ? 'restes' : 'reste' }} avant le cap des {{ c.cap }}
+            </li>
+          }
+        </ul>
+      }
+
+      <details class="profil">
+        <summary>✏️ Modifier mon profil</summary>
+
+        <p class="sous-titre">Ton avatar</p>
+        <div class="avatars" role="group" aria-label="Choisir un avatar">
+          @if (u.photo) {
+            <button
+              type="button"
+              class="choix-photo"
+              [attr.aria-pressed]="avatarPhoto()"
+              (click)="choisirPhoto()"
+            >
+              <img [src]="u.photo" alt="" referrerpolicy="no-referrer" />
+              <span class="visually-hidden">Ma photo Google</span>
+            </button>
+          }
+          @for (e of emojis; track e) {
+            <button
+              type="button"
+              [style.background]="couleurChoisie()"
+              [attr.aria-pressed]="emojiChoisi() === e"
+              (click)="choisirEmoji(e)"
+            >
+              {{ e }}
+            </button>
+          }
+        </div>
+        <div class="couleurs" role="group" aria-label="Couleur de fond">
+          @for (c of couleurs; track c) {
+            <button
+              type="button"
+              [style.background]="c"
+              [attr.aria-pressed]="couleurChoisie() === c"
+              [attr.aria-label]="'Couleur ' + ($index + 1)"
+              (click)="choisirCouleur(c)"
+            ></button>
+          }
+        </div>
+
+        <form class="ligne" (submit)="enregistrerPrenom($event)">
+          <label>
+            Prénom
+            <input
+              type="text"
+              autocomplete="given-name"
+              maxlength="40"
+              [value]="prenom()"
+              (input)="prenom.set($any($event.target).value)"
+            />
+          </label>
+          <button class="principal" type="submit" [disabled]="occupe() || prenomInchange()">
+            Enregistrer
+          </button>
+        </form>
+      </details>
+
+      <details class="profil">
+        <summary>🔐 E-mail et mot de passe</summary>
+        @if (u.google) {
+          <p class="note">
+            Tu te connectes avec Google : ton e-mail ({{ u.email }}) et ton mot de passe se changent
+            dans ton compte Google.
+          </p>
+        } @else {
+          <form (submit)="changerEmail($event)">
+            <label>
+              Nouvelle adresse e-mail
+              <input
+                type="email"
+                autocomplete="email"
+                [value]="nouvelEmail()"
+                (input)="nouvelEmail.set($any($event.target).value)"
+              />
+            </label>
+            <label>
+              Mot de passe actuel
+              <input
+                type="password"
+                autocomplete="current-password"
+                [value]="motDePasseEmail()"
+                (input)="motDePasseEmail.set($any($event.target).value)"
+              />
+            </label>
+            <button class="secondaire" type="submit" [disabled]="occupe()">Changer d'e-mail</button>
+            <p class="note">Un lien de confirmation part à la nouvelle adresse.</p>
+          </form>
+
+          <form (submit)="changerMotDePasse($event)">
+            <label>
+              Mot de passe actuel
+              <input
+                type="password"
+                autocomplete="current-password"
+                [value]="ancienMotDePasse()"
+                (input)="ancienMotDePasse.set($any($event.target).value)"
+              />
+            </label>
+            <label>
+              Nouveau mot de passe
+              <input
+                type="password"
+                autocomplete="new-password"
+                minlength="6"
+                [value]="nouveauMotDePasse()"
+                (input)="nouveauMotDePasse.set($any($event.target).value)"
+              />
+              <span class="aide">6 caractères minimum</span>
+            </label>
+            <button class="secondaire" type="submit" [disabled]="occupe()">
+              Changer de mot de passe
+            </button>
+          </form>
+        }
+      </details>
+      @if (info()) {
+        <p class="info" role="status">{{ info() }}</p>
+      }
+
       @if (frigoActif) {
         @if (frigo.urgents()) {
           <a class="rappel" routerLink="/frigo">
@@ -158,6 +307,9 @@
       <div class="actions">
         <button class="secondaire" type="button" [disabled]="occupe()" (click)="deconnecter()">
           Se déconnecter
+        </button>
+        <button class="secondaire" type="button" [disabled]="occupe()" (click)="telecharger()">
+          ⬇️ Mes données
         </button>
         <button class="danger" type="button" [disabled]="occupe()" (click)="supprimer()">
           {{ confirmerSuppression() ? 'Confirmer la suppression' : 'Supprimer mon compte' }}

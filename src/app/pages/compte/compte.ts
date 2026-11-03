@@ -10,6 +10,7 @@ import {
 import { Title } from '@angular/platform-browser';
 import { RouterLink } from '@angular/router';
 import { FONCTIONNALITES } from '../../../environments/fonctionnalites';
+import { COULEURS_AVATAR, EMOJIS_AVATAR } from '../../components/avatar/avatar';
 import { InvitationInstallation } from '../../components/invitation-installation/invitation-installation';
 import { TitrePage } from '../../components/titre-page/titre-page';
 import { PAGES, titreOnglet } from '../../pages-noms';
@@ -35,6 +36,8 @@ export class PageCompte {
     // L'onglet du navigateur porte le même nom que le titre et le menu.
     const titre = inject(Title);
     effect(() => titre.setTitle(titreOnglet(this.compte.nomAffiche() ?? 'Se connecter')));
+    // Le champ prénom part du prénom du compte.
+    effect(() => this.prenom.set(this.compte.utilisateur()?.nom ?? ''));
   }
   protected readonly compte = inject(Compte);
   protected readonly favoris = inject(Favoris);
@@ -60,6 +63,30 @@ export class PageCompte {
   protected readonly lienCopie = signal(false);
   /** Deuxième clic nécessaire pour supprimer le compte. */
   protected readonly confirmerSuppression = signal(false);
+
+  // Profil : avatar, prénom, e-mail et mot de passe.
+  protected readonly emojis = EMOJIS_AVATAR;
+  protected readonly couleurs = COULEURS_AVATAR;
+  protected readonly avatarPhoto = computed(() => {
+    const a = this.compte.avatar();
+    return !!a && 'photo' in a;
+  });
+  protected readonly emojiChoisi = computed(() => {
+    const a = this.compte.avatar();
+    return a && 'emoji' in a ? a.emoji : null;
+  });
+  protected readonly couleurChoisie = computed(() => {
+    const a = this.compte.avatar();
+    return a && 'couleur' in a ? a.couleur : COULEURS_AVATAR[0];
+  });
+  protected readonly prenom = signal('');
+  protected readonly prenomInchange = computed(
+    () => this.prenom().trim() === (this.compte.utilisateur()?.nom ?? ''),
+  );
+  protected readonly nouvelEmail = signal('');
+  protected readonly motDePasseEmail = signal('');
+  protected readonly ancienMotDePasse = signal('');
+  protected readonly nouveauMotDePasse = signal('');
 
   protected readonly titre = computed(
     () =>
@@ -97,6 +124,63 @@ export class PageCompte {
         this.info.set(`Un e-mail pour changer ton mot de passe est parti à ${email}.`);
       }
       this.motDePasse.set('');
+    });
+  }
+
+  protected choisirEmoji(emoji: string): Promise<void> {
+    return this.executer(() =>
+      this.compte.choisirAvatar({ emoji, couleur: this.couleurChoisie() }),
+    );
+  }
+
+  protected choisirCouleur(couleur: string): Promise<void> {
+    return this.executer(() =>
+      this.compte.choisirAvatar({ emoji: this.emojiChoisi() ?? EMOJIS_AVATAR[0], couleur }),
+    );
+  }
+
+  protected choisirPhoto(): Promise<void> {
+    return this.executer(() => this.compte.choisirAvatar({ photo: true }));
+  }
+
+  protected enregistrerPrenom(evenement: Event): Promise<void> {
+    evenement.preventDefault();
+    return this.executer(async () => {
+      await this.compte.changerPrenom(this.prenom().trim());
+      this.info.set('✓ Prénom enregistré');
+    });
+  }
+
+  protected changerEmail(evenement: Event): Promise<void> {
+    evenement.preventDefault();
+    const email = this.nouvelEmail().trim();
+    return this.executer(async () => {
+      await this.compte.changerEmail(email, this.motDePasseEmail());
+      this.motDePasseEmail.set('');
+      this.nouvelEmail.set('');
+      this.info.set(`📩 Ouvre le lien envoyé à ${email} pour confirmer ta nouvelle adresse.`);
+    });
+  }
+
+  protected changerMotDePasse(evenement: Event): Promise<void> {
+    evenement.preventDefault();
+    return this.executer(async () => {
+      await this.compte.changerMotDePasse(this.ancienMotDePasse(), this.nouveauMotDePasse());
+      this.ancienMotDePasse.set('');
+      this.nouveauMotDePasse.set('');
+      this.info.set('✓ Mot de passe changé');
+    });
+  }
+
+  /** Télécharge un fichier avec tout ce que le compte garde. */
+  protected telecharger(): Promise<void> {
+    return this.executer(async () => {
+      const contenu = await this.compte.exporter();
+      const lien = document.createElement('a');
+      lien.href = URL.createObjectURL(new Blob([contenu], { type: 'application/json' }));
+      lien.download = 'rien-ne-se-jette-mes-donnees.json';
+      lien.click();
+      URL.revokeObjectURL(lien.href);
     });
   }
 

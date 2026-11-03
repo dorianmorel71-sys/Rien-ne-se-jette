@@ -1,5 +1,5 @@
 import { computed, effect, inject, Injectable, signal, untracked } from '@angular/core';
-import type { Auth } from 'firebase/auth';
+import type { Auth, User } from 'firebase/auth';
 import type { Firestore } from 'firebase/firestore';
 import { FIREBASE_CONFIG } from '../firebase.config';
 import { DonneesCompte, fusionner } from '../utils/fusion';
@@ -15,6 +15,25 @@ export interface Utilisateur {
   email: string | null;
   /** Date de création du compte, telle que Firebase la donne. */
   creeLe?: string;
+  /** Photo du compte Google, s'il y en a une. */
+  photo?: string | null;
+  /** Connecté avec Google : l'e-mail et le mot de passe se gèrent chez Google. */
+  google?: boolean;
+}
+
+/** Avatar choisi : un aliment sur une couleur, ou la photo du compte Google. */
+export type Avatar = { emoji: string; couleur: string } | { photo: true };
+
+/** Construit l'utilisateur affiché à partir de celui de Firebase. */
+function versUtilisateur(u: User): Utilisateur {
+  return {
+    uid: u.uid,
+    nom: u.displayName,
+    email: u.email,
+    creeLe: u.metadata.creationTime,
+    photo: u.photoURL,
+    google: u.providerData.some((p) => p.providerId === 'google.com'),
+  };
 }
 
 export type EtatSynchro = 'a-jour' | 'en-cours' | 'erreur';
@@ -38,6 +57,7 @@ const CLE_REUNI = 'rien-ne-se-jette.compte-reuni';
 type DocumentCompte = Partial<DonneesCompte> & {
   foyer?: string;
   nouvelles?: { email: string | null; date: unknown };
+  avatar?: Avatar;
 };
 
 /** Ce qu'on envoie : sans le frigo quand il est partagé, il vit alors dans le foyer. */
@@ -60,6 +80,8 @@ const ERREURS: Record<string, string> = {
   'auth/requires-recent-login': 'Par sécurité, déconnecte-toi, reconnecte-toi puis réessaie.',
   'auth/unauthorized-domain': "Ce site n'est pas encore autorisé dans Firebase.",
   'foyer/introuvable': "Cette invitation n'existe plus. Demande un nouveau lien.",
+  'auth/email-already-exists': 'Un compte existe déjà avec cette adresse.',
+  'auth/operation-not-allowed': 'Ce changement n’est pas possible pour ce compte.',
   'permission-denied': 'Accès refusé par Firebase : les règles de la base ne sont pas à jour.',
 };
 
@@ -94,6 +116,8 @@ export class Compte {
 
   /** A accepté de recevoir des nouvelles de l'appli par e-mail. */
   readonly nouvelles = signal(false);
+  /** Avatar choisi dans le compte ; à défaut, l'initiale. */
+  readonly avatar = signal<Avatar | null>(null);
 
   /** Foyer dont on partage le frigo, lu dans le document du compte. */
   readonly foyerId = signal<string | null>(null);
@@ -145,11 +169,8 @@ export class Compte {
       this.arreterEcoute?.();
       this.recu.set(false);
       this.dernierEnvoi = '';
-      this.utilisateur.set(
-        u
-          ? { uid: u.uid, nom: u.displayName, email: u.email, creeLe: u.metadata.creationTime }
-          : null,
-      );
+      this.utilisateur.set(u ? versUtilisateur(u) : null);
+      if (!u) this.avatar.set(null);
       // Sans compte, les données ne durent que le temps de l'onglet.
       garderSurAppareil(!!u);
       this.pret.set(true);
@@ -169,6 +190,7 @@ export class Compte {
         const document = instantane.data() as DocumentCompte | undefined;
         this.foyerId.set(document?.foyer ?? null);
         this.nouvelles.set(!!document?.nouvelles);
+        this.avatar.set(document?.avatar ?? null);
         const distant = document && this.extraire(document);
 
         if (!this.recu()) {
@@ -246,12 +268,7 @@ export class Compte {
     const { user } = await auth.createUserWithEmailAndPassword(instanceAuth, email, motDePasse);
     if (nom) {
       await auth.updateProfile(user, { displayName: nom });
-      this.utilisateur.set({
-        uid: user.uid,
-        nom,
-        email: user.email,
-        creeLe: user.metadata.creationTime,
-      });
+      this.utilisateur.set(versUtilisateur(user));
     }
   }
 
@@ -277,6 +294,60 @@ export class Compte {
     // À la prochaine connexion, ce qui aura été fait entre-temps sera réuni avec le compte.
     ecrire(CLE_REUNI, '');
     await auth.signOut(instanceAuth);
+  }
+
+  /** Enregistre l'avatar dans le compte, pour le retrouver sur tous les appareils. */
+  async choisirAvatar(avatar: Avatar): Promise<void> {
+    const { store, db } = await this.charge();
+    const uid = this.utilisateur()?.uid;
+    if (!uid) return;
+    this.avatar.set(avatar);
+    await store.setDoc(store.doc(db, COLLECTION, uid), { avatar }, { merge: true });
+  }
+
+  async changerPrenom(nom: string): Promise<void> {
+    const { auth, instanceAuth } = await this.charge();
+    const user = instanceAuth.currentUser;
+    if (!user) return;
+    await auth.updateProfile(user, { displayName: nom || null });
+    this.utilisateur.set(versUtilisateur(user));
+  }
+
+  /** Firebase redemande le mot de passe avant de changer l'e-mail ou le mot de passe. */
+  private async reconfirmer(motDePasse: string): Promise<User> {
+    const { auth, instanceAuth } = await this.charge();
+    const user = instanceAuth.currentUser;
+    if (!user?.email) throw { code: 'auth/user-not-found' };
+    await auth.reauthenticateWithCredential(
+      user,
+      auth.EmailAuthProvider.credential(user.email, motDePasse),
+    );
+    return user;
+  }
+
+  async changerMotDePasse(actuel: string, nouveau: string): Promise<void> {
+    const { auth } = await this.charge();
+    await auth.updatePassword(await this.reconfirmer(actuel), nouveau);
+  }
+
+  /** Envoie un lien à la nouvelle adresse : l'e-mail ne change qu'une fois ce lien ouvert. */
+  async changerEmail(nouvel: string, motDePasse: string): Promise<void> {
+    const { auth } = await this.charge();
+    await auth.verifyBeforeUpdateEmail(await this.reconfirmer(motDePasse), nouvel);
+  }
+
+  /** Tout ce que le compte garde, dans un fichier lisible (droit d'accès du RGPD). */
+  async exporter(): Promise<string> {
+    const { store, db } = await this.charge();
+    const u = this.utilisateur();
+    if (!u) return '{}';
+    const document = (await store.getDoc(store.doc(db, COLLECTION, u.uid))).data() ?? {};
+    return JSON.stringify(
+      { compte: { email: u.email, prenom: u.nom, creeLe: u.creeLe }, ...document },
+      (_, valeur) =>
+        valeur && typeof valeur.toDate === 'function' ? valeur.toDate().toISOString() : valeur,
+      2,
+    );
   }
 
   /** Enregistre (ou retire) l'accord pour recevoir des nouvelles de l'appli par e-mail. */

@@ -164,19 +164,6 @@ header {
     }
   }
 
-  .avatar {
-    display: grid;
-    place-items: center;
-    width: 1.35em;
-    height: 1.35em;
-    border-radius: 50%;
-    background: var(--mustard);
-    color: #2b1d14;
-    font-family: var(--f-display);
-    font-weight: 800;
-    font-size: 0.8em;
-  }
-
   .synchro {
     position: absolute;
     right: -2px;

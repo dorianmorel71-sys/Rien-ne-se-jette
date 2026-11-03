@@ -336,20 +336,6 @@ export class Compte {
     await auth.verifyBeforeUpdateEmail(await this.reconfirmer(motDePasse), nouvel);
   }
 
-  /** Tout ce que le compte garde, dans un fichier lisible (droit d'accès du RGPD). */
-  async exporter(): Promise<string> {
-    const { store, db } = await this.charge();
-    const u = this.utilisateur();
-    if (!u) return '{}';
-    const document = (await store.getDoc(store.doc(db, COLLECTION, u.uid))).data() ?? {};
-    return JSON.stringify(
-      { compte: { email: u.email, prenom: u.nom, creeLe: u.creeLe }, ...document },
-      (_, valeur) =>
-        valeur && typeof valeur.toDate === 'function' ? valeur.toDate().toISOString() : valeur,
-      2,
-    );
-  }
-
   /** Enregistre (ou retire) l'accord pour recevoir des nouvelles de l'appli par e-mail. */
   async accepterNouvelles(oui: boolean): Promise<void> {
     const { store, db, instanceAuth } = await this.charge();

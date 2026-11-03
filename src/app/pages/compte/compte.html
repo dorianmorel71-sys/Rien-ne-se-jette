@@ -308,9 +308,6 @@
         <button class="secondaire" type="button" [disabled]="occupe()" (click)="deconnecter()">
           Se déconnecter
         </button>
-        <button class="secondaire" type="button" [disabled]="occupe()" (click)="telecharger()">
-          ⬇️ Mes données
-        </button>
         <button class="danger" type="button" [disabled]="occupe()" (click)="supprimer()">
           {{ confirmerSuppression() ? 'Confirmer la suppression' : 'Supprimer mon compte' }}
         </button>

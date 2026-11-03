@@ -7,7 +7,8 @@
     "start:testeurs": "ng serve --configuration testeurs",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "test:regles": "firebase emulators:exec --only firestore --project demo-rien-ne-se-jette \"node --test tests/regles-firestore.test.mjs\""
   },
   "private": true,
   "packageManager": "npm@11.10.1",
@@ -29,6 +30,8 @@
     "@angular/build": "^21.2.1",
     "@angular/cli": "^21.2.1",
     "@angular/compiler-cli": "^21.2.0",
+    "@firebase/rules-unit-testing": "^6.0.0",
+    "firebase-tools": "^15.34.2",
     "jsdom": "^28.0.0",
     "prettier": "^3.8.1",
     "typescript": "~5.9.2",

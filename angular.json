@@ -29,7 +29,12 @@
                 "input": "public"
               }
             ],
-            "styles": ["src/styles.scss"]
+            "styles": [
+              "@fontsource-variable/fraunces/opsz.css",
+              "@fontsource-variable/fraunces/opsz-italic.css",
+              "@fontsource-variable/dm-sans/opsz.css",
+              "src/styles.scss"
+            ]
           },
           "configurations": {
             "production": {

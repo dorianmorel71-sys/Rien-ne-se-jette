@@ -45,7 +45,7 @@ export const PAGES = {
     chemin: '/confidentialite',
     icone: '🔒',
     nom: 'Confidentialité',
-    phrase: 'Ce que l’appli garde sur toi, où, et comment l’effacer.',
+    phrase: 'Ce que l’appli garde sur toi, comment l’effacer, et les mentions légales.',
   },
   accueil: { chemin: '/accueil', icone: '❓', nom: 'Accueil', phrase: '' },
   invitation: { chemin: '/foyer', icone: '🏠', nom: 'Invitation', phrase: '' },

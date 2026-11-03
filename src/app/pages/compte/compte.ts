@@ -45,6 +45,8 @@ export class PageCompte {
 
   protected readonly mode = signal<Mode>('connexion');
   protected readonly nom = signal('');
+  /** Case « recevoir des nouvelles » du formulaire de création. */
+  protected readonly accepteNouvelles = signal(false);
   protected readonly email = signal('');
   protected readonly motDePasse = signal('');
   protected readonly voirMotDePasse = signal(false);
@@ -87,6 +89,7 @@ export class PageCompte {
     await this.executer(async () => {
       if (this.mode() === 'creation') {
         await this.compte.creerCompte(email, this.motDePasse(), this.nom().trim());
+        if (this.accepteNouvelles()) await this.compte.accepterNouvelles(true);
       } else if (this.mode() === 'connexion') {
         await this.compte.connecter(email, this.motDePasse());
       } else {
@@ -95,6 +98,10 @@ export class PageCompte {
       }
       this.motDePasse.set('');
     });
+  }
+
+  protected basculerNouvelles(oui: boolean): Promise<void> {
+    return this.executer(() => this.compte.accepterNouvelles(oui));
   }
 
   protected google(): Promise<void> {

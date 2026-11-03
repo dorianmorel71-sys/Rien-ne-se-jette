@@ -19,5 +19,5 @@ export class PageConfidentialite {
   protected readonly responsable = 'Dorian Morel';
   protected readonly email = 'riennesejette.contact@gmail.com';
   /** À changer à chaque modification du texte. */
-  protected readonly miseAJour = '2 novembre 2026';
+  protected readonly miseAJour = '3 novembre 2026';
 }

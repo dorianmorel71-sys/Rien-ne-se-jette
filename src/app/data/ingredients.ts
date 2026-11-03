@@ -208,6 +208,8 @@ export const GROUPES_INGREDIENTS: GroupeIngredients[] = [
       { id: 'tiges-herbes', nom: "Tiges d'herbes", avecArticle: "les tiges d'herbes" },
       { id: 'herbes-fanees', nom: 'Herbes fanées', avecArticle: 'les herbes fanées' },
       { id: 'pelures-oignon', nom: "Pelures d'oignon", avecArticle: "les pelures d'oignon" },
+      { id: 'fanes-oignon', nom: "Fanes d'oignon nouveau", avecArticle: "les fanes d'oignon" },
+      { id: 'ail-germe', nom: 'Ail germé', avecArticle: "l'ail germé" },
     ],
   },
   {
@@ -255,6 +257,7 @@ export const GROUPES_INGREDIENTS: GroupeIngredients[] = [
       { id: 'fromage-bouts', nom: 'Bouts de fromage', avecArticle: 'les bouts de fromage' },
       { id: 'croute-parmesan', nom: 'Croûte de parmesan', avecArticle: 'la croûte de parmesan' },
       { id: 'pain-rassis', nom: 'Pain rassis', avecArticle: 'le pain rassis' },
+      { id: 'pain-mie', nom: 'Pain de mie ou biscottes', avecArticle: 'le pain de mie' },
       {
         id: 'brioche-rassise',
         nom: 'Brioche ou viennoiseries rassises',
@@ -266,6 +269,7 @@ export const GROUPES_INGREDIENTS: GroupeIngredients[] = [
       { id: 'blancs-oeufs', nom: "Blancs d'œufs", avecArticle: "les blancs d'œufs" },
       { id: 'jaunes-oeufs', nom: "Jaunes d'œufs", avecArticle: "les jaunes d'œufs" },
       { id: 'yaourt', nom: 'Yaourt à finir', avecArticle: 'le yaourt' },
+      { id: 'creme-entamee', nom: 'Crème fraîche entamée', avecArticle: 'la crème' },
       { id: 'crepes', nom: 'Crêpes en trop', avecArticle: 'les crêpes' },
       {
         id: 'miettes-gateau',
@@ -278,6 +282,19 @@ export const GROUPES_INGREDIENTS: GroupeIngredients[] = [
         avecArticle: 'le fond de confiture',
       },
       { id: 'fond-vin', nom: 'Fond de bouteille de vin', avecArticle: 'le fond de vin' },
+      { id: 'fond-cereales', nom: 'Fond de paquet de céréales', avecArticle: 'les céréales' },
+      { id: 'jus-bocal', nom: "Jus de cornichons ou d'olives", avecArticle: 'le jus du bocal' },
+      {
+        id: 'huile-conserve',
+        nom: 'Huile de conserve (thon, tomates séchées…)',
+        avecArticle: "l'huile de la conserve",
+      },
+      {
+        id: 'eau-cuisson',
+        nom: 'Eau de cuisson des légumes',
+        avecArticle: "l'eau de cuisson",
+      },
+      { id: 'pulpe-jus', nom: 'Pulpe de jus (extracteur)', avecArticle: 'la pulpe' },
     ],
   },
   {

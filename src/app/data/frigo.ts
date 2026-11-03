@@ -88,6 +88,14 @@ const JOURS_PAR_RESTE: Record<string, number> = {
   'kakis-murs': 2,
   'epl-coing': 2,
   'fruits-secs': 60,
+  'ail-germe': 14,
+  'pain-mie': 7,
+  'creme-entamee': 5,
+  'fond-cereales': 60,
+  'jus-bocal': 30,
+  'huile-conserve': 7,
+  'eau-cuisson': 2,
+  'pulpe-jus': 1,
 };
 
 const GROUPE_PAR_RESTE = new Map(

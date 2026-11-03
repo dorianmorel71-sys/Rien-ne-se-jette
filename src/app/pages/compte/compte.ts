@@ -172,18 +172,6 @@ export class PageCompte {
     });
   }
 
-  /** Télécharge un fichier avec tout ce que le compte garde. */
-  protected telecharger(): Promise<void> {
-    return this.executer(async () => {
-      const contenu = await this.compte.exporter();
-      const lien = document.createElement('a');
-      lien.href = URL.createObjectURL(new Blob([contenu], { type: 'application/json' }));
-      lien.download = 'rien-ne-se-jette-mes-donnees.json';
-      lien.click();
-      URL.revokeObjectURL(lien.href);
-    });
-  }
-
   protected basculerNouvelles(oui: boolean): Promise<void> {
     return this.executer(() => this.compte.accepterNouvelles(oui));
   }

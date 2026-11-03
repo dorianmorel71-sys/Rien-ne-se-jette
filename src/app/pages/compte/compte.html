@@ -141,6 +141,16 @@
         </section>
       }
 
+      <label class="case">
+        <input
+          type="checkbox"
+          [checked]="compte.nouvelles()"
+          [disabled]="occupe()"
+          (change)="basculerNouvelles($any($event.target).checked)"
+        />
+        <span>📬 Recevoir des nouvelles de l'appli par e-mail (rarement)</span>
+      </label>
+
       <p class="note astuce-appareils">
         Connecte-toi avec le même compte sur ton téléphone et ton ordinateur pour tout retrouver.
       </p>
@@ -301,6 +311,20 @@
             @if (mode() === 'creation') {
               <span class="aide">6 caractères minimum</span>
             }
+          </label>
+        }
+
+        @if (mode() === 'creation') {
+          <label class="case">
+            <input
+              type="checkbox"
+              [checked]="accepteNouvelles()"
+              (change)="accepteNouvelles.set($any($event.target).checked)"
+            />
+            <span>
+              📬 J'accepte de recevoir des nouvelles de l'appli par e-mail (rarement). Je peux
+              changer d'avis à tout moment dans mon compte.
+            </span>
           </label>
         }
 

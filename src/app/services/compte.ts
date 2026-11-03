@@ -31,8 +31,14 @@ const COLLECTION = 'utilisateurs';
  */
 const CLE_REUNI = 'rien-ne-se-jette.compte-reuni';
 
-/** Le document du compte : les données, et le foyer dont on partage le frigo. */
-type DocumentCompte = Partial<DonneesCompte> & { foyer?: string };
+/**
+ * Le document du compte : les données, le foyer dont on partage le frigo, et l'accord
+ * pour recevoir des nouvelles de l'appli (avec l'adresse à utiliser et sa date).
+ */
+type DocumentCompte = Partial<DonneesCompte> & {
+  foyer?: string;
+  nouvelles?: { email: string | null; date: unknown };
+};
 
 /** Ce qu'on envoie : sans le frigo quand il est partagé, il vit alors dans le foyer. */
 type DonneesEnvoyees = Omit<DonneesCompte, 'frigo'> & { frigo?: DonneesCompte['frigo'] };
@@ -85,6 +91,9 @@ export class Compte {
     return u ? u.nom || u.email?.split('@')[0] || 'Mon compte' : null;
   });
   readonly initiale = computed(() => this.nomAffiche()?.[0]?.toUpperCase() ?? null);
+
+  /** A accepté de recevoir des nouvelles de l'appli par e-mail. */
+  readonly nouvelles = signal(false);
 
   /** Foyer dont on partage le frigo, lu dans le document du compte. */
   readonly foyerId = signal<string | null>(null);
@@ -159,6 +168,7 @@ export class Compte {
         if (instantane.metadata.hasPendingWrites) return;
         const document = instantane.data() as DocumentCompte | undefined;
         this.foyerId.set(document?.foyer ?? null);
+        this.nouvelles.set(!!document?.nouvelles);
         const distant = document && this.extraire(document);
 
         if (!this.recu()) {
@@ -267,6 +277,20 @@ export class Compte {
     // À la prochaine connexion, ce qui aura été fait entre-temps sera réuni avec le compte.
     ecrire(CLE_REUNI, '');
     await auth.signOut(instanceAuth);
+  }
+
+  /** Enregistre (ou retire) l'accord pour recevoir des nouvelles de l'appli par e-mail. */
+  async accepterNouvelles(oui: boolean): Promise<void> {
+    const { store, db, instanceAuth } = await this.charge();
+    // Juste après la création, le compte n'est pas encore dans `utilisateur`.
+    const u = instanceAuth.currentUser;
+    if (!u) return;
+    await store.setDoc(
+      store.doc(db, COLLECTION, u.uid),
+      { nouvelles: oui ? { email: u.email, date: store.serverTimestamp() } : store.deleteField() },
+      { merge: true },
+    );
+    this.nouvelles.set(oui);
   }
 
   /** Enregistre dans le compte le foyer dont on partage le frigo (ou aucun). */

@@ -37,12 +37,6 @@
   font-size: 0.92rem;
 }
 
-.profil {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-
 .avatar {
   flex-shrink: 0;
   display: grid;
@@ -453,8 +447,7 @@ button {
     }
   }
 
-  // Le profil et la sauvegarde sont dans le panneau : on ne les répète pas.
-  .profil,
+  // La sauvegarde est dans le panneau : on ne la répète pas.
   .synchro,
   .astuce-appareils {
     display: none;
